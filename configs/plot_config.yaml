@@ -1,0 +1,31 @@
+# configs/plot_config.yaml
+
+font:
+  family: "Times New Roman"
+  size: 10  # IEEE typically uses 10pt font
+
+figure:
+  figsize: [3.45, 2.5]  # Width, Height in inches (adjust as needed)
+  dpi: 300  # High resolution for publication
+  tight_layout: true
+
+lines:
+  linewidth: 1.0
+  markersize: 4
+
+ticks:
+  major_size: 4
+  minor_size: 2
+  direction: "in"  # or "out"
+
+legend:
+  fontsize: 8
+  frameon: false
+
+axes:
+  grid: false
+  labelsize: 10
+
+savefig:
+  format: "png"
+  bbox: "tight"

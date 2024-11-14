@@ -8,9 +8,10 @@ training:
   learning_rate: 0.001
   epochs: 20
   validation_split: 0.2
+  test_split: 0.1  # Added parameter
   early_stopping_patience: 5  # Added parameter
 
 paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
-
+  plot_config_path: 'configs/plot_config.yaml'  # Added parameter

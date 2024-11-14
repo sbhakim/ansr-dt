@@ -2,9 +2,9 @@
 
 import os
 import logging
-from utils.logging_setup import setup_logging
-from utils.config_manager import load_config
-from utils.pipeline import NEXUSDTPipeline
+from src.logging.logging_setup import setup_logging
+from src.config.config_manager import load_config
+from src.pipeline.pipeline import NEXUSDTPipeline
 
 def main():
     # Initialize logging
