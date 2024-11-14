@@ -1,0 +1,16 @@
+# configs/config.yaml
+
+model:
+  window_size: 10
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 20
+  validation_split: 0.2
+  early_stopping_patience: 5  # Added parameter
+
+paths:
+  data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
+  results_dir: 'results'
+

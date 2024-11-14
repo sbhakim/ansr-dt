@@ -1,0 +1,15 @@
+# Exclude logs directory
+logs/
+
+# Exclude .sh files
+*.sh
+
+# Exclude .txt files
+*.txt
+
+# Exclude specific Python file
+check_data.py
+
+# Exclude .idea directory (IDE settings)
+.idea/
+
