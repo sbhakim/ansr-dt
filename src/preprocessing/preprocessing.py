@@ -4,6 +4,7 @@ import logging
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
+
 def preprocess_sequences(X_seq: np.ndarray):
     """
     Preprocesses the sequenced data by scaling.

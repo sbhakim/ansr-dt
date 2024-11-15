@@ -6,6 +6,7 @@ from src.logging.logging_setup import setup_logging
 from src.config.config_manager import load_config
 from src.pipeline.pipeline import NEXUSDTPipeline
 
+
 def main():
     # Initialize logging
     logger = setup_logging(
@@ -27,6 +28,7 @@ def main():
 
     except Exception as e:
         logger.exception(f"An error occurred: {e}")
+
 
 if __name__ == '__main__':
     main()

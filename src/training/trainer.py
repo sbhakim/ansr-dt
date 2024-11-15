@@ -9,9 +9,9 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.utils import class_weight
 import joblib
 
-
 from src.models.lstm_model import create_lstm_model  # Corrected import
 from src.utils.model_utils import save_model, save_scaler
+
 
 def train_model(
     model,

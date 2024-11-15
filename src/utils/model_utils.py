@@ -6,6 +6,7 @@ from typing import Any
 import joblib
 import tensorflow as tf  # Added import
 
+
 def save_scaler(scaler: Any, path: str, logger: logging.Logger):
     """
     Saves the scaler object to the specified path.
@@ -21,6 +22,7 @@ def save_scaler(scaler: Any, path: str, logger: logging.Logger):
     except Exception as e:
         logger.error(f"Failed to save scaler: {e}")
         raise
+
 
 def load_scaler(path: str, logger: logging.Logger) -> Any:
     """
@@ -41,6 +43,7 @@ def load_scaler(path: str, logger: logging.Logger) -> Any:
         logger.error(f"Failed to load scaler: {e}")
         raise
 
+
 def save_model(model: Any, path: str, logger: logging.Logger):
     """
     Saves the Keras model to the specified path.
@@ -56,6 +59,7 @@ def save_model(model: Any, path: str, logger: logging.Logger):
     except Exception as e:
         logger.error(f"Failed to save model: {e}")
         raise
+
 
 def load_model(path: str, logger: logging.Logger) -> Any:
     """

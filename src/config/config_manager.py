@@ -3,6 +3,7 @@
 import yaml
 import logging
 
+
 def load_config(config_path: str) -> dict:
     """
     Loads the YAML configuration file.

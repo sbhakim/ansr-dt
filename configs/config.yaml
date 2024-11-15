@@ -15,3 +15,7 @@ paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
   plot_config_path: 'configs/plot_config.yaml'  # Added parameter
+  reasoning_rules_path: 'src/reasoning/rules.pl'  # Added parameter
+
+symbolic_reasoning:
+  enabled: true  # Flag to enable/disable symbolic reasoning

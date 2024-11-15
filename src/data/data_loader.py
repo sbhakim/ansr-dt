@@ -6,12 +6,26 @@ import os
 from typing import Tuple
 
 class DataLoader:
-    def __init__(self, data_file, window_size=10):
+    def __init__(self, data_file: str, window_size: int = 10):
+        """
+        Initializes the DataLoader with the specified data file and window size.
+
+        Parameters:
+        - data_file (str): Path to the .npz data file.
+        - window_size (int): Number of timesteps per sequence.
+        """
         self.data_file = data_file
         self.window_size = window_size
         self.logger = logging.getLogger(__name__)
 
-    def load_data(self):
+    def load_data(self) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Loads data from a .npz file.
+
+        Returns:
+        - X (np.ndarray): Features array of shape (samples, features).
+        - y (np.ndarray): Labels array of shape (samples,).
+        """
         try:
             data = np.load(self.data_file)
             self.logger.info(f"Keys in the .npz file: {data.files}")
@@ -44,17 +58,17 @@ class DataLoader:
             self.logger.error(f"Failed to load data: {e}")
             raise
 
-    def create_sequences(self, X, y):
+    def create_sequences(self, X: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Create sequences of data for LSTM input.
+        Creates sequences of data for LSTM input.
 
         Parameters:
-        - X: 2D array of shape (samples, features)
-        - y: 1D array of shape (samples,)
+        - X (np.ndarray): 2D array of shape (samples, features)
+        - y (np.ndarray): 1D array of shape (samples,)
 
         Returns:
-        - X_seq: 3D array of shape (samples - window_size +1, window_size, features)
-        - y_seq: 1D array of shape (samples - window_size +1,)
+        - X_seq (np.ndarray): 3D array of shape (samples - window_size +1, window_size, features)
+        - y_seq (np.ndarray): 1D array of shape (samples - window_size +1,)
         """
         try:
             X_seq = []
@@ -75,7 +89,7 @@ class DataLoader:
             self.logger.error(f"Failed to create sequences: {e}")
             raise
 
-    def split_data(self, X, y, validation_split: float, test_split: float) -> Tuple:
+    def split_data(self, X: np.ndarray, y: np.ndarray, validation_split: float, test_split: float) -> Tuple:
         """
         Splits the data into training, validation, and test sets.
 
@@ -91,19 +105,20 @@ class DataLoader:
         try:
             total = len(X)
             test_size = int(total * test_split)
-            val_size = int(total * validation_split)
+            validation_size = int(total * validation_split)
 
             X_test = X[:test_size]
             y_test = y[:test_size]
 
-            X_val = X[test_size:test_size + val_size]
-            y_val = y[test_size:test_size + val_size]
+            X_val = X[test_size:test_size + validation_size]
+            y_val = y[test_size:test_size + validation_size]
 
-            X_train = X[test_size + val_size:]
-            y_train = y[test_size + val_size:]
+            X_train = X[test_size + validation_size:]
+            y_train = y[test_size + validation_size:]
 
             self.logger.info(
-                f"Data split into training, validation, and test sets with validation_split={validation_split} and test_split={test_split}.")
+                f"Data split into training, validation, and test sets with validation_split={validation_split} and test_split={test_split}."
+            )
             self.logger.info(f"Training set - X_train: {X_train.shape}, y_train: {y_train.shape}")
             self.logger.info(f"Validation set - X_val: {X_val.shape}, y_val: {y_val.shape}")
             self.logger.info(f"Test set - X_test: {X_test.shape}, y_test: {y_test.shape}")

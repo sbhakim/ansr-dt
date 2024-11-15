@@ -1,8 +1,7 @@
 # src/visualization/plotting.py
 
 import os
-
-import numpy as np
+import numpy as np  # Ensure this import exists
 import yaml
 import logging
 import matplotlib.pyplot as plt
@@ -95,17 +94,18 @@ def plot_metrics(history, figures_dir: str, config: dict):
     """
     logger = logging.getLogger(__name__)
     try:
-        plt.figure()
+        plt.figure(figsize=(12, 5))  # Adjusted figure size for better layout
 
         # Plot Accuracy
         plt.subplot(1, 2, 1)
-        plt.plot(history.history.get('accuracy', history.history.get('acc')), label='Train')
-        plt.plot(history.history.get('val_accuracy', history.history.get('val_acc')), label='Validation')
+        accuracy = history.history.get('accuracy') or history.history.get('acc')
+        val_accuracy = history.history.get('val_accuracy') or history.history.get('val_acc')
+        plt.plot(accuracy, label='Train')
+        plt.plot(val_accuracy, label='Validation')
         plt.title('Accuracy')
         plt.ylabel('Accuracy')
         plt.xlabel('Epoch')
         plt.legend(loc='upper left')
-        plt.tight_layout()
 
         # Plot Loss
         plt.subplot(1, 2, 2)
@@ -115,9 +115,8 @@ def plot_metrics(history, figures_dir: str, config: dict):
         plt.ylabel('Loss')
         plt.xlabel('Epoch')
         plt.legend(loc='upper left')
-        plt.tight_layout()
 
-        # Save plots
+        plt.tight_layout()
         plot_path = os.path.join(figures_dir, 'training_plots.png')
         plt.savefig(plot_path)
         plt.close()
@@ -129,40 +128,48 @@ def plot_metrics(history, figures_dir: str, config: dict):
 
 def plot_confusion_matrix(cm, classes, title: str, save_path: str, config: dict):
     """
-    Plots and saves the confusion matrix.
-
-    Parameters:
-    - cm (np.ndarray): Confusion matrix.
-    - classes (list): List of class names.
-    - title (str): Title of the plot.
-    - save_path (str): Path to save the plot.
-    - config (dict): Plot configuration parameters.
+    Plots and saves the confusion matrix with improved layout handling.
     """
     logger = logging.getLogger(__name__)
     try:
-        plt.figure()
-        plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
-        plt.title(title)
-        plt.colorbar()
+        # Create figure and axis with constrained layout
+        fig, ax = plt.subplots(figsize=config['figure']['figsize'],
+                               constrained_layout=True)
+
+        # Plot confusion matrix
+        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+
+        # Add colorbar
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+
+        # Set title and labels
+        ax.set_title(title)
+        ax.set_xlabel('Predicted Label')
+        ax.set_ylabel('True Label')
+
+        # Configure ticks
         tick_marks = np.arange(len(classes))
-        plt.xticks(tick_marks, classes, rotation=45)
-        plt.yticks(tick_marks, classes)
+        ax.set_xticks(tick_marks)
+        ax.set_yticks(tick_marks)
+        ax.set_xticklabels(classes)
+        ax.set_yticklabels(classes)
 
-        # Normalize the confusion matrix.
-        cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-
+        # Add text annotations
         thresh = cm.max() / 2.
         for i, j in np.ndindex(cm.shape):
-            plt.text(j, i, f"{cm[i, j]} ({cm_normalized[i, j]:.2f})",
-                     horizontalalignment="center",
-                     color="white" if cm[i, j] > thresh else "black")
+            percentage = cm[i, j] / np.sum(cm[i, :]) * 100 if np.sum(cm[i, :]) != 0 else 0
+            ax.text(j, i, f'{cm[i, j]}\n({percentage:.1f}%)',
+                    horizontalalignment="center",
+                    verticalalignment="center",
+                    color="white" if cm[i, j] > thresh else "black")
 
-        plt.tight_layout()
-        plt.ylabel('True Label')
-        plt.xlabel('Predicted Label')
-        plt.savefig(save_path)
-        plt.close()
+        # Save figure
+        plt.savefig(save_path, dpi=config['figure']['dpi'],
+                    bbox_inches='tight', format=config['savefig']['format'])
+        plt.close(fig)
+
         logger.info(f"Confusion matrix plot saved to {save_path}")
+
     except Exception as e:
         logger.error(f"Failed to plot confusion matrix: {e}")
         raise
@@ -170,33 +177,33 @@ def plot_confusion_matrix(cm, classes, title: str, save_path: str, config: dict)
 
 def plot_roc_curve(y_true: np.ndarray, y_scores: np.ndarray, save_path: str, config: dict):
     """
-    Plots and saves the ROC curve.
-
-    Parameters:
-    - y_true (np.ndarray): True binary labels.
-    - y_scores (np.ndarray): Predicted scores or probabilities.
-    - save_path (str): Path to save the plot.
-    - config (dict): Plot configuration parameters.
+    Plots and saves the ROC curve with improved layout handling.
     """
     logger = logging.getLogger(__name__)
     try:
+        fig, ax = plt.subplots(figsize=config['figure']['figsize'],
+                               constrained_layout=True)
+
         fpr, tpr, thresholds = roc_curve(y_true, y_scores)
         roc_auc = roc_auc_score(y_true, y_scores)
 
-        plt.figure()
-        plt.plot(fpr, tpr, color='darkorange',
-                 lw=1.5, label=f'ROC curve (AUC = {roc_auc:.2f})')
-        plt.plot([0, 1], [0, 1], color='navy', lw=1.5, linestyle='--')
-        plt.xlim([0.0, 1.0])
-        plt.ylim([0.0, 1.05])
-        plt.xlabel('False Positive Rate')
-        plt.ylabel('True Positive Rate')
-        plt.title('Receiver Operating Characteristic')
-        plt.legend(loc="lower right")
-        plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
+        ax.plot(fpr, tpr, color='darkorange',
+                lw=2, label=f'ROC curve (AUC = {roc_auc:.2f})')
+        ax.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+
+        ax.set_xlim([0.0, 1.0])
+        ax.set_ylim([0.0, 1.05])
+        ax.set_xlabel('False Positive Rate')
+        ax.set_ylabel('True Positive Rate')
+        ax.set_title('Receiver Operating Characteristic')
+        ax.legend(loc="lower right")
+
+        plt.savefig(save_path, dpi=config['figure']['dpi'],
+                    bbox_inches='tight', format=config['savefig']['format'])
+        plt.close(fig)
+
         logger.info(f"ROC curve saved to {save_path}")
+
     except Exception as e:
         logger.error(f"Failed to plot ROC curve: {e}")
         raise
@@ -204,30 +211,30 @@ def plot_roc_curve(y_true: np.ndarray, y_scores: np.ndarray, save_path: str, con
 
 def plot_precision_recall_curve(y_true: np.ndarray, y_scores: np.ndarray, save_path: str, config: dict):
     """
-    Plots and saves the Precision-Recall curve.
-
-    Parameters:
-    - y_true (np.ndarray): True binary labels.
-    - y_scores (np.ndarray): Predicted scores or probabilities.
-    - save_path (str): Path to save the plot.
-    - config (dict): Plot configuration parameters.
+    Plots and saves the Precision-Recall curve with improved layout handling.
     """
     logger = logging.getLogger(__name__)
     try:
+        fig, ax = plt.subplots(figsize=config['figure']['figsize'],
+                               constrained_layout=True)
+
         precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
         average_precision = average_precision_score(y_true, y_scores)
 
-        plt.figure()
-        plt.plot(recall, precision, color='blue',
-                 lw=1.5, label=f'Precision-Recall curve (AP = {average_precision:.2f})')
-        plt.xlabel('Recall')
-        plt.ylabel('Precision')
-        plt.title('Precision-Recall Curve')
-        plt.legend(loc="upper right")
-        plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
+        ax.plot(recall, precision, color='blue',
+                lw=2, label=f'Precision-Recall curve (AP = {average_precision:.2f})')
+
+        ax.set_xlabel('Recall')
+        ax.set_ylabel('Precision')
+        ax.set_title('Precision-Recall Curve')
+        ax.legend(loc="upper right")
+
+        plt.savefig(save_path, dpi=config['figure']['dpi'],
+                    bbox_inches='tight', format=config['savefig']['format'])
+        plt.close(fig)
+
         logger.info(f"Precision-Recall curve saved to {save_path}")
+
     except Exception as e:
         logger.error(f"Failed to plot Precision-Recall curve: {e}")
         raise
