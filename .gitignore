@@ -13,3 +13,5 @@ check_data.py
 # Exclude .idea directory (IDE settings)
 .idea/
 
+
+.pyc

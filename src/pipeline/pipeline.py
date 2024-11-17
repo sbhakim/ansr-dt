@@ -10,13 +10,13 @@ from tensorflow.keras.models import Model
 from src.models.lstm_model import create_lstm_model
 from src.data.data_loader import DataLoader
 from src.preprocessing.preprocessing import preprocess_sequences
-from src.data.data_processing import map_labels, split_data
+from src.data.data_processing import map_labels
 from src.training.trainer import train_model
 from src.evaluation.evaluation import evaluate_model
-from src.utils.model_utils import save_model, save_scaler, load_model
+from src.utils.model_utils import save_model, save_scaler
 from src.visualization import plot_metrics
 from src.visualization.plotting import load_plot_config
-from src.reasoning.reasoning import SymbolicReasoner  # Import the SymbolicReasoner
+from src.reasoning.reasoning import SymbolicReasoner
 
 
 class NEXUSDTPipeline:
