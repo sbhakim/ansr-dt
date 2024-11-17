@@ -11,6 +11,7 @@ from src.utils.model_utils import load_model, load_scaler
 from src.reasoning.reasoning import SymbolicReasoner
 from src.config.config_manager import load_config
 from src.data.data_loader import DataLoader
+from src.preprocessing.preprocessing import preprocess_sequences  # Ensure this import exists
 
 
 class InferencePipeline:
@@ -44,23 +45,30 @@ class InferencePipeline:
             rules_path = os.path.join(config_dir, self.config['paths']['reasoning_rules_path'])
             self.reasoner = SymbolicReasoner(rules_path)
 
-
     def load_and_preprocess_data(self, data_file: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Load and preprocess new data."""
-        # Use DataLoader for consistent data loading
-        data_loader = DataLoader(data_file, self.window_size)
-        X, _ = data_loader.load_data()
+        """
+        Load and preprocess data.
 
-        # Create sequences
-        sequences = []
-        for i in range(len(X) - self.window_size + 1):
-            sequences.append(X[i:i + self.window_size])
-        X_seq = np.array(sequences)
+        Parameters:
+        - data_file (str): Path to the new data file.
 
-        # Scale data
-        X_scaled = self.scaler.transform(X_seq.reshape(-1, X_seq.shape[-1])).reshape(X_seq.shape)
+        Returns:
+        - X_scaled (np.ndarray): Scaled feature sequences.
+        - y_seq (np.ndarray): Corresponding labels.
+        """
+        try:
+            data_loader = DataLoader(data_file, self.window_size)
+            X, y = data_loader.load_data()
+            X_seq, y_seq = data_loader.create_sequences(X, y)
 
-        return X_scaled, X_seq
+            # Scale data
+            X_scaled = self.scaler.transform(X_seq.reshape(-1, X_seq.shape[-1])).reshape(X_seq.shape)
+
+            return X_scaled, y_seq
+
+        except Exception as e:
+            self.logger.error(f"Failed to load and preprocess data: {e}")
+            raise
 
     def get_predictions(self, X_scaled: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Get model predictions."""

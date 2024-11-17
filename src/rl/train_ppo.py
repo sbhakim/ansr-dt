@@ -5,7 +5,8 @@ import yaml
 import logging
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
-from src.nexusdt.nexus_dt_env import NexusDTEnv  # Added import
+from src.nexusdt.nexus_dt_env import NexusDTEnv  # Correct import
+import argparse  # For flexibility
 
 def setup_logger(log_file: str = 'logs/ppo_training.log') -> logging.Logger:
     """
@@ -34,7 +35,7 @@ def load_config(config_path: str) -> dict:
         raise
 
 
-def train_ppo_agent():
+def train_ppo_agent(total_timesteps: int = 100000):
     """
     Trains the PPO agent and saves the trained model.
     """
@@ -51,11 +52,7 @@ def train_ppo_agent():
     # Initialize PPO agent
     model = PPO('MlpPolicy', env, verbose=1, tensorboard_log="logs/ppo_tensorboard/")
 
-    # Force a small number of timesteps for quick development
-    DEV_MODE_TIMESTEPS = 100  # Small number for quick testing
-    total_timesteps = DEV_MODE_TIMESTEPS  # Override config value
-
-    logger.info(f"Starting PPO training for {total_timesteps} timesteps (Development Mode).")
+    logger.info(f"Starting PPO training for {total_timesteps} timesteps.")
     model.learn(total_timesteps=total_timesteps)
     logger.info("PPO training completed.")
 
@@ -64,5 +61,9 @@ def train_ppo_agent():
     model.save(ppo_model_path)
     logger.info(f"PPO agent saved to {ppo_model_path}")
 
+
 if __name__ == "__main__":
-    train_ppo_agent()
+    parser = argparse.ArgumentParser(description='Train PPO Agent for NEXUS-DT')
+    parser.add_argument('--timesteps', type=int, default=100000, help='Total timesteps for PPO training')
+    args = parser.parse_args()
+    train_ppo_agent(total_timesteps=args.timesteps)

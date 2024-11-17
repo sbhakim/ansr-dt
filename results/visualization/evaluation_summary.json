@@ -1,0 +1,33 @@
+{
+  "classification_metrics": {
+    "report": "              precision    recall  f1-score   support\n\n           0       0.99      1.00      1.00       343\n           1       1.00      0.99      0.99       156\n\n    accuracy                           1.00       499\n   macro avg       1.00      0.99      1.00       499\nweighted avg       1.00      1.00      1.00       499\n",
+    "confusion_matrix": [
+      [
+        343,
+        0
+      ],
+      [
+        2,
+        154
+      ]
+    ]
+  },
+  "symbolic_insights_count": 499,
+  "visualization_paths": {
+    "confusion_matrix": "results/visualization/test_confusion_matrix.png",
+    "roc_curve": "results/visualization/roc_curve.png",
+    "precision_recall": "results/visualization/precision_recall_curve.png",
+    "cnn_features": null,
+    "feature_importance": "results/visualization/model_visualization/feature_importance.png"
+  },
+  "feature_importance_scores": {
+    "temperature": 0.005332958418875933,
+    "vibration": 0.0020860149525105953,
+    "pressure": 0.014318281784653664,
+    "operational_hours": 0.002334712538868189,
+    "efficiency_index": 0.006726723164319992,
+    "system_state": 0.011090114712715149,
+    "performance_score": 0.0067532560788095
+  },
+  "timestamp": "2024-11-17T16:31:51"
+}

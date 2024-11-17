@@ -1,9 +1,10 @@
 # src/reasoning/reasoning.py
 
 import logging
-from pyswip import Prolog, Functor, Variable, Query
+from pyswip import Prolog
 import os
 import numpy as np
+
 
 class SymbolicReasoner:
     def __init__(self, rules_path: str):
@@ -27,7 +28,7 @@ class SymbolicReasoner:
 
         Parameters:
         - sensor_data (dict): Dictionary containing sensor readings.
-            Expected keys: 'temperature', 'vibration', 'pressure', 'operational_hours', 'efficiency_index'
+            Expected keys: 'temperature', 'vibration', 'pressure', 'operational_hours', 'efficiency_index', 'system_state', 'performance_score'
 
         Returns:
         - insights (list): List of inferred states/actions based on rules.
@@ -38,14 +39,16 @@ class SymbolicReasoner:
             temperature = float(sensor_data.get('temperature', 0))
             vibration = float(sensor_data.get('vibration', 0))
             pressure = float(sensor_data.get('pressure', 0))
-            # Convert operational hours to integer and ensure it's positive
             operational_hours = max(0, int(round(float(sensor_data.get('operational_hours', 0)))))
             efficiency_index = float(sensor_data.get('efficiency_index', 0))
+            system_state = float(sensor_data.get('system_state', 0))
+            performance_score = float(sensor_data.get('performance_score', 0))
 
             # Apply rules with proper type conversion
+
             # For degraded state (using float values)
             try:
-                for solution in self.prolog.query(f"degraded_state({temperature}, {vibration})."):
+                for _ in self.prolog.query(f"degraded_state({temperature}, {vibration})."):
                     insights.append("Degraded State")
                     break
             except Exception as e:
@@ -53,7 +56,7 @@ class SymbolicReasoner:
 
             # For system stress (using float values)
             try:
-                for solution in self.prolog.query(f"system_stress({pressure})."):
+                for _ in self.prolog.query(f"system_stress({pressure})."):
                     insights.append("System Stress")
                     break
             except Exception as e:
@@ -61,7 +64,7 @@ class SymbolicReasoner:
 
             # For critical state (using float values)
             try:
-                for solution in self.prolog.query(f"critical_state({efficiency_index})."):
+                for _ in self.prolog.query(f"critical_state({efficiency_index})."):
                     insights.append("Critical State")
                     break
             except Exception as e:
@@ -69,7 +72,7 @@ class SymbolicReasoner:
 
             # For maintenance (using integer values)
             try:
-                for solution in self.prolog.query(f"maintenance_needed({operational_hours})."):
+                for _ in self.prolog.query(f"maintenance_needed({operational_hours})."):
                     insights.append("Maintenance Required")
                     break
             except Exception as e:

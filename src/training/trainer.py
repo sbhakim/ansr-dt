@@ -9,8 +9,16 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.utils import class_weight
 import joblib
 
-from src.models.lstm_model import create_lstm_model  # Corrected import
+# Import the CNN-LSTM model instead of LSTM
+from src.models.cnn_lstm_model import create_cnn_lstm_model
+from src.data.data_loader import DataLoader
+from src.preprocessing.preprocessing import preprocess_sequences
+from src.data.data_processing import map_labels
+from src.evaluation.evaluation import evaluate_model
 from src.utils.model_utils import save_model, save_scaler
+from src.visualization import plot_metrics
+from src.visualization.plotting import load_plot_config
+from src.reasoning.reasoning import SymbolicReasoner
 
 
 def train_model(

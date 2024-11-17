@@ -4,9 +4,11 @@ import os
 import json
 import logging
 from stable_baselines3 import PPO
+from stable_baselines3.common.vec_env import DummyVecEnv
 from src.nexusdt.nexus_dt_env import NexusDTEnv  # Updated import
 import yaml
 from src.reasoning.reasoning import SymbolicReasoner
+
 
 class RL_Symbolic_Integration:
     """
@@ -20,6 +22,10 @@ class RL_Symbolic_Integration:
         self.config = self.load_config(config_path)
         self.logger = logger
 
+        # Determine base directories
+        config_dir = os.path.dirname(os.path.abspath(config_path))
+        project_root = os.path.dirname(config_dir)
+
         # Load PPO model
         ppo_model_path = os.path.join(self.config['paths']['results_dir'], 'ppo_nexus_dt')
         if not os.path.exists(ppo_model_path + ".zip"):
@@ -29,19 +35,27 @@ class RL_Symbolic_Integration:
         self.logger.info(f"PPO agent loaded from {ppo_model_path}")
 
         # Initialize Symbolic Reasoner
-        rules_path = self.config['paths']['reasoning_rules_path']
+        rules_path = os.path.join(project_root, self.config['paths']['reasoning_rules_path'])
         self.reasoner = SymbolicReasoner(rules_path)
+        self.logger.info(f"Symbolic Reasoner initialized with rules from {rules_path}")
 
-        # Initialize Environment
-        self.env = NexusDTEnv(
+        # Initialize Vectorized Environment
+        self.env = DummyVecEnv([lambda: NexusDTEnv(
             data_file=self.config['paths']['data_file'],
             window_size=self.config['model']['window_size'],
             config=self.config.get('ppo', {})
-        )
+        )])
+        self.logger.info("Vectorized environment initialized for integration.")
 
     def load_config(self, config_path: str) -> dict:
         """
         Loads the YAML configuration file.
+
+        Parameters:
+        - config_path (str): Path to config.yaml
+
+        Returns:
+        - config (dict): Configuration parameters.
         """
         try:
             with open(config_path, 'r') as f:
@@ -52,52 +66,59 @@ class RL_Symbolic_Integration:
             raise
 
     def integrate(self, output_path: str = 'results/inference_with_rl_results.json'):
-        """
-        Runs the integration by performing inference with RL actions and symbolic reasoning.
-        """
         try:
-            # Reset environment and get initial observation
+            # Reset vectorized environment and get initial observation
             obs = self.env.reset()
             done = False
-            trunc = False
             total_reward = 0
             steps = 0
             actions_list = []
             rewards_list = []
             insights_list = []
 
-            while not (done or trunc):
-                # Get action from policy using just the observation
+            while not done:
+                # Get action from policy
                 action, _states = self.ppo_agent.predict(obs, deterministic=True)
                 actions_list.append(action.tolist())
 
-                # Step environment with SB3 format
-                obs, reward, done, trunc, info = self.env.step(action)
+                # Step environment with SB3 VecEnv format
+                obs, rewards, dones, infos = self.env.step(action)
+                reward = rewards[0]  # Extract scalar reward
+                done = dones[0]  # Extract scalar done flag
+                info = infos[0]  # Extract info dict
+
                 rewards_list.append(reward)
                 total_reward += reward
                 steps += 1
 
-                # Use action directly for symbolic insights
+                # Extract the latest observation for symbolic reasoning
+                # obs shape is (1, window_size, features)
+                latest_obs = obs[0, -1]  # Get latest timestep
                 sensor_state = {
-                    'temperature': obs[-1, 0],  # Latest temperature
-                    'vibration': obs[-1, 1],  # Latest vibration
-                    'pressure': obs[-1, 2]  # Latest pressure
+                    'temperature': float(latest_obs[0]),
+                    'vibration': float(latest_obs[1]),
+                    'pressure': float(latest_obs[2]),
+                    'operational_hours': float(latest_obs[3]),
+                    'efficiency_index': float(latest_obs[4]),
+                    'system_state': float(latest_obs[5]),
+                    'performance_score': float(latest_obs[6])
                 }
-                insights = self.reasoner.reason(sensor_state)
-                insights_list.append(insights)
 
-                self.logger.info(f"Step {steps}: Action: {action}, Reward: {reward}, Insights: {insights}")
+                # Get symbolic reasoning insights
+                insight = self.reasoner.reason(sensor_state)
+                insights_list.append(insight)
 
-            # Compile results
+                self.logger.info(f"Step {steps}: Action: {action}, Reward: {reward}, Insights: {insight}")
+
+            # Save results
             results = {
-                'total_reward': float(total_reward),  # Convert to float for JSON serialization
+                'total_reward': float(total_reward),
                 'steps': steps,
                 'actions': actions_list,
-                'rewards': [float(r) for r in rewards_list],  # Convert rewards to float
+                'rewards': [float(r) for r in rewards_list],
                 'insights': insights_list
             }
 
-            # Save results
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             with open(output_path, 'w') as f:
                 json.dump(results, f, indent=2)
@@ -107,6 +128,7 @@ class RL_Symbolic_Integration:
         except Exception as e:
             self.logger.error(f"Integration failed: {e}")
             raise
+
 
 def main():
     import argparse
@@ -130,6 +152,7 @@ def main():
     # Initialize and run integration
     integration = RL_Symbolic_Integration(config_path=args.config, logger=logger)
     integration.integrate(output_path=args.output)
+
 
 if __name__ == "__main__":
     main()

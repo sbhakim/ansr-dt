@@ -61,7 +61,7 @@ class NexusDTEnv(gym.Env):
         self.max_episode_steps = len(self.temperature) - window_size
 
         # Initialize observation history
-        self.history = np.zeros((window_size, 3))  # [temperature, vibration, pressure]
+        self.history = np.zeros((window_size, 7))  # [temperature, vibration, pressure]
 
         # Action space: control adjustments for temperature, vibration, pressure
         # Each action is a continuous value between -5.0 and 5.0
@@ -75,7 +75,7 @@ class NexusDTEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=-np.inf,
             high=np.inf,
-            shape=(window_size, 3),
+            shape=(window_size, 7),  # Updated shape for all features
             dtype=np.float32
         )
 
@@ -121,7 +121,11 @@ class NexusDTEnv(gym.Env):
             self.history[i] = np.array([
                 self.temperature[i],
                 self.vibration[i],
-                self.pressure[i]
+                self.pressure[i],
+                float(self.data['operational_hours'][i]),
+                float(self.data['efficiency_index'][i]),
+                float(self.data['system_state'][i]),
+                float(self.data['performance_score'][i])
             ])
 
         # Optionally, include additional info
@@ -145,17 +149,27 @@ class NexusDTEnv(gym.Env):
         """
         self.episode_steps += 1
 
-        # Apply actions and calculate adjusted values
+        # Apply actions to controllable variables
         adjusted_temperature = self.temperature[self.current_step] + action[0]
         adjusted_vibration = self.vibration[self.current_step] + action[1]
         adjusted_pressure = self.pressure[self.current_step] + action[2]
 
-        # Update history with new observations
+        # Get current values for non-controllable variables
+        current_operational_hours = float(self.data['operational_hours'][self.current_step])
+        current_efficiency_index = float(self.data['efficiency_index'][self.current_step])
+        current_system_state = float(self.data['system_state'][self.current_step])
+        current_performance_score = float(self.data['performance_score'][self.current_step])
+
+        # Update history with new observations (all 7 features)
         self.history = np.roll(self.history, -1, axis=0)
         self.history[-1] = np.array([
             adjusted_temperature,
             adjusted_vibration,
-            adjusted_pressure
+            adjusted_pressure,
+            current_operational_hours,
+            current_efficiency_index,
+            current_system_state,
+            current_performance_score
         ])
 
         # Calculate component rewards
@@ -165,9 +179,9 @@ class NexusDTEnv(gym.Env):
 
         # Calculate total reward
         reward = (
-            self.alpha1 * efficiency +
-            self.alpha2 * satisfaction +
-            self.alpha3 * safety
+                self.alpha1 * efficiency +
+                self.alpha2 * satisfaction +
+                self.alpha3 * safety
         )
 
         # Update internal state
@@ -193,7 +207,11 @@ class NexusDTEnv(gym.Env):
             'safety': safety,
             'current_temperature': adjusted_temperature,
             'current_vibration': adjusted_vibration,
-            'current_pressure': adjusted_pressure
+            'current_pressure': adjusted_pressure,
+            'current_operational_hours': current_operational_hours,
+            'current_efficiency_index': current_efficiency_index,
+            'current_system_state': current_system_state,
+            'current_performance_score': current_performance_score
         }
 
         return self.history, reward, terminated, truncated, info

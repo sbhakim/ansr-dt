@@ -13,5 +13,9 @@ check_data.py
 # Exclude .idea directory (IDE settings)
 .idea/
 
+# Exclude compiled Python files
+*.pyc
 
-.pyc
+# Exclude __pycache__ directories
+__pycache__/
+
