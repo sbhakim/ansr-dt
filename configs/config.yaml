@@ -22,7 +22,7 @@ training:
 
 ppo:
   enabled: true  # Flag to enable/disable PPO training
-  total_timesteps: 100  # Total timesteps for PPO training
+  total_timesteps: 100000  # Total timesteps for PPO training
   reward_weights:
     efficiency: 1.0
     satisfaction: 1.0

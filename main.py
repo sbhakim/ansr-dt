@@ -2,63 +2,132 @@
 
 import os
 import logging
+import numpy as np
 
 from src.logging.logging_setup import setup_logging
 from src.config.config_manager import load_config
 from src.pipeline.pipeline import NEXUSDTPipeline
 from src.rl.train_ppo import train_ppo_agent
-from src.pipeline.integration import RL_Symbolic_Integration
+from src.nexusdt.explainable import ExplainableNEXUSDT
+
+
+def setup_dirs(project_root: str) -> None:
+    """Create necessary project directories."""
+    dirs = ['logs', 'results', 'results/visualization']
+    for dir_path in dirs:
+        os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
+
+
+def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.ndarray:
+    """
+    Prepare sensor window with correct shape for models.
+
+    Args:
+        data: Loaded NPZ data file
+        window_size: Size of the sliding window
+
+    Returns:
+        np.ndarray: Properly shaped sensor window
+    """
+    # Extract and stack features in correct order
+    features = [
+        data['temperature'][:window_size],
+        data['vibration'][:window_size],
+        data['pressure'][:window_size],
+        data['operational_hours'][:window_size],
+        data['efficiency_index'][:window_size],
+        data['system_state'][:window_size],
+        data['performance_score'][:window_size]
+    ]
+
+    # Stack features to shape (window_size, n_features)
+    return np.stack(features, axis=1)
 
 
 def main():
     """
-    Executes the NEXUS-DT pipeline sequentially:
-    1. Initializes logging.
-    2. Loads configuration.
-    3. Runs data loading, preprocessing, splitting, training, and evaluation.
-    4. Generates and saves metrics and visualizations.
-    5. Trains the PPO RL agent.
-    6. Performs RL and Symbolic Reasoning integration.
+    Execute the NEXUS-DT pipeline:
+    1. Train CNN-LSTM for anomaly detection
+    2. Train PPO for adaptive control
+    3. Run integrated system
     """
-    # Step 1: Initialize Logging
+    # Setup project structure
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    setup_dirs(project_root)
+
+    # Initialize logging
     logger = setup_logging(
         log_file='logs/nexus_dt.log',
-        log_level=logging.INFO,
-        max_bytes=5 * 1024 * 1024,  # 5 MB
-        backup_count=5
+        log_level=logging.INFO
     )
-    logger.info("Starting NEXUS-DT Model Training Pipeline.")
+    logger.info("Starting NEXUS-DT Pipeline")
 
     try:
-        # Step 2: Load Configuration
-        config = load_config('configs/config.yaml')
-        logger.info("Configuration loaded.")
+        # Load and update configuration
+        config_path = os.path.join(project_root, 'configs', 'config.yaml')
+        config = load_config(config_path)
 
-        # Step 3: Initialize and Run the Main Pipeline
-        pipeline = NEXUSDTPipeline(config, logger)
+        # Update paths to be absolute
+        config['paths']['results_dir'] = os.path.join(project_root, 'results')
+        config['paths']['data_file'] = os.path.join(project_root, config['paths']['data_file'])
+
+        # Step 1: Train CNN-LSTM model
+        logger.info("Starting CNN-LSTM training...")
+        pipeline = NEXUSDTPipeline(config, config_path, logger)
         pipeline.run()
-        logger.info("Main pipeline execution completed.")
+        logger.info("CNN-LSTM training completed")
 
-        # Step 4: Train PPO RL Agent
-        logger.info("Initiating PPO RL agent training.")
-        train_ppo_agent()
-        logger.info("PPO RL agent training completed.")
+        # Step 2: Train PPO agent
+        logger.info("Starting PPO training...")
+        ppo_success = train_ppo_agent(config_path)
 
-        # Step 5: RL and Symbolic Reasoning Integration
-        logger.info("Initiating RL and Symbolic Reasoning Integration.")
-        integration = RL_Symbolic_Integration(
-            config_path='configs/config.yaml',
-            logger=logger
+        if not ppo_success:
+            raise RuntimeError("PPO training failed")
+        logger.info("PPO training completed")
+
+        # Verify trained models exist
+        model_paths = {
+            'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
+            'ppo': os.path.join(config['paths']['results_dir'], 'ppo_nexus_dt.zip')
+        }
+
+        for name, path in model_paths.items():
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"{name} model not found at {path}")
+
+        # Step 3: Initialize NEXUS-DT system
+        logger.info("Initializing NEXUS-DT system...")
+        nexusdt = ExplainableNEXUSDT(config_path, logger)
+
+        # Load test data and prepare window
+        test_data = np.load(config['paths']['data_file'])
+        sensor_window = prepare_sensor_window(
+            data=test_data,
+            window_size=config['model']['window_size']
         )
-        integration.integrate(
-            output_path=os.path.join(
-                config['paths']['results_dir'], 'inference_with_rl_results.json'
+
+        # Verify sensor window shape
+        expected_shape = (config['model']['window_size'], 7)
+        if sensor_window.shape != expected_shape:
+            raise ValueError(
+                f"Incorrect sensor window shape: {sensor_window.shape}, "
+                f"expected {expected_shape}"
             )
-        )
-        logger.info("RL and Symbolic Reasoning Integration completed.")
+
+        # Run integrated inference
+        logger.info("Running integrated inference...")
+        result = nexusdt.adapt_and_explain(sensor_window)
+
+        # Save results
+        results_file = os.path.join(config['paths']['results_dir'], 'final_state.json')
+        nexusdt.save_state(results_file)
+
+        logger.info(f"Pipeline completed successfully. Results saved to {results_file}")
+        logger.info(f"System explanation: {result.get('explanation', '')}")
 
     except Exception as e:
-        logger.exception(f"An error occurred during execution: {e}")
+        logger.exception(f"Pipeline failed: {e}")
+        raise
 
 
 if __name__ == '__main__':

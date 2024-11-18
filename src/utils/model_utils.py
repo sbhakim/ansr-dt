@@ -54,11 +54,13 @@ def save_model(model: Any, path: str, logger: logging.Logger):
     - logger (logging.Logger): Logger for logging messages.
     """
     try:
+        logger.info(f"Attempting to save model to {path}")
         model.save(path)
-        logger.info(f"Model saved to {path}")
+        logger.info(f"Model successfully saved to {path}")
     except Exception as e:
         logger.error(f"Failed to save model: {e}")
         raise
+
 
 
 def load_model(path: str, logger: logging.Logger) -> Any:

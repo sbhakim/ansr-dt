@@ -90,8 +90,15 @@ def train_model(
         )
         logger.info("Model training completed.")
 
+        # Confirm that the model checkpoint exists
+        if os.path.exists(checkpoint_path):
+            logger.info(f"Best model checkpoint saved at {checkpoint_path}")
+        else:
+            logger.warning("Best model checkpoint was not saved.")
+
         return history, model
 
     except Exception as e:
         logger.error(f"An error occurred during model training: {e}")
         raise
+

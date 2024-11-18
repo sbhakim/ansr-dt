@@ -1,5 +1,19 @@
+# src/evaluation/evaluation.py
+
 import logging
 import os
+from typing import Dict, List, Any, Optional, Tuple
+import numpy as np
+import json
+import yaml
+from sklearn.metrics import (
+    classification_report,
+    confusion_matrix,
+    roc_auc_score,
+    average_precision_score,
+    precision_recall_curve,
+    auc
+)
 from src.visualization.plotting import (
     load_plot_config,
     apply_plot_config,
@@ -7,281 +21,260 @@ from src.visualization.plotting import (
     plot_roc_curve,
     plot_precision_recall_curve
 )
-from sklearn.metrics import classification_report, confusion_matrix
 from src.visualization.model_visualization import ModelVisualizer
-import yaml
-import numpy as np
 from src.reasoning.reasoning import SymbolicReasoner
-import json
-from typing import Optional, Dict, List, Any
 
 
-def _get_rules_path(config_path: str) -> str:
+def get_project_root(config_path: str) -> str:
+    """Get project root directory from config path."""
+    return os.path.dirname(os.path.dirname(os.path.dirname(config_path)))
+
+
+def setup_evaluation_dirs(results_dir: str) -> Dict[str, str]:
     """
-    Extracts the symbolic reasoning rules path from the configuration.
+    Create and return evaluation directory structure.
 
-    Parameters:
-    - config_path (str): Path to the YAML configuration file.
+    Args:
+        results_dir: Base results directory
 
     Returns:
-    - rules_path (str): Path to the Prolog rules file.
+        Dictionary of directory paths
     """
-    try:
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
-        rules_path = config.get('paths', {}).get('reasoning_rules_path', '')
-        if not rules_path:
-            raise ValueError("Reasoning rules path not found in configuration.")
-        return rules_path
-    except Exception as e:
-        logging.getLogger(__name__).error(f"Failed to extract rules path from config: {e}")
-        raise
+    dirs = {
+        'base': results_dir,
+        'figures': os.path.join(results_dir, 'visualization'),
+        'model_viz': os.path.join(results_dir, 'visualization', 'model_visualization'),
+        'metrics': os.path.join(results_dir, 'metrics')
+    }
+
+    for dir_path in dirs.values():
+        os.makedirs(dir_path, exist_ok=True)
+
+    return dirs
 
 
-def evaluate_model(y_true: np.ndarray,
-                   y_pred: np.ndarray,
-                   y_scores: np.ndarray,
-                   figures_dir: str,
-                   plot_config_path: str,
-                   config_path: str,
-                   sensor_data: np.ndarray,
-                   model: Optional[Any] = None) -> Dict[str, Any]:
+def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_scores: np.ndarray) -> Dict[str, Any]:
     """
-    Evaluates the model and generates evaluation plots along with symbolic reasoning insights.
+    Calculate comprehensive evaluation metrics.
 
-    Parameters:
-    - y_true (np.ndarray): True binary labels.
-    - y_pred (np.ndarray): Predicted binary labels.
-    - y_scores (np.ndarray): Predicted probabilities or scores.
-    - figures_dir (str): Directory to save the plots.
-    - plot_config_path (str): Path to the plot configuration YAML file.
-    - config_path (str): Path to the main configuration YAML file.
-    - sensor_data (np.ndarray): Sensor data corresponding to each prediction.
-    - model: Optional trained model for visualization features.
+    Args:
+        y_true: True labels
+        y_pred: Predicted labels
+        y_scores: Prediction scores/probabilities
 
     Returns:
-    - Dict[str, Any]: Evaluation results and metrics
+        Dictionary of calculated metrics
+    """
+    metrics = {
+        'classification_report': classification_report(y_true, y_pred, zero_division=0),
+        'confusion_matrix': confusion_matrix(y_true, y_pred).tolist(),
+        'roc_auc': float(roc_auc_score(y_true, y_scores)),
+        'avg_precision': float(average_precision_score(y_true, y_scores))
+    }
+
+    # Calculate precision-recall curve and AUC
+    precision, recall, _ = precision_recall_curve(y_true, y_scores)
+    metrics['pr_auc'] = float(auc(recall, precision))
+
+    return metrics
+
+
+def evaluate_model(
+        y_true: np.ndarray,
+        y_pred: np.ndarray,
+        y_scores: np.ndarray,
+        figures_dir: str,
+        plot_config_path: str,
+        config_path: str,
+        sensor_data: np.ndarray,
+        model: Optional[Any] = None
+) -> Dict[str, Any]:
+    """
+    Comprehensive model evaluation with visualization and symbolic reasoning.
+
+    Args:
+        y_true: True labels
+        y_pred: Predicted labels
+        y_scores: Prediction scores
+        figures_dir: Directory to save figures
+        plot_config_path: Path to plotting configuration
+        config_path: Path to main configuration
+        sensor_data: Sensor data for analysis
+        model: Optional trained model for visualization
+
+    Returns:
+        Dictionary containing evaluation results
     """
     logger = logging.getLogger(__name__)
 
-    # Initialize paths and results
-    cnn_path = None
-    importance_path = None
-    insights = []
-    evaluation_results = {}
-
     try:
+        # Setup directories
+        project_root = get_project_root(config_path)
+        eval_dirs = setup_evaluation_dirs(figures_dir)
+
         # Load and apply plot configuration
         plot_config = load_plot_config(plot_config_path)
         apply_plot_config(plot_config)
 
-        # Create figures directory if it doesn't exist
-        os.makedirs(figures_dir, exist_ok=True)
+        # Calculate metrics
+        metrics = calculate_metrics(y_true, y_pred, y_scores)
+        logger.info(f"Classification Report:\n{metrics['classification_report']}")
+        logger.info(f"Confusion Matrix:\n{metrics['confusion_matrix']}")
 
-        # Compute classification metrics
-        report = classification_report(y_true, y_pred, zero_division=0)
-        cm = confusion_matrix(y_true, y_pred)
-
-        logger.info("Classification Report:\n" + report)
-        logger.info(f"Confusion Matrix:\n{cm}")
-
-        # Save classification report to a text file
-        report_path = os.path.join(figures_dir, 'test_classification_report.txt')
+        # Save classification report
+        report_path = os.path.join(eval_dirs['metrics'], 'classification_report.txt')
         with open(report_path, 'w') as f:
-            f.write(report)
+            f.write(metrics['classification_report'])
         logger.info(f"Classification report saved to {report_path}")
 
-        # Generate and save confusion matrix plot
-        cm_plot_path = os.path.join(figures_dir, 'test_confusion_matrix.png')
+        # Generate and save plots
+        plot_paths = {}
+
+        # Confusion Matrix
+        cm_path = os.path.join(eval_dirs['figures'], 'confusion_matrix.png')
         plot_confusion_matrix(
-            cm=cm,
+            cm=np.array(metrics['confusion_matrix']),
             classes=['Normal', 'Anomaly'],
             title='Confusion Matrix',
-            save_path=cm_plot_path,
+            save_path=cm_path,
             config=plot_config
         )
+        plot_paths['confusion_matrix'] = cm_path
 
-        # Generate and save ROC curve
-        roc_plot_path = os.path.join(figures_dir, 'roc_curve.png')
+        # ROC Curve
+        roc_path = os.path.join(eval_dirs['figures'], 'roc_curve.png')
         plot_roc_curve(
             y_true=y_true,
             y_scores=y_scores,
-            save_path=roc_plot_path,
+            save_path=roc_path,
             config=plot_config
         )
+        plot_paths['roc_curve'] = roc_path
 
-        # Generate and save Precision-Recall curve
-        pr_plot_path = os.path.join(figures_dir, 'precision_recall_curve.png')
+        # Precision-Recall Curve
+        pr_path = os.path.join(eval_dirs['figures'], 'precision_recall_curve.png')
         plot_precision_recall_curve(
             y_true=y_true,
             y_scores=y_scores,
-            save_path=pr_plot_path,
+            save_path=pr_path,
             config=plot_config
         )
+        plot_paths['precision_recall'] = pr_path
 
         # Model visualization if model is provided
-        importance_scores = None
+        feature_importance_scores = None
         if model is not None:
-            viz_dir = os.path.join(figures_dir, 'model_visualization')
-            os.makedirs(viz_dir, exist_ok=True)
-
             try:
                 visualizer = ModelVisualizer(model, logger)
 
-                # Prepare sample data for visualization
-                sample_window = sensor_data[:10]  # Take first window
-                sample_data = sample_window.reshape(1, *sample_window.shape)
+                if hasattr(model, 'input_shape'):
+                    # Prepare sample data for visualization
+                    sample_data = sensor_data[:10].reshape(1, 10, -1)
 
-                # Visualize CNN features
-                cnn_path = os.path.join(viz_dir, 'cnn_features.png')
-                feature_maps, cnn_success = visualizer.visualize_cnn_features(
-                    input_data=sample_data,
-                    layer_name='conv1d',
-                    save_path=cnn_path
-                )
-                if not cnn_success:
-                    cnn_path = None
+                    # Generate feature importance visualization
+                    importance_path = os.path.join(eval_dirs['model_viz'], 'feature_importance.png')
+                    importance, success = visualizer.get_feature_importance(
+                        input_data=sample_data,
+                        save_path=importance_path
+                    )
 
-                # Calculate and visualize feature importance
-                importance_path = os.path.join(viz_dir, 'feature_importance.png')
-                importance, importance_success = visualizer.get_feature_importance(
-                    input_data=sample_data,
-                    save_path=importance_path
-                )
+                    if success and importance is not None:
+                        feature_importance_scores = dict(zip(
+                            ['temperature', 'vibration', 'pressure', 'operational_hours',
+                             'efficiency_index', 'system_state', 'performance_score'],
+                            importance.tolist()
+                        ))
 
-                if importance_success and importance is not None:
-                    importance_scores = {
-                        'temperature': float(importance[0]),
-                        'vibration': float(importance[1]),
-                        'pressure': float(importance[2]),
-                        'operational_hours': float(importance[3]),
-                        'efficiency_index': float(importance[4]),
-                        'system_state': float(importance[5]),
-                        'performance_score': float(importance[6])
-                    }
+                        # Save feature importance scores
+                        scores_path = os.path.join(eval_dirs['model_viz'], 'feature_importance.json')
+                        with open(scores_path, 'w') as f:
+                            json.dump(feature_importance_scores, f, indent=2)
+                        plot_paths['feature_importance'] = importance_path
 
-                    with open(os.path.join(viz_dir, 'feature_importance.json'), 'w') as f:
-                        json.dump(importance_scores, f, indent=2)
-                else:
-                    importance_path = None
+                # Save model architecture
+                arch_path = os.path.join(eval_dirs['model_viz'], 'model_architecture.txt')
+                visualizer.visualize_model_architecture(arch_path)
 
             except Exception as viz_error:
-                logger.warning(f"Model visualization failed: {viz_error}. Continuing with evaluation...")
-                cnn_path = None
-                importance_path = None
+                logger.warning(f"Model visualization warning: {viz_error}")
 
-        # Apply symbolic reasoning if enabled
-        with open(config_path, 'r') as f:
-            config = yaml.safe_load(f)
+        # Symbolic reasoning
+        symbolic_insights = []
+        try:
+            # Initialize symbolic reasoner with correct path
+            rules_path = os.path.join(project_root, 'src', 'reasoning', 'rules.pl')
+            reasoner = SymbolicReasoner(rules_path)
 
-        symbolic_reasoning_enabled = config.get('symbolic_reasoning', {}).get('enabled', False)
+            # Process each timestep
+            for i in range(len(sensor_data)):
+                sensor_dict = {
+                    'temperature': float(sensor_data[i][0]),
+                    'vibration': float(sensor_data[i][1]),
+                    'pressure': float(sensor_data[i][2]),
+                    'operational_hours': float(sensor_data[i][3]),
+                    'efficiency_index': float(sensor_data[i][4]),
+                    'system_state': float(sensor_data[i][5]),
+                    'performance_score': float(sensor_data[i][6])
+                }
+                insight = reasoner.reason(sensor_dict)
+                if insight:
+                    symbolic_insights.append({
+                        'timestep': i,
+                        'insights': insight,
+                        'readings': sensor_dict
+                    })
 
-        if symbolic_reasoning_enabled:
-            try:
-                # Get the rules path from config
-                rules_path = _get_rules_path(config_path)
+            # Save insights
+            insights_path = os.path.join(eval_dirs['metrics'], 'symbolic_insights.json')
+            with open(insights_path, 'w') as f:
+                json.dump(symbolic_insights, f, indent=2)
 
-                # Initialize the SymbolicReasoner
-                symbolic_reasoner = SymbolicReasoner(rules_path=rules_path)
-                insights = []
+        except Exception as reasoning_error:
+            logger.warning(f"Symbolic reasoning warning: {reasoning_error}")
 
-                for i in range(sensor_data.shape[0]):
-                    sensor_dict = {
-                        'temperature': sensor_data[i][0],
-                        'vibration': sensor_data[i][1],
-                        'pressure': sensor_data[i][2],
-                        'operational_hours': sensor_data[i][3],
-                        'efficiency_index': sensor_data[i][4],
-                        'system_state': sensor_data[i][5],
-                        'performance_score': sensor_data[i][6]
-                    }
-                    insight = symbolic_reasoner.reason(sensor_dict)
-                    insights.append(insight)
-
-                # Save insights to a JSON file
-                insights_path = os.path.join(figures_dir, 'symbolic_reasoning_insights.json')
-                with open(insights_path, 'w') as f:
-                    json.dump(insights, f, indent=2)
-                logger.info(f"Symbolic reasoning insights saved to {insights_path}")
-
-            except Exception as reasoning_error:
-                logger.warning(f"Symbolic reasoning failed: {reasoning_error}. Continuing with evaluation...")
-                insights = []
-
-        # Create an evaluation summary dictionary
-        evaluation_summary = {
-            'classification_metrics': {
-                'report': report,
-                'confusion_matrix': cm.tolist()
+        # Compile final evaluation results
+        evaluation_results = {
+            'metrics': metrics,
+            'plot_paths': plot_paths,
+            'feature_importance': feature_importance_scores,
+            'symbolic_insights': {
+                'total_insights': len(symbolic_insights),
+                'insights_path': insights_path if symbolic_insights else None
             },
-            'symbolic_insights_count': len(insights),
-            'visualization_paths': {
-                'confusion_matrix': cm_plot_path,
-                'roc_curve': roc_plot_path,
-                'precision_recall': pr_plot_path,
-                'cnn_features': cnn_path,
-                'feature_importance': importance_path
-            },
-            'feature_importance_scores': importance_scores,
-            'timestamp': str(np.datetime64('now'))
+            'timestamp': str(np.datetime64('now')),
+            'success': True
         }
 
         # Save evaluation summary
-        summary_path = os.path.join(figures_dir, 'evaluation_summary.json')
+        summary_path = os.path.join(eval_dirs['base'], 'evaluation_summary.json')
         with open(summary_path, 'w') as f:
-            json.dump(evaluation_summary, f, indent=2)
-        logger.info(f"Evaluation summary saved to {summary_path}")
+            json.dump(evaluation_results, f, indent=2)
 
-        evaluation_results = {
-            'success': True,
-            'classification_report': report,
-            'confusion_matrix': cm,
-            'insights': insights,
-            'importance_scores': importance_scores,
-            'paths': {
-                'summary': summary_path,
-                'confusion_matrix': cm_plot_path,
-                'roc_curve': roc_plot_path,
-                'precision_recall': pr_plot_path,
-                'cnn_features': cnn_path,
-                'feature_importance': importance_path
-            }
-        }
-
+        logger.info("Evaluation completed successfully")
         return evaluation_results
 
     except Exception as e:
-        logger.error(f"Failed to evaluate model: {e}")
-        evaluation_results = {
-            'success': False,
+        logger.error(f"Evaluation failed: {e}")
+        return {
             'error': str(e),
-            'paths': {
-                'confusion_matrix': cm_plot_path if 'cm_plot_path' in locals() else None,
-                'roc_curve': roc_plot_path if 'roc_plot_path' in locals() else None,
-                'precision_recall': pr_plot_path if 'pr_plot_path' in locals() else None,
-                'cnn_features': cnn_path,
-                'feature_importance': importance_path
-            }
+            'success': False
         }
-        return evaluation_results
 
 
-def load_symbolic_rules(config_path: str) -> List[str]:
+def load_evaluation_results(results_path: str) -> Dict[str, Any]:
     """
-    Loads symbolic reasoning rules from the configuration file.
+    Load saved evaluation results.
 
-    Parameters:
-    - config_path (str): Path to the YAML configuration file.
+    Args:
+        results_path: Path to evaluation results file
 
     Returns:
-    - List[str]: List of symbolic reasoning rules.
+        Dictionary containing loaded results
     """
     try:
-        with open(config_path, 'r') as file:
-            config = yaml.safe_load(file)
-        rules = config.get('symbolic_reasoning', {}).get('rules', [])
-        logging.getLogger(__name__).info(f"Loaded {len(rules)} symbolic reasoning rules.")
-        return rules
+        with open(results_path, 'r') as f:
+            results = json.load(f)
+        return results
     except Exception as e:
-        logging.getLogger(__name__).error(f"Failed to load symbolic reasoning rules: {e}")
+        logging.getLogger(__name__).error(f"Failed to load evaluation results: {e}")
         raise
