@@ -186,38 +186,60 @@ class SymbolicReasoner:
                 self.logger.warning("Insufficient sequences for pattern analysis.")
                 return rules
 
-            # First ensure model is built by making a prediction with dummy input
-            if not self.model.built:
-                # Use the first sequence as dummy input to build the model
-                dummy_input = np.expand_dims(anomalous_sequences[0], axis=0)
-                _ = self.model.predict(dummy_input, verbose=0)
-                self.logger.debug("Model built with dummy prediction")
+            # Ensure model is built by making a prediction
+            try:
+                if not self.model.built:
+                    # Build model with first sequence
+                    dummy_input = np.expand_dims(anomalous_sequences[0], axis=0)
+                    _ = self.model.predict(dummy_input, verbose=0)
+                    self.logger.debug("Model built with dummy prediction")
+
+                # Build again with a single prediction to ensure internal states
+                dummy_pred = self.model.predict(dummy_input, verbose=0)
+                self.logger.debug(f"Model built successfully. Dummy prediction shape: {dummy_pred.shape}")
+            except Exception as build_error:
+                self.logger.error(f"Failed to build model: {build_error}")
+                return []
 
             # Find LSTM layer
             lstm_layer = None
-            for layer in self.model.layers:
+            for i, layer in enumerate(self.model.layers):
                 if isinstance(layer, tf.keras.layers.LSTM):
                     lstm_layer = layer
+                    self.logger.debug(f"Found LSTM layer at index {i}")
                     break
 
             if lstm_layer is None:
                 self.logger.error("No LSTM layer found in the model.")
                 return []
 
-            # Create feature extractor after model is built
+            # Create feature extractor with built model
             try:
+                # Get input layer explicitly
+                input_layer = self.model.get_layer(index=0)
+                self.logger.debug(f"Using input layer: {input_layer.name}")
+
+                # Create feature extractor with explicit inputs
                 feature_extractor = tf.keras.Model(
-                    inputs=self.model.input,
+                    inputs=input_layer.input,
                     outputs=lstm_layer.output,
                     name='feature_extractor'
                 )
-                self.logger.info("Feature extractor model created based on LSTM layer.")
+
+                # Build feature extractor
+                feature_extractor.build(input_shape=(None,) + self.input_shape)
+                self.logger.info("Feature extractor created and built successfully")
             except Exception as fe:
                 self.logger.error(f"Failed to create feature extractor: {fe}")
                 return []
 
-            # Extract features from anomalous and normal sequences
+            # Extract features
             try:
+                # Ensure proper input shapes
+                anomalous_sequences = anomalous_sequences.astype(np.float32)
+                normal_sequences = normal_sequences.astype(np.float32)
+
+                # Extract features
                 anomalous_features = feature_extractor.predict(anomalous_sequences, verbose=0)
                 normal_features = feature_extractor.predict(normal_sequences, verbose=0)
 
@@ -231,25 +253,25 @@ class SymbolicReasoner:
             anomaly_pattern = np.mean(anomalous_features, axis=0)
             normal_pattern = np.mean(normal_features, axis=0)
 
-            # Determine significant differences between patterns
+            # Determine significant differences
             pattern_diff = np.abs(anomaly_pattern - normal_pattern)
             threshold_diff = np.mean(pattern_diff) + np.std(pattern_diff)
             significant_dims = np.where(pattern_diff > threshold_diff)[0]
-            self.logger.info(f"Significant dimensions identified at indices: {significant_dims}")
+            self.logger.info(f"Found {len(significant_dims)} significant dimensions")
 
-            # Generate rules based on significant pattern differences
+            # Generate rules
             for sequence in anomalous_sequences:
-                # Extract the last timestep's feature values
+                # Get last timestep values
                 current_values = sequence[-1]
                 important_features = []
 
-                # Check each feature's value against domain thresholds
+                # Check significant features
                 for dim in significant_dims:
                     feature_idx = dim % len(feature_names)
                     feature_name = feature_names[feature_idx]
                     feat_value = float(current_values[feature_idx])
 
-                    # Define importance based on domain-specific thresholds
+                    # Domain-specific thresholds
                     if feature_name == 'temperature' and feat_value > 80:
                         important_features.append((feature_name, feat_value, 'high'))
                     elif feature_name == 'vibration' and feat_value > 55:
@@ -259,8 +281,9 @@ class SymbolicReasoner:
                     elif feature_name == 'efficiency_index' and feat_value < 0.6:
                         important_features.append((feature_name, feat_value, 'low'))
 
+                # Create rules for important features
                 if important_features:
-                    # Create Prolog rule conditions
+                    # Format conditions
                     conditions = []
                     for feat_name, feat_value, condition_type in important_features:
                         if feat_name == 'efficiency_index':
@@ -268,28 +291,28 @@ class SymbolicReasoner:
                         else:
                             conditions.append(f"{feat_name}({int(feat_value)})")
 
-                    # Create unique rule name and full rule
+                    # Create rule
                     rule_name = f"pattern_rule_{len(self.learned_rules) + 1}"
                     rule_body = ", ".join(conditions) + "."
                     rule = f"{rule_name} :- {rule_body}"
 
-                    # Calculate confidence using model prediction
+                    # Calculate confidence
                     try:
                         sequence_reshaped = np.expand_dims(sequence, axis=0)
                         confidence = float(self.model.predict(sequence_reshaped, verbose=0)[0])
 
                         rules.append((rule, confidence))
                         self.rule_confidence[rule] = confidence
-                        self.logger.info(f"Generated pattern rule: {rule} with confidence: {confidence:.2f}")
+                        self.logger.info(f"Generated rule: {rule} with confidence: {confidence:.2f}")
                     except Exception as pred_error:
                         self.logger.warning(f"Failed to calculate confidence for rule {rule}: {pred_error}")
                         continue
 
-            self.logger.info(f"Total patterns analyzed and rules generated: {len(rules)}")
+            self.logger.info(f"Generated {len(rules)} pattern-based rules")
             return rules
 
         except Exception as e:
-            self.logger.error(f"Error analyzing neural patterns: {e}")
+            self.logger.error(f"Error in pattern analysis: {e}")
             raise
 
     def update_rules(self, new_rules: List[Tuple[str, float]], min_confidence: float = 0.7):

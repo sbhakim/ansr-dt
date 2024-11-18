@@ -139,7 +139,14 @@ def evaluate_model(
             logger.error(f"Prolog rules file not found at: {rules_path}")
             raise FileNotFoundError(f"Prolog rules file not found at: {rules_path}")
 
-        reasoner = SymbolicReasoner(rules_path)
+        # Initialize reasoner with proper parameters
+        input_shape = (config['model']['window_size'], len(config['model']['feature_names']))
+        reasoner = SymbolicReasoner(
+            rules_path=rules_path,
+            input_shape=input_shape,
+            model=model,
+            logger=logger
+        )
 
         # Setup evaluation directories
         eval_dirs = setup_evaluation_dirs(figures_dir)
