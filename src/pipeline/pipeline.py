@@ -1,14 +1,14 @@
 # src/pipeline/pipeline.py
-
+import json
 import logging
 import os
-from typing import Tuple, Dict, Any
+from typing import Tuple, Dict, Any, List
 
 import numpy as np
+import tensorflow as tf
 
-# Import the CNN-LSTM model
+# Import components
 from src.models.cnn_lstm_model import create_cnn_lstm_model
-
 from src.data.data_loader import DataLoader
 from src.preprocessing.preprocessing import preprocess_sequences
 from src.data.data_processing import map_labels
@@ -16,18 +16,11 @@ from src.training.trainer import train_model
 from src.evaluation.evaluation import evaluate_model
 from src.utils.model_utils import save_model, save_scaler
 from src.visualization.plotting import load_plot_config, plot_metrics
+from src.reasoning.reasoning import SymbolicReasoner
 
 
 def validate_config(config: dict, logger: logging.Logger, project_root: str, config_dir: str):
-    """
-    Validates the presence of required configuration keys and the existence of critical files.
-
-    Parameters:
-    - config (dict): Configuration dictionary.
-    - logger (logging.Logger): Logger for logging errors.
-    - project_root (str): Path to the project root directory.
-    - config_dir (str): Path to the configuration directory.
-    """
+    """Validates configuration and paths."""
     try:
         required_keys = ['model', 'training', 'paths']
         for key in required_keys:
@@ -49,141 +42,171 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
             full_path = os.path.join(base_dir, path)
 
             if key.endswith('_dir'):
-                # Ensure directory exists
                 os.makedirs(full_path, exist_ok=True)
                 logger.info(f"Directory '{key}' ensured at: {full_path}")
             else:
-                # Ensure file exists
                 if not os.path.exists(full_path):
                     logger.error(f"Required file '{key}' not found at: {full_path}")
                     raise FileNotFoundError(f"Required file '{key}' not found at: {full_path}")
                 logger.info(f"File '{key}' found at: {full_path}")
 
-            # Update the config with absolute paths
             config['paths'][key] = full_path
-
-        # Additional validations can be added here (e.g., checking numerical parameters)
 
         logger.info("Configuration validation passed.")
 
-    except KeyError as ke:
-        logger.exception(f"Configuration validation failed: {ke}")
-        raise
-    except FileNotFoundError as fe:
-        logger.exception(f"Configuration validation failed: {fe}")
-        raise
     except Exception as e:
-        logger.exception(f"Unexpected error during configuration validation: {e}")
+        logger.exception(f"Configuration validation failed: {e}")
         raise
 
 
 class NEXUSDTPipeline:
-    """
-    The NEXUSDTPipeline class orchestrates the entire workflow of the NEXUS-DT project,
-    including data loading, preprocessing, model training, evaluation, and saving results.
-    """
+    """NEXUS-DT Pipeline with Neurosymbolic Rule Learning."""
 
     def __init__(self, config: dict, config_path: str, logger: logging.Logger):
-        """
-        Initializes the pipeline with configuration and logger.
-
-        Parameters:
-        - config (dict): Configuration parameters loaded from config.yaml.
-        - config_path (str): Path to the configuration file.
-        - logger (logging.Logger): Configured logger for logging messages.
-        """
+        """Initialize pipeline."""
         self.config = config
         self.logger = logger
-
-        # Determine base directories based on config_path
         self.config_dir = os.path.dirname(os.path.abspath(config_path))
         self.project_root = os.path.dirname(self.config_dir)
+        self.model = None  # Add this line
 
-        # Initialize DataLoader
+        # Initialize components
         self.data_loader = DataLoader(
             self.config['paths']['data_file'],
             window_size=self.config['model']['window_size']
         )
 
+        # Initialize symbolic reasoner
+        rules_path = os.path.join(self.project_root, self.config['paths']['reasoning_rules_path'])
+        self.reasoner = SymbolicReasoner(rules_path)
+
+        # Define feature names for rule extraction
+        self.feature_names = [
+            'temperature', 'vibration', 'pressure', 'operational_hours',
+            'efficiency_index', 'system_state', 'performance_score'
+        ]
+
+    def extract_neural_rules(
+            self,
+            model: tf.keras.Model,
+            X_test: np.ndarray,
+            y_pred: np.ndarray,
+            threshold: float = 0.8
+    ) -> None:
+        """Extract rules from neural model predictions."""
+        try:
+            # Find strong anomaly predictions
+            anomalous_idx = np.where(y_pred > threshold)[0]
+            normal_idx = np.where(y_pred < 0.2)[0]  # Clear normal cases
+
+            if len(anomalous_idx) > 0:
+                # Get sequences for analysis
+                anomalous_sequences = X_test[anomalous_idx]
+                normal_sequences = X_test[normal_idx]
+
+                # Extract rules using gradient-based method
+                gradient_rules = self.reasoner.extract_rules_from_neural_model(
+                    model=model,
+                    input_data=anomalous_sequences,
+                    feature_names=self.feature_names,
+                    threshold=0.7
+                )
+
+                # Extract rules from pattern analysis
+                pattern_rules = self.reasoner.analyze_neural_patterns(
+                    model=model,
+                    anomalous_sequences=anomalous_sequences,
+                    normal_sequences=normal_sequences,
+                    feature_names=self.feature_names
+                )
+
+                # Update symbolic knowledge base
+                all_rules = gradient_rules + pattern_rules
+                self.reasoner.update_rules(all_rules)
+
+                # Log statistics
+                stats = self.reasoner.get_rule_statistics()
+                self.logger.info(f"Neural rule extraction stats: {stats}")
+
+                # Save extracted rules summary
+                rules_summary = {
+                    'gradient_rules': gradient_rules,
+                    'pattern_rules': pattern_rules,
+                    'statistics': stats,
+                    'timestamp': str(np.datetime64('now'))
+                }
+
+                summary_path = os.path.join(
+                    self.config['paths']['results_dir'],
+                    'neurosymbolic_rules.json'
+                )
+
+                with open(summary_path, 'w') as f:
+                    json.dump(rules_summary, f, indent=2)
+
+                self.logger.info(f"Neurosymbolic rules saved to {summary_path}")
+
+        except Exception as e:
+            self.logger.error(f"Error in neural rule extraction: {e}")
+            raise
+
     def run(self):
-        """
-        Executes the pipeline:
-        1. Validates configuration.
-        2. Loads and processes data.
-        3. Splits data into training, validation, and test sets.
-        4. Maps labels to binary.
-        5. Preprocesses sequences (scaling).
-        6. Creates and trains the CNN-LSTM model.
-        7. Plots training metrics.
-        8. Evaluates the model on the test set.
-        9. Saves the trained model.
-        """
+        """Execute complete pipeline with neurosymbolic learning."""
         try:
             self.logger.info("Starting pipeline execution.")
 
             # 1. Validate Configuration
-            self.logger.debug("Validating configuration.")
             validate_config(self.config, self.logger, self.project_root, self.config_dir)
 
             # 2. Load and process data
-            self.logger.debug("Loading data.")
             X, y = self.data_loader.load_data()
             self.logger.info(f"Data loaded with shapes - X: {X.shape}, y: {y.shape}")
 
             # 3. Create sequences
-            self.logger.debug("Creating sequences.")
             X_seq, y_seq = self.data_loader.create_sequences(X, y)
             self.logger.info(f"Sequences created with shapes - X_seq: {X_seq.shape}, y_seq shape: {y_seq.shape}")
 
-            # 4. Split into training, validation, and test sets
-            self.logger.debug("Splitting data into training, validation, and test sets.")
+            # 4. Split data
             X_train, X_val, X_test, y_train, y_val, y_test = self.data_loader.split_data(
                 X_seq, y_seq,
                 validation_split=self.config['training']['validation_split'],
                 test_split=self.config['training']['test_split']
             )
-            self.logger.info("Data split into training, validation, and test sets.")
+            self.logger.info("Data split completed.")
 
             # 5. Map labels to binary
-            self.logger.debug("Mapping labels to binary.")
             y_train_binary = map_labels(y_train, self.logger)
             y_val_binary = map_labels(y_val, self.logger)
             y_test_binary = map_labels(y_test, self.logger)
 
-            # 6. Preprocess sequences (scaling)
-            self.logger.debug("Preprocessing training data (scaling).")
+            # 6. Preprocess sequences
             scaler, X_train_scaled = preprocess_sequences(X_train)
-            self.logger.info("Training data preprocessing (scaling) completed.")
-
-            self.logger.debug("Applying scaler to validation and test data.")
             X_val_scaled = scaler.transform(X_val.reshape(-1, X_val.shape[-1])).reshape(X_val.shape)
             X_test_scaled = scaler.transform(X_test.reshape(-1, X_test.shape[-1])).reshape(X_test.shape)
-            self.logger.info("Validation and test data scaling completed.")
 
-            # Save scaler for future use
+            # Save scaler
             scaler_path = os.path.join(self.config['paths']['results_dir'], 'scaler.pkl')
-            self.logger.debug(f"Saving scaler to {scaler_path}.")
             save_scaler(scaler, scaler_path, self.logger)
-            self.logger.info(f"Scaler saved to {scaler_path}")
 
-            # 7. Create and train CNN-LSTM model based on configuration
-            architecture = self.config['model'].get('architecture', 'cnn_lstm')
-            if architecture == 'cnn_lstm':
-                self.logger.info("Creating CNN-LSTM model.")
-                model = create_cnn_lstm_model(
-                    input_shape=X_train_scaled.shape[1:],  # (window_size, features)
+            # 7. Create model before using it
+            if self.config['model'].get('architecture', 'cnn_lstm') == 'cnn_lstm':
+                self.model = create_cnn_lstm_model(
+                    input_shape=X_train_scaled.shape[1:],
                     learning_rate=self.config['training']['learning_rate']
                 )
             else:
-                self.logger.error(f"Unsupported model architecture: {architecture}")
-                raise ValueError(f"Unsupported model architecture: {architecture}")
+                raise ValueError(f"Unsupported architecture: {self.config['model'].get('architecture')}")
 
             self.logger.info("Model created.")
 
-            # Train the model
-            self.logger.debug("Starting model training.")
+            # Build model with dummy data
+            dummy_shape = (1, self.config['model']['window_size'], len(self.feature_names))
+            dummy_input = np.zeros(dummy_shape)
+            _ = self.model(dummy_input, training=False)
+
+            # Train model
             history, trained_model = train_model(
-                model=model,
+                model=self.model,
                 X_train=X_train_scaled,
                 y_train=y_train_binary,
                 X_val=X_val_scaled,
@@ -194,76 +217,71 @@ class NEXUSDTPipeline:
             )
             self.logger.info("Model training completed.")
 
-            # 8. Plot training metrics
-            self.logger.debug("Plotting training metrics.")
+            # 8. Plot metrics
             figures_dir = os.path.join(self.config['paths']['results_dir'], 'visualization')
             os.makedirs(figures_dir, exist_ok=True)
-            self.logger.info(f"Figures directory ensured at {figures_dir}")
 
-            # Load plot configuration from plot_config_path
-            plot_config_path = self.config['paths']['plot_config_path']
-            self.logger.debug(f"Loading plot configuration from {plot_config_path}.")
-            plot_config = load_plot_config(plot_config_path)
-            self.logger.info(f"Plot configuration loaded from {plot_config_path}")
-
-            # Plot metrics
+            plot_config = load_plot_config(self.config['paths']['plot_config_path'])
             plot_metrics(history, figures_dir, plot_config)
-            self.logger.info("Training and validation metrics plotted.")
 
-            # 9. Evaluate the model on the test set
-            self.logger.debug("Evaluating the model on the test set.")
+            # 9. Evaluate model and extract rules
             y_test_pred = trained_model.predict(X_test_scaled).ravel()
             y_test_pred_classes = (y_test_pred > 0.5).astype(int)
-            self.logger.info("Model predictions on test set obtained.")
 
-            # Pass sensor data corresponding to test set
-            sensor_data_test = {
-                'temperature': X_test_scaled[:, -1, 0],
-                'vibration': X_test_scaled[:, -1, 1],
-                'pressure': X_test_scaled[:, -1, 2],
-                'operational_hours': X_test_scaled[:, -1, 3],
-                'efficiency_index': X_test_scaled[:, -1, 4],
-                'system_state': X_test_scaled[:, -1, 5],
-                'performance_score': X_test_scaled[:, -1, 6]
-            }
+            # Prepare sensor data for evaluation
+            sensor_data_test = np.column_stack([
+                X_test_scaled[:, -1, 0:7]  # Last timestep of each sequence
+            ])
 
+            # Extract rules from neural model
+            self.logger.info("Extracting rules from neural model...")
+            self.extract_neural_rules(
+                model=trained_model,
+                X_test=X_test_scaled,
+                y_pred=y_test_pred,
+                threshold=0.8
+            )
+
+            # Evaluate with both neural and symbolic components
             evaluate_model(
                 y_true=y_test_binary,
                 y_pred=y_test_pred_classes,
                 y_scores=y_test_pred,
                 figures_dir=figures_dir,
-                plot_config_path=plot_config_path,
-                config_path=self.config_dir,  # Use config_dir to locate rules
-                sensor_data=np.column_stack([
-                    sensor_data_test['temperature'],
-                    sensor_data_test['vibration'],
-                    sensor_data_test['pressure'],
-                    sensor_data_test['operational_hours'],
-                    sensor_data_test['efficiency_index'],
-                    sensor_data_test['system_state'],
-                    sensor_data_test['performance_score']
-                ]),
-                model=trained_model  # Pass the trained model for visualization
+                plot_config_path=self.config['paths']['plot_config_path'],
+                config_path=self.config_dir,
+                sensor_data=sensor_data_test,
+                model=trained_model
             )
-            self.logger.info("Model evaluation on test set completed.")
 
-            # 10. Save the final trained model
-            self.logger.debug("Saving the final trained model.")
+            # After evaluating model and before saving final model
+            self.logger.info("Extracting rules from neural model predictions...")
+            anomaly_indices = np.where(y_test_pred > 0.8)[0]  # Get strong anomaly predictions
+            if len(anomaly_indices) > 0:
+                anomaly_sequences = X_test_scaled[anomaly_indices]
+                # Extract and update rules
+                new_rules = self.reasoner.extract_rules_from_neural_model(
+                    model=trained_model,
+                    input_data=anomaly_sequences,
+                    feature_names=self.feature_names,
+                    threshold=0.7
+                )
+                pattern_rules = self.reasoner.analyze_neural_patterns(
+                    model=trained_model,
+                    anomalous_sequences=anomaly_sequences,
+                    normal_sequences=X_test_scaled[y_test_pred < 0.2],
+                    feature_names=self.feature_names
+                )
+                # Update rules with confidence
+                self.reasoner.update_rules(new_rules + pattern_rules, min_confidence=0.7)
+                self.logger.info(f"Extracted {len(new_rules)} direct rules and {len(pattern_rules)} pattern rules")
+
+            # 10. Save final model
             best_model_path = os.path.join(self.config['paths']['results_dir'], 'best_model.keras')
             save_model(trained_model, best_model_path, self.logger)
-            self.logger.info(f"Best trained model saved to {best_model_path}")
 
             self.logger.info("Pipeline completed successfully.")
 
-        except KeyError as ke:
-            self.logger.exception(f"Missing configuration key: {ke}")
-            raise
-        except FileNotFoundError as fe:
-            self.logger.exception(f"File not found during pipeline execution: {fe}")
-            raise
-        except ValueError as ve:
-            self.logger.exception(f"Value error during pipeline execution: {ve}")
-            raise
         except Exception as e:
-            self.logger.exception(f"An unexpected error occurred in the pipeline: {e}")
+            self.logger.exception(f"Pipeline error: {e}")
             raise

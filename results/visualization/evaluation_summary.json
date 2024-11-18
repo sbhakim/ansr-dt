@@ -1,19 +1,19 @@
 {
   "metrics": {
-    "classification_report": "              precision    recall  f1-score   support\n\n           0       0.99      1.00      0.99       343\n           1       0.99      0.98      0.99       156\n\n    accuracy                           0.99       499\n   macro avg       0.99      0.99      0.99       499\nweighted avg       0.99      0.99      0.99       499\n",
+    "classification_report": "              precision    recall  f1-score   support\n\n           0       0.99      1.00      1.00       343\n           1       1.00      0.99      0.99       156\n\n    accuracy                           1.00       499\n   macro avg       1.00      0.99      1.00       499\nweighted avg       1.00      1.00      1.00       499\n",
     "confusion_matrix": [
       [
-        342,
-        1
+        343,
+        0
       ],
       [
-        3,
-        153
+        2,
+        154
       ]
     ],
-    "roc_auc": 0.999682290498617,
-    "avg_precision": 0.9993250748711208,
-    "pr_auc": 0.9993229692977671
+    "roc_auc": 0.999925244823204,
+    "avg_precision": 0.999837198196466,
+    "pr_auc": 0.9998366780523237
   },
   "plot_paths": {
     "confusion_matrix": "/home/safayatb/Videos/NEXUS-DT/nexus_dt_1.0/results/visualization/visualization/confusion_matrix.png",
@@ -22,18 +22,18 @@
     "feature_importance": "/home/safayatb/Videos/NEXUS-DT/nexus_dt_1.0/results/visualization/visualization/model_visualization/feature_importance.png"
   },
   "feature_importance": {
-    "temperature": 0.18725736439228058,
-    "vibration": 0.17012402415275574,
-    "pressure": 0.48922309279441833,
-    "operational_hours": 0.23210184276103973,
-    "efficiency_index": 0.3998274803161621,
-    "system_state": 0.5594944357872009,
-    "performance_score": 0.4559713900089264
+    "temperature": 0.057312410324811935,
+    "vibration": 0.10067971050739288,
+    "pressure": 0.2336619645357132,
+    "operational_hours": 0.07652056217193604,
+    "efficiency_index": 0.08138173818588257,
+    "system_state": 0.140872523188591,
+    "performance_score": 0.08082927763462067
   },
   "symbolic_insights": {
     "total_insights": 0,
     "insights_path": null
   },
-  "timestamp": "2024-11-18T04:57:56",
+  "timestamp": "2024-11-18T06:31:44",
   "success": true
 }

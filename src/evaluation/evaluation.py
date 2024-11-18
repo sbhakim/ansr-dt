@@ -108,6 +108,9 @@ def evaluate_model(
     logger = logging.getLogger(__name__)
 
     try:
+        reasoner = None
+        neural_insights = {}
+
         # Setup directories
         project_root = get_project_root(config_path)
         eval_dirs = setup_evaluation_dirs(figures_dir)
@@ -115,6 +118,23 @@ def evaluate_model(
         # Load and apply plot configuration
         plot_config = load_plot_config(plot_config_path)
         apply_plot_config(plot_config)
+
+        # Around line 100:
+        try:
+            # Neural rule analysis
+            if model is not None:
+                rules_path = os.path.join(project_root, 'src', 'reasoning', 'rules.pl')
+                reasoner = SymbolicReasoner(rules_path)
+                neural_insights = {
+                    'extracted_rules': len(reasoner.learned_rules) if reasoner else 0,
+                    'high_confidence_rules': len(
+                        [r for r, c in reasoner.rule_confidence.items() if c >= 0.7]) if reasoner else 0,
+                    'average_confidence': np.mean(
+                        list(reasoner.rule_confidence.values())) if reasoner and reasoner.rule_confidence else 0.0,
+                    'rules': reasoner.learned_rules if reasoner else []
+                }
+        except Exception as e:
+            logger.warning(f"Neural insights generation skipped: {e}")
 
         # Calculate metrics
         metrics = calculate_metrics(y_true, y_pred, y_scores)
@@ -125,7 +145,26 @@ def evaluate_model(
         report_path = os.path.join(eval_dirs['metrics'], 'classification_report.txt')
         with open(report_path, 'w') as f:
             f.write(metrics['classification_report'])
-        logger.info(f"Classification report saved to {report_path}")
+
+        # Add after metrics calculation:
+        try:
+            # Neural rule analysis
+            neural_insights = {
+                'extracted_rules': len(reasoner.learned_rules),
+                'high_confidence_rules': len([r for r, c in reasoner.rule_confidence.items() if c >= 0.7]),
+                'average_confidence': np.mean(list(reasoner.rule_confidence.values())),
+                'rules': reasoner.learned_rules
+            }
+
+            # Save neurosymbolic insights
+            neural_path = os.path.join(eval_dirs['metrics'], 'neural_insights.json')
+            with open(neural_path, 'w') as f:
+                json.dump(neural_insights, f, indent=2)
+
+            evaluation_results['neural_insights'] = neural_insights
+
+        except Exception as e:
+            logger.warning(f"Neural insights generation skipped: {e}")
 
         # Generate and save plots
         plot_paths = {}
@@ -139,6 +178,7 @@ def evaluate_model(
             save_path=cm_path,
             config=plot_config
         )
+
         plot_paths['confusion_matrix'] = cm_path
 
         # ROC Curve

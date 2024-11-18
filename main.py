@@ -1,5 +1,5 @@
 # main.py
-
+import json
 import os
 import logging
 import numpy as np
@@ -42,6 +42,21 @@ def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.nd
 
     # Stack features to shape (window_size, n_features)
     return np.stack(features, axis=1)
+
+
+def setup_project_structure():
+    """Set up project directory structure."""
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    required_dirs = [
+        'src/reasoning',
+        'results',
+        'logs',
+        'results/visualization',
+        'results/visualization/model_visualization'
+    ]
+
+    for dir_path in required_dirs:
+        os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
 
 
 def main():
@@ -118,6 +133,31 @@ def main():
         logger.info("Running integrated inference...")
         result = nexusdt.adapt_and_explain(sensor_window)
 
+        # Save neurosymbolic results
+        neurosymbolic_results = {
+            'neural_rules': nexusdt.reasoner.learned_rules,
+            'rule_confidence': nexusdt.reasoner.rule_confidence,
+            'symbolic_insights': result.get('insights', []),
+            'neural_confidence': result.get('confidence', 0.0),
+            'timestamp': str(np.datetime64('now'))
+        }
+
+        neurosymbolic_path = os.path.join(
+            config['paths']['results_dir'],
+            'neurosymbolic_results.json'
+        )
+
+        with open(neurosymbolic_path, 'w') as f:
+            json.dump(neurosymbolic_results, f, indent=2)
+
+        logger.info(f"Neurosymbolic results saved to {neurosymbolic_path}")
+
+        # After saving neurosymbolic results
+        logger.info("Neurosymbolic Analysis Summary:")
+        logger.info(f"- Neural Rules Extracted: {len(neurosymbolic_results['neural_rules'])}")
+        logger.info(f"- Symbolic Insights Generated: {len(neurosymbolic_results['symbolic_insights'])}")
+        logger.info(f"- Neural Confidence: {neurosymbolic_results['neural_confidence']:.2%}")
+
         # Save results
         results_file = os.path.join(config['paths']['results_dir'], 'final_state.json')
         nexusdt.save_state(results_file)
@@ -131,4 +171,5 @@ def main():
 
 
 if __name__ == '__main__':
+    setup_project_structure()
     main()

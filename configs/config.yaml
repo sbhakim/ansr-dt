@@ -22,7 +22,7 @@ training:
 
 ppo:
   enabled: true  # Flag to enable/disable PPO training
-  total_timesteps: 100000  # Total timesteps for PPO training
+  total_timesteps: 10000  # Total timesteps for PPO training
   reward_weights:
     efficiency: 1.0
     satisfaction: 1.0
@@ -31,9 +31,9 @@ ppo:
 paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
-  plot_config_path: 'plot_config.yaml'  # Corrected path relative to configs/
-  reasoning_rules_path: 'src/reasoning/rules.pl'  # Correct path relative to project root
+  plot_config_path: 'plot_config.yaml'
+  reasoning_rules_path: 'src/reasoning/rules.pl'  # Relative to project root
 
 symbolic_reasoning:
-  enabled: true  # Flag to enable/disable symbolic reasoning
-  rules_path: 'src/reasoning/rules.pl'  # Path to Prolog rules file
+  enabled: true
+  rules_path: 'src/reasoning/rules.pl'

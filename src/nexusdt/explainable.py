@@ -146,3 +146,48 @@ class ExplainableNEXUSDT(NEXUSDTCore):
 
         except Exception as e:
             self.logger.error(f"Error loading decision history: {e}")
+
+    def get_neurosymbolic_explanation(self, decision: Dict[str, Any]) -> str:
+        """Generate explanation combining neural and symbolic insights."""
+        explanations = []
+
+        # Add neural model confidence
+        if decision['confidence'] > 0.5:
+            explanations.append(
+                f"Neural model detected anomaly with {decision['confidence']:.2%} confidence"
+            )
+
+        # Add learned rule insights
+        if decision.get('learned_rules'):
+            explanations.append(
+                "Learned patterns: " +
+                ", ".join([f"{rule} (conf: {conf:.2f})"
+                           for rule, conf in decision['learned_rules']])
+            )
+
+        # Add symbolic insights
+        if decision.get('insights'):
+            explanations.append(
+                "Symbolic insights: " + ", ".join(decision['insights'])
+            )
+
+        return " | ".join(explanations)
+
+    def track_neurosymbolic_decisions(self, decision: Dict[str, Any]):
+        """Track decisions with neural and symbolic components."""
+        try:
+            tracked_decision = {
+                'timestamp': datetime.now().isoformat(),
+                'neural_confidence': decision['confidence'],
+                'learned_rules': decision.get('learned_rules', []),
+                'symbolic_insights': decision.get('insights', []),
+                'explanation': self.get_neurosymbolic_explanation(decision)
+            }
+            self.decision_history.append(tracked_decision)
+
+            # Save periodically
+            if len(self.decision_history) % 100 == 0:
+                self.save_decision_history('results/neurosymbolic_decisions.json')
+
+        except Exception as e:
+            self.logger.error(f"Error tracking neurosymbolic decision: {e}")

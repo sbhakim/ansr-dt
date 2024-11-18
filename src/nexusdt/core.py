@@ -93,24 +93,29 @@ class NEXUSDTCore:
             raise
 
     def _initialize_reasoner(self) -> SymbolicReasoner:
+        """Initialize symbolic reasoner with proper path resolution."""
         try:
             symbolic_reasoning_config = self.config.get('symbolic_reasoning', {})
             if symbolic_reasoning_config.get('enabled', False):
-                rules_path = self.config['paths']['reasoning_rules_path']
-                absolute_rules_path = os.path.join(self.project_root, rules_path)
-                self.logger.info(f"Initializing Symbolic Reasoner with rules from: {absolute_rules_path}")
-                reasoner = SymbolicReasoner(absolute_rules_path)
+                # Fix path resolution
+                rules_path = os.path.join(self.project_root,
+                                          'src', 'reasoning', 'rules.pl')
+
+                if not os.path.exists(rules_path):
+                    # Try alternate path from config
+                    rules_path = os.path.join(self.project_root,
+                                              self.config['paths']['reasoning_rules_path'])
+
+                if not os.path.exists(rules_path):
+                    raise FileNotFoundError(f"Rules file not found at: {rules_path}")
+
+                self.logger.info(f"Initializing Symbolic Reasoner with rules from: {rules_path}")
+                reasoner = SymbolicReasoner(rules_path)
                 self.logger.info("Symbolic Reasoner initialized successfully.")
                 return reasoner
             else:
                 self.logger.info("Symbolic Reasoning is disabled in the configuration.")
                 return None
-        except FileNotFoundError as fe:
-            self.logger.error(f"Reasoning rules file not found: {fe}")
-            raise
-        except KeyError as ke:
-            self.logger.error(f"Configuration error in symbolic reasoning: {ke}")
-            raise
         except Exception as e:
             self.logger.error(f"Failed to initialize Symbolic Reasoner: {e}")
             raise
@@ -237,6 +242,18 @@ class NEXUSDTCore:
         try:
             # Update state
             state = self.update_state(sensor_data)
+
+            # Extract rules from current prediction if it's a strong anomaly
+            if state['anomaly_score'] > 0.8:
+                new_rules = self.reasoner.extract_rules_from_neural_model(
+                    model=self.cnn_lstm,
+                    input_data=sensor_data,
+                    feature_names=self.feature_names,
+                    threshold=0.7
+                )
+                if new_rules:
+                    self.reasoner.update_rules(new_rules, min_confidence=0.7)
+                    self.logger.info(f"Extracted {len(new_rules)} new rules from current prediction")
 
             # Generate decision
             decision = {

@@ -15,6 +15,10 @@ class NexusDTEnv(gym.Env):
         """Initialize environment."""
         super().__init__()
 
+        self.current_neural_rules = []
+        self.current_insights = []
+        self.current_confidence = 0.0
+
         # Basic logging setup
         self.logger = logging.getLogger(__name__)
 
@@ -106,49 +110,62 @@ class NexusDTEnv(gym.Env):
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, bool, Dict[str, Any]]:
         """Execute environment step."""
-        # Apply actions
-        adjusted_values = {
-            'temperature': self.data['temperature'][self.current_step] + action[0],
-            'vibration': self.data['vibration'][self.current_step] + action[1],
-            'pressure': self.data['pressure'][self.current_step] + action[2]
-        }
+        try:
+            # Apply actions
+            adjusted_values = {
+                'temperature': self.data['temperature'][self.current_step] + action[0],
+                'vibration': self.data['vibration'][self.current_step] + action[1],
+                'pressure': self.data['pressure'][self.current_step] + action[2]
+            }
 
-        # Update history
-        self.history = np.roll(self.history, -1, axis=0)
-        self.history[-1] = np.array([
-            adjusted_values['temperature'],
-            adjusted_values['vibration'],
-            adjusted_values['pressure'],
-            self.data['operational_hours'][self.current_step],
-            self.data['efficiency_index'][self.current_step],
-            self.data['system_state'][self.current_step],
-            self.data['performance_score'][self.current_step]
-        ])
+            # Update history
+            self.history = np.roll(self.history, -1, axis=0)
+            self.history[-1] = np.array([
+                adjusted_values['temperature'],
+                adjusted_values['vibration'],
+                adjusted_values['pressure'],
+                self.data['operational_hours'][self.current_step],
+                self.data['efficiency_index'][self.current_step],
+                self.data['system_state'][self.current_step],
+                self.data['performance_score'][self.current_step]
+            ])
 
-        # Calculate reward components
-        rewards = {
-            'efficiency': 1.0 - abs(adjusted_values['temperature'] - self.targets['temperature']) / 100,
-            'satisfaction': 1.0 - abs(adjusted_values['vibration'] - self.targets['vibration']) / 100,
-            'safety': 1.0 - abs(adjusted_values['pressure'] - self.targets['pressure']) / 50
-        }
+            # Update insights and rules (these will be populated by the reasoning component)
+            self.current_insights = []
+            self.current_neural_rules = []
+            self.current_confidence = 0.0
 
-        # Calculate total reward
-        reward = sum(self.weights[k] * v for k, v in rewards.items())
+            # Calculate reward components
+            rewards = {
+                'efficiency': 1.0 - abs(adjusted_values['temperature'] - self.targets['temperature']) / 100,
+                'satisfaction': 1.0 - abs(adjusted_values['vibration'] - self.targets['vibration']) / 100,
+                'safety': 1.0 - abs(adjusted_values['pressure'] - self.targets['pressure']) / 50
+            }
 
-        # Update state
-        self.current_step += 1
+            # Calculate total reward
+            reward = sum(self.weights[k] * v for k, v in rewards.items())
 
-        # Check termination
-        terminated = self.current_step >= self.max_steps
-        truncated = False
+            # Update state
+            self.current_step += 1
 
-        info = {
-            'current_step': self.current_step,
-            'reward_components': rewards,
-            'adjusted_values': adjusted_values
-        }
+            # Check termination
+            terminated = self.current_step >= self.max_steps
+            truncated = False
 
-        return self.history, reward, terminated, truncated, info
+            info = {
+                'current_step': self.current_step,
+                'reward_components': rewards,
+                'adjusted_values': adjusted_values,
+                'neural_rules': self.current_neural_rules,
+                'symbolic_insights': self.current_insights,
+                'rule_confidence': self.current_confidence
+            }
+
+            return self.history, reward, terminated, truncated, info
+
+        except Exception as e:
+            self.logger.error(f"Error in step: {e}")
+            raise
 
     def get_current_state(self) -> Dict[str, float]:
         """Get current state values."""

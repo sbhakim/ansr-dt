@@ -80,7 +80,7 @@ def train_ppo_agent(config_path: str) -> bool:
         logger.info("Starting PPO training...")
 
         # Train the agent
-        total_timesteps = config.get('ppo', {}).get('total_timesteps', 100000)
+        total_timesteps = config.get('ppo', {}).get('total_timesteps', 10000)
         model.learn(total_timesteps=total_timesteps)
 
         # Save the trained model
