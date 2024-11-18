@@ -2,6 +2,15 @@
 
 model:
   window_size: 10
+  feature_names:
+    - temperature
+    - vibration
+    - pressure
+    - operational_hours
+    - efficiency_index
+    - system_state
+    - performance_score
+  input_shape: [ 10, 7 ]
   architecture: "cnn_lstm"  # Specifies the model type
   cnn_lstm:
     conv_filters: [64, 128]  # Number of filters for each Conv1D layer
@@ -31,8 +40,8 @@ ppo:
 paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
-  plot_config_path: 'plot_config.yaml'
-  reasoning_rules_path: 'src/reasoning/rules.pl'  # Relative to project root
+  plot_config_path: 'configs/plot_config.yaml'  # Change this line
+  reasoning_rules_path: 'src/reasoning/rules.pl'
 
 symbolic_reasoning:
   enabled: true

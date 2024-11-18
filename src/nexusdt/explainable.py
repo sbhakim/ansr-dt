@@ -11,9 +11,10 @@ from .core import NEXUSDTCore
 
 
 class ExplainableNEXUSDT(NEXUSDTCore):
-    def __init__(self, config_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, config_path: str, logger: Optional[logging.Logger] = None,
+                 cnn_lstm_model: Optional[Any] = None, ppo_agent: Optional[Any] = None):
         """Initialize explainable NEXUS-DT."""
-        super().__init__(config_path, logger)
+        super().__init__(config_path, logger, cnn_lstm_model, ppo_agent)
         self.decision_history = []
         self.explanation_templates = {
             'normal': "System is operating within normal parameters.",

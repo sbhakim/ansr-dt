@@ -9,12 +9,26 @@ from src.config.config_manager import load_config
 from src.pipeline.pipeline import NEXUSDTPipeline
 from src.rl.train_ppo import train_ppo_agent
 from src.nexusdt.explainable import ExplainableNEXUSDT
+from src.utils.model_utils import load_model_with_initialization
+from stable_baselines3 import PPO
 
 
-def setup_dirs(project_root: str) -> None:
-    """Create necessary project directories."""
-    dirs = ['logs', 'results', 'results/visualization']
-    for dir_path in dirs:
+def setup_project_structure(project_root: str) -> None:
+    """
+    Create necessary project directories to ensure the pipeline runs smoothly.
+
+    Parameters:
+    - project_root (str): Root directory of the project.
+    """
+    required_dirs = [
+        'src/reasoning',
+        'results',
+        'logs',
+        'results/visualization',
+        'results/visualization/model_visualization'
+    ]
+
+    for dir_path in required_dirs:
         os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
 
 
@@ -27,7 +41,7 @@ def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.nd
         window_size: Size of the sliding window
 
     Returns:
-        np.ndarray: Properly shaped sensor window
+        np.ndarray: Properly shaped sensor window (window_size, n_features)
     """
     # Extract and stack features in correct order
     features = [
@@ -44,75 +58,118 @@ def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.nd
     return np.stack(features, axis=1)
 
 
-def setup_project_structure():
-    """Set up project directory structure."""
-    project_root = os.path.dirname(os.path.abspath(__file__))
-    required_dirs = [
-        'src/reasoning',
-        'results',
-        'logs',
-        'results/visualization',
-        'results/visualization/model_visualization'
-    ]
-
-    for dir_path in required_dirs:
-        os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
-
-
 def main():
     """
     Execute the NEXUS-DT pipeline:
-    1. Train CNN-LSTM for anomaly detection
-    2. Train PPO for adaptive control
-    3. Run integrated system
+    1. Train CNN-LSTM for anomaly detection or load existing model
+    2. Train PPO for adaptive control or load existing agent
+    3. Run integrated system for reasoning and explanation
     """
-    # Setup project structure
+    # Determine project root directory
     project_root = os.path.dirname(os.path.abspath(__file__))
-    setup_dirs(project_root)
+
+    # Setup project directory structure
+    setup_project_structure(project_root)
 
     # Initialize logging
     logger = setup_logging(
-        log_file='logs/nexus_dt.log',
+        log_file=os.path.join(project_root, 'logs', 'nexus_dt.log'),
         log_level=logging.INFO
     )
     logger.info("Starting NEXUS-DT Pipeline")
 
     try:
-        # Load and update configuration
+        # Load configuration
         config_path = os.path.join(project_root, 'configs', 'config.yaml')
         config = load_config(config_path)
+        logger.info(f"Configuration loaded from {config_path}.")
 
-        # Update paths to be absolute
+        # Update paths in config to be absolute
         config['paths']['results_dir'] = os.path.join(project_root, 'results')
         config['paths']['data_file'] = os.path.join(project_root, config['paths']['data_file'])
+        config['paths']['plot_config_path'] = os.path.join(project_root, config['paths']['plot_config_path'])
+        config['paths']['reasoning_rules_path'] = os.path.join(project_root, config['paths']['reasoning_rules_path'])
 
-        # Step 1: Train CNN-LSTM model
-        logger.info("Starting CNN-LSTM training...")
-        pipeline = NEXUSDTPipeline(config, config_path, logger)
-        pipeline.run()
-        logger.info("CNN-LSTM training completed")
-
-        # Step 2: Train PPO agent
-        logger.info("Starting PPO training...")
-        ppo_success = train_ppo_agent(config_path)
-
-        if not ppo_success:
-            raise RuntimeError("PPO training failed")
-        logger.info("PPO training completed")
-
-        # Verify trained models exist
+        # Paths to the models
         model_paths = {
             'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
             'ppo': os.path.join(config['paths']['results_dir'], 'ppo_nexus_dt.zip')
         }
 
+        # Step 1: Check if CNN-LSTM model exists, else train
+        if os.path.exists(model_paths['cnn_lstm']):
+            logger.info("Loading existing CNN-LSTM model.")
+            cnn_lstm_model = load_model_with_initialization(
+                path=model_paths['cnn_lstm'],
+                logger=logger,
+                input_shape=tuple(config['model']['input_shape'])
+            )
+            logger.info("CNN-LSTM model loaded successfully.")
+
+            # Ensure the model is built
+            if not cnn_lstm_model.built:
+                logger.info("Model is not built. Building model with dummy input.")
+                dummy_input = np.zeros((1,) + tuple(config['model']['input_shape']), dtype=np.float32)
+                cnn_lstm_model.predict(dummy_input)
+                logger.info("Model built successfully.")
+            else:
+                logger.info("Model is already built.")
+        else:
+            logger.info("CNN-LSTM model not found. Starting training.")
+            pipeline = NEXUSDTPipeline(config, config_path, logger)
+            pipeline.run()
+            logger.info("Pipeline run completed.")
+
+            # Load the trained model
+            cnn_lstm_model = load_model_with_initialization(
+                path=model_paths['cnn_lstm'],
+                logger=logger,
+                input_shape=tuple(config['model']['input_shape'])
+            )
+            logger.info("CNN-LSTM training completed and model loaded.")
+
+            # Ensure the model is built
+            if not cnn_lstm_model.built:
+                logger.info("Model is not built after loading. Building model with dummy input.")
+                dummy_input = np.zeros((1,) + tuple(config['model']['input_shape']), dtype=np.float32)
+                cnn_lstm_model.predict(dummy_input)
+                logger.info("Model built successfully.")
+            else:
+                logger.info("Model is already built after loading.")
+
+        # Step 2: Check if PPO agent exists, else train
+        if os.path.exists(model_paths['ppo']):
+            logger.info("Loading existing PPO agent.")
+            ppo_agent = PPO.load(model_paths['ppo'])
+            logger.info("PPO agent loaded successfully.")
+        else:
+            logger.info("PPO agent not found. Starting training.")
+            ppo_success = train_ppo_agent(config_path)
+
+            if not ppo_success:
+                raise RuntimeError("PPO training failed.")
+            # Load the trained agent
+            ppo_agent = PPO.load(model_paths['ppo'])
+            logger.info("PPO training completed and agent loaded.")
+
+        # Verify trained models exist
         for name, path in model_paths.items():
             if not os.path.exists(path):
                 raise FileNotFoundError(f"{name} model not found at {path}")
+            else:
+                logger.info(f"{name} model confirmed at {path}")
 
-        # Step 3: Initialize NEXUS-DT system
-        logger.info("Initializing NEXUS-DT system...")
-        nexusdt = ExplainableNEXUSDT(config_path, logger)
+        # Step 3: Initialize NEXUS-DT system with reasoning capabilities
+        logger.info("Initializing NEXUS-DT reasoning system...")
+
+        # Initialize ExplainableNEXUSDT with loaded models
+        nexusdt = ExplainableNEXUSDT(
+            config_path=config_path,
+            logger=logger,
+            cnn_lstm_model=cnn_lstm_model,
+            ppo_agent=ppo_agent
+        )
+        logger.info("ExplainableNEXUSDT initialized successfully.")
 
         # Load test data and prepare window
         test_data = np.load(config['paths']['data_file'])
@@ -121,16 +178,18 @@ def main():
             window_size=config['model']['window_size']
         )
 
-        # Verify sensor window shape
-        expected_shape = (config['model']['window_size'], 7)
+        # Dynamically determine the number of features
+        num_features = len(config['model']['feature_names'])
+        expected_shape = (config['model']['window_size'], num_features)
         if sensor_window.shape != expected_shape:
             raise ValueError(
                 f"Incorrect sensor window shape: {sensor_window.shape}, "
                 f"expected {expected_shape}"
             )
+        logger.info(f"Sensor window prepared with shape: {sensor_window.shape}")
 
-        # Run integrated inference
-        logger.info("Running integrated inference...")
+        # Run integrated inference and reasoning
+        logger.info("Running integrated inference and reasoning...")
         result = nexusdt.adapt_and_explain(sensor_window)
 
         # Save neurosymbolic results
@@ -152,13 +211,13 @@ def main():
 
         logger.info(f"Neurosymbolic results saved to {neurosymbolic_path}")
 
-        # After saving neurosymbolic results
+        # Log Neurosymbolic Analysis Summary
         logger.info("Neurosymbolic Analysis Summary:")
         logger.info(f"- Neural Rules Extracted: {len(neurosymbolic_results['neural_rules'])}")
         logger.info(f"- Symbolic Insights Generated: {len(neurosymbolic_results['symbolic_insights'])}")
         logger.info(f"- Neural Confidence: {neurosymbolic_results['neural_confidence']:.2%}")
 
-        # Save results
+        # Save final state (assuming `nexusdt` has a `save_state` method)
         results_file = os.path.join(config['paths']['results_dir'], 'final_state.json')
         nexusdt.save_state(results_file)
 
@@ -171,5 +230,4 @@ def main():
 
 
 if __name__ == '__main__':
-    setup_project_structure()
     main()

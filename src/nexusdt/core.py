@@ -6,7 +6,7 @@ from typing import Dict, Any, Optional
 import tensorflow as tf
 from stable_baselines3 import PPO
 from src.config.config_manager import load_config
-from src.utils.model_utils import load_model
+from src.utils.model_utils import load_model_with_initialization as load_model
 from src.reasoning.reasoning import SymbolicReasoner
 import json
 import os
@@ -18,13 +18,17 @@ class NEXUSDTCore:
     Integrates the CNN-LSTM anomaly detection model, PPO agent for control, and symbolic reasoning.
     """
 
-    def __init__(self, config_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, config_path: str, logger: Optional[logging.Logger] = None,
+                 cnn_lstm_model: Optional[tf.keras.Model] = None,
+                 ppo_agent: Optional[PPO] = None):
         """
         Initialize core NEXUS-DT components.
 
         Parameters:
         - config_path (str): Path to the configuration file.
         - logger (Optional[logging.Logger]): Optional logger instance. If not provided, a default logger is created.
+        - cnn_lstm_model (Optional[tf.keras.Model]): Pre-loaded CNN-LSTM model. If None, the model will be loaded from file.
+        - ppo_agent (Optional[PPO]): Pre-loaded PPO agent. If None, the agent will be loaded from file.
         """
         self.logger = logger or logging.getLogger(__name__)
         self.config = load_config(config_path)
@@ -34,21 +38,38 @@ class NEXUSDTCore:
         self.project_root = os.path.dirname(self.config_dir)
 
         # Set results directory from configuration
-        self.results_dir = self.config['paths']['results_dir']
+        self.results_dir = os.path.join(self.project_root, self.config['paths']['results_dir'])
 
-        # Load CNN-LSTM model
-        self.cnn_lstm = self._load_cnn_lstm_model()
+        # Initialize models
+        if cnn_lstm_model is not None:
+            self.cnn_lstm = cnn_lstm_model
+            self.logger.info("CNN-LSTM model provided externally.")
+        else:
+            self.cnn_lstm = self._load_cnn_lstm_model()
 
-        # Load PPO agent
-        self.ppo_agent = self._load_ppo_agent()
+        if ppo_agent is not None:
+            self.ppo_agent = ppo_agent
+            self.logger.info("PPO agent provided externally.")
+        else:
+            self.ppo_agent = self._load_ppo_agent()
+
+        # Extract and set window_size and feature_names from configuration
+        try:
+            self.window_size = self.config['model']['window_size']
+            self.feature_names = self.config['model']['feature_names']
+            self.logger.debug(f"Window Size: {self.window_size}")
+            self.logger.debug(f"Feature Names: {self.feature_names}")
+        except KeyError as ke:
+            self.logger.error(f"Missing key in configuration: {ke}")
+            raise
 
         # Initialize symbolic reasoner with correct path
         self.reasoner = self._initialize_reasoner()
 
         # Initialize state tracking
         self.current_state = None
-        self.window_size = self.config['model']['window_size']
         self.state_history = []
+        self.decision_history = []
 
     def _load_cnn_lstm_model(self) -> tf.keras.Model:
         """
@@ -92,25 +113,40 @@ class NEXUSDTCore:
             self.logger.error(f"Failed to load PPO agent: {e}")
             raise
 
-    def _initialize_reasoner(self) -> SymbolicReasoner:
-        """Initialize symbolic reasoner with proper path resolution."""
+    def _initialize_reasoner(self) -> Optional[SymbolicReasoner]:
+        """
+        Initialize symbolic reasoner with proper path resolution.
+
+        Returns:
+            Optional[SymbolicReasoner]: Initialized symbolic reasoner or None if disabled.
+        """
         try:
             symbolic_reasoning_config = self.config.get('symbolic_reasoning', {})
             if symbolic_reasoning_config.get('enabled', False):
-                # Fix path resolution
-                rules_path = os.path.join(self.project_root,
-                                          'src', 'reasoning', 'rules.pl')
+                # Resolve rules path
+                rules_path = self.config['paths'].get('reasoning_rules_path')
+                if not rules_path:
+                    self.logger.error("Reasoning rules path not specified in configuration.")
+                    raise KeyError("reasoning_rules_path not found in configuration.")
+
+                if not os.path.isabs(rules_path):
+                    rules_path = os.path.join(self.project_root, rules_path)
 
                 if not os.path.exists(rules_path):
-                    # Try alternate path from config
-                    rules_path = os.path.join(self.project_root,
-                                              self.config['paths']['reasoning_rules_path'])
-
-                if not os.path.exists(rules_path):
+                    self.logger.error(f"Rules file not found at: {rules_path}")
                     raise FileNotFoundError(f"Rules file not found at: {rules_path}")
 
                 self.logger.info(f"Initializing Symbolic Reasoner with rules from: {rules_path}")
-                reasoner = SymbolicReasoner(rules_path)
+
+                # Define input_shape for reasoner
+                input_shape = (self.window_size, len(self.feature_names))
+
+                reasoner = SymbolicReasoner(
+                    rules_path=rules_path,
+                    input_shape=input_shape,
+                    model=self.cnn_lstm,  # Add this line
+                    logger=self.logger
+                )
                 self.logger.info("Symbolic Reasoner initialized successfully.")
                 return reasoner
             else:
@@ -142,10 +178,10 @@ class NEXUSDTCore:
                 raise ValueError(f"Expected 2D or 3D input, got shape {sensor_data.shape}")
 
             # Verify final shape
-            expected_shape = (self.window_size, 7)
+            expected_shape = (self.window_size, len(self.feature_names))
             if sensor_data.shape[1:] != expected_shape:
                 raise ValueError(
-                    f"Expected shape (batch, {self.window_size}, 7), "
+                    f"Expected shape (batch, {self.window_size}, {len(self.feature_names)}), "
                     f"got {sensor_data.shape}"
                 )
 
@@ -244,7 +280,7 @@ class NEXUSDTCore:
             state = self.update_state(sensor_data)
 
             # Extract rules from current prediction if it's a strong anomaly
-            if state['anomaly_score'] > 0.8:
+            if state['anomaly_score'] > 0.5 and self.reasoner:
                 new_rules = self.reasoner.extract_rules_from_neural_model(
                     model=self.cnn_lstm,
                     input_data=sensor_data,

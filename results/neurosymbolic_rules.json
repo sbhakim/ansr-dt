@@ -1,12 +1,672 @@
 {
-  "gradient_rules": [],
+  "gradient_rules": [
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.46).",
+      0.850288987159729
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.42).",
+      0.9393377900123596
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.46).",
+      0.8698785305023193
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998926520347595
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.999850332736969
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9999377131462097
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9999676942825317
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9999487400054932
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.43).",
+      0.999951183795929
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.63).",
+      0.9999638795852661
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9999651312828064
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.46).",
+      0.9999455213546753
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.59).",
+      0.9998260140419006
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9998177289962769
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998083710670471
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.45).",
+      0.9998224973678589
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998329877853394
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998481273651123
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.70).",
+      0.9998424649238586
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.9998494386672974
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.999828040599823
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998289346694946
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.63).",
+      0.999828040599823
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998268485069275
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.68).",
+      0.9998241066932678
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9998102784156799
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.54).",
+      0.9998171925544739
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9998089671134949
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.51).",
+      0.9998046159744263
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.45).",
+      0.9997974634170532
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9998185038566589
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.42).",
+      0.9998102188110352
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.47).",
+      0.9998019933700562
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.46).",
+      0.9998053312301636
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.54).",
+      0.9998092651367188
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9998099207878113
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.40).",
+      0.9998165369033813
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.49).",
+      0.9998106956481934
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9998142719268799
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998158812522888
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.999820351600647
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.72).",
+      0.9998388886451721
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998469352722168
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.68).",
+      0.9998405575752258
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.70).",
+      0.999846875667572
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.67).",
+      0.9998319149017334
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998348355293274
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.68).",
+      0.9998356699943542
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.70).",
+      0.9998339414596558
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998210072517395
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.74).",
+      0.999821126461029
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.29).",
+      0.9540088772773743
+    ],
+    [
+      "neural_rule_1 :- pressure(-1).",
+      0.9452094435691833
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.55).",
+      0.8106868863105774
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9998999834060669
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9999504089355469
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9999554753303528
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9999642372131348
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.47).",
+      0.9999493956565857
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.49).",
+      0.9999498128890991
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.44).",
+      0.9999625086784363
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9999643564224243
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.9999477863311768
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.51).",
+      0.9998173713684082
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.59).",
+      0.9998278021812439
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9998219013214111
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.61).",
+      0.9998165369033813
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.66).",
+      0.9998341798782349
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9998287558555603
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.76).",
+      0.9998375773429871
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998466968536377
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.66).",
+      0.9998372197151184
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.64).",
+      0.9998473525047302
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.61).",
+      0.9998190999031067
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.77).",
+      0.9998347163200378
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998448491096497
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.54).",
+      0.99983149766922
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9998375177383423
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.9998049139976501
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998287558555603
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9998294115066528
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.51).",
+      0.9998393654823303
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.49).",
+      0.999816358089447
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.999825656414032
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.46).",
+      0.9998122453689575
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.9998055100440979
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.9998170733451843
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9998114705085754
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.45).",
+      0.9998093843460083
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9998136758804321
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.64).",
+      0.9998369812965393
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.52).",
+      0.9998404383659363
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.52).",
+      0.9998295307159424
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).",
+      0.999853789806366
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).",
+      0.9998549818992615
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.72).",
+      0.9998511672019958
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.74).",
+      0.999862015247345
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.66).",
+      0.9998372793197632
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.73).",
+      0.9998304843902588
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.63).",
+      0.9998252391815186
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.9998195767402649
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.60).",
+      0.9998158812522888
+    ],
+    [
+      "neural_rule_1 :- pressure(1), efficiency_index(-0.13).",
+      0.9991225600242615
+    ],
+    [
+      "neural_rule_1 :- pressure(-1).",
+      0.9047166109085083
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.53).",
+      0.9657865762710571
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9999330043792725
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).",
+      0.99996417760849
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.999958336353302
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.59).",
+      0.99996417760849
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9999507069587708
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.45).",
+      0.999955415725708
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.52).",
+      0.999963641166687
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.44).",
+      0.9999646544456482
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.61).",
+      0.9999468326568604
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.999836266040802
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998239874839783
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9998336434364319
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.9998252391815186
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).",
+      0.9998253583908081
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.67).",
+      0.999830961227417
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.78).",
+      0.9998365640640259
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.9998368620872498
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.67).",
+      0.999833881855011
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.67).",
+      0.999832808971405
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.999809205532074
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).",
+      0.9998165965080261
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.66).",
+      0.999840259552002
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.61).",
+      0.9998428821563721
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.68).",
+      0.9998324513435364
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9998327493667603
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).",
+      0.9998137354850769
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).",
+      0.9998173713684082
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.51).",
+      0.9998185634613037
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.44).",
+      0.9998162984848022
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.38).",
+      0.9998108744621277
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).",
+      0.9998255372047424
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.44).",
+      0.9998278021812439
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.46).",
+      0.9998159408569336
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998455047607422
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).",
+      0.9998462796211243
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).",
+      0.9998427629470825
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).",
+      0.9998475909233093
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).",
+      0.9998301863670349
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.73).",
+      0.9998475313186646
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.73).",
+      0.9998553395271301
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).",
+      0.9998549818992615
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.81).",
+      0.9998592734336853
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).",
+      0.9998646974563599
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.70).",
+      0.999855101108551
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998650550842285
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.64).",
+      0.9998471736907959
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.63).",
+      0.9998224377632141
+    ],
+    [
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).",
+      0.9998388886451721
+    ]
+  ],
   "pattern_rules": [],
   "statistics": {
-    "total_rules": 4,
-    "neural_derived_rules": 0,
-    "high_confidence_rules": 0,
-    "average_confidence": 0.0,
-    "rules_confidence": {}
+    "total_rules": 50,
+    "neural_derived_rules": 46,
+    "high_confidence_rules": 46,
+    "average_confidence": 0.9882352339184802,
+    "rules_confidence": {
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.46).": 0.850288987159729,
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.42).": 0.9393377900123596,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.57).": 0.9998926520347595,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.56).": 0.999850332736969,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.55).": 0.9999377131462097,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.48).": 0.9999676942825317,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.43).": 0.999951183795929,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.63).": 0.9999638795852661,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.53).": 0.9999651312828064,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.46).": 0.9999455213546753,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.59).": 0.9998260140419006,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.62).": 0.9998083710670471,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.45).": 0.9998224973678589,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.71).": 0.9998329877853394,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.70).": 0.9998424649238586,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.65).": 0.9998494386672974,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.68).": 0.9998241066932678,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.54).": 0.9998171925544739,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.51).": 0.9998046159744263,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.58).": 0.9998185038566589,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.42).": 0.9998102188110352,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.47).": 0.9998019933700562,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.40).": 0.9998165369033813,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.49).": 0.9998106956481934,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.72).": 0.9998388886451721,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.67).": 0.9998319149017334,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.74).": 0.999821126461029,
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.29).": 0.9540088772773743,
+      "neural_rule_1 :- pressure(-1).": 0.9452094435691833,
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.55).": 0.8106868863105774,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.44).": 0.9999625086784363,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.50).": 0.9999477863311768,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.61).": 0.9998165369033813,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.66).": 0.9998341798782349,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.76).": 0.9998375773429871,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.64).": 0.9998473525047302,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.77).": 0.9998347163200378,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.52).": 0.9998404383659363,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.69).": 0.999853789806366,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.73).": 0.9998304843902588,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.60).": 0.9998158812522888,
+      "neural_rule_1 :- pressure(1), efficiency_index(-0.13).": 0.9991225600242615,
+      "neural_rule_1 :- pressure(-1), efficiency_index(0.53).": 0.9657865762710571,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.78).": 0.9998365640640259,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.38).": 0.9998108744621277,
+      "neural_rule_1 :- pressure(-1), efficiency_index(-1.81).": 0.9998592734336853
+    }
   },
-  "timestamp": "2024-11-18T06:31:43"
+  "timestamp": "2024-11-18T21:38:30"
 }

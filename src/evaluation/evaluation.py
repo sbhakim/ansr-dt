@@ -27,7 +27,7 @@ from src.reasoning.reasoning import SymbolicReasoner
 
 def get_project_root(config_path: str) -> str:
     """Get project root directory from config path."""
-    return os.path.dirname(os.path.dirname(os.path.dirname(config_path)))
+    return os.path.dirname(os.path.dirname(config_path))
 
 
 def setup_evaluation_dirs(results_dir: str) -> Dict[str, str]:
@@ -106,35 +106,47 @@ def evaluate_model(
         Dictionary containing evaluation results
     """
     logger = logging.getLogger(__name__)
+    if os.path.isdir(config_path):
+        config_path = os.path.join(config_path, 'config.yaml')
+        logger.info(f"Using config file: {config_path}")
+
+    symbolic_insights = []
 
     try:
-        reasoner = None
-        neural_insights = {}
+        # Check if config_path is a file
+        if not os.path.isfile(config_path):
+            logger.error(f"Config path is not a file: {config_path}")
+            raise ValueError(f"Config path is not a file: {config_path}")
 
-        # Setup directories
+        # Load configuration
+        with open(config_path, 'r') as f:
+            config = yaml.safe_load(f)
+
+        # Determine project root
         project_root = get_project_root(config_path)
+
+        # Initialize symbolic reasoner with correct path
+        rules_path = config['paths'].get('reasoning_rules_path')
+        if not rules_path:
+            logger.error("reasoning_rules_path not found in configuration.")
+            raise KeyError("reasoning_rules_path not found in configuration.")
+
+        if not os.path.isabs(rules_path):
+            rules_path = os.path.join(project_root, rules_path)
+
+        # Check if rules_path is a file
+        if not os.path.isfile(rules_path):
+            logger.error(f"Prolog rules file not found at: {rules_path}")
+            raise FileNotFoundError(f"Prolog rules file not found at: {rules_path}")
+
+        reasoner = SymbolicReasoner(rules_path)
+
+        # Setup evaluation directories
         eval_dirs = setup_evaluation_dirs(figures_dir)
 
         # Load and apply plot configuration
         plot_config = load_plot_config(plot_config_path)
         apply_plot_config(plot_config)
-
-        # Around line 100:
-        try:
-            # Neural rule analysis
-            if model is not None:
-                rules_path = os.path.join(project_root, 'src', 'reasoning', 'rules.pl')
-                reasoner = SymbolicReasoner(rules_path)
-                neural_insights = {
-                    'extracted_rules': len(reasoner.learned_rules) if reasoner else 0,
-                    'high_confidence_rules': len(
-                        [r for r, c in reasoner.rule_confidence.items() if c >= 0.7]) if reasoner else 0,
-                    'average_confidence': np.mean(
-                        list(reasoner.rule_confidence.values())) if reasoner and reasoner.rule_confidence else 0.0,
-                    'rules': reasoner.learned_rules if reasoner else []
-                }
-        except Exception as e:
-            logger.warning(f"Neural insights generation skipped: {e}")
 
         # Calculate metrics
         metrics = calculate_metrics(y_true, y_pred, y_scores)
@@ -145,26 +157,6 @@ def evaluate_model(
         report_path = os.path.join(eval_dirs['metrics'], 'classification_report.txt')
         with open(report_path, 'w') as f:
             f.write(metrics['classification_report'])
-
-        # Add after metrics calculation:
-        try:
-            # Neural rule analysis
-            neural_insights = {
-                'extracted_rules': len(reasoner.learned_rules),
-                'high_confidence_rules': len([r for r, c in reasoner.rule_confidence.items() if c >= 0.7]),
-                'average_confidence': np.mean(list(reasoner.rule_confidence.values())),
-                'rules': reasoner.learned_rules
-            }
-
-            # Save neurosymbolic insights
-            neural_path = os.path.join(eval_dirs['metrics'], 'neural_insights.json')
-            with open(neural_path, 'w') as f:
-                json.dump(neural_insights, f, indent=2)
-
-            evaluation_results['neural_insights'] = neural_insights
-
-        except Exception as e:
-            logger.warning(f"Neural insights generation skipped: {e}")
 
         # Generate and save plots
         plot_paths = {}
@@ -178,7 +170,6 @@ def evaluate_model(
             save_path=cm_path,
             config=plot_config
         )
-
         plot_paths['confusion_matrix'] = cm_path
 
         # ROC Curve
@@ -211,6 +202,11 @@ def evaluate_model(
                     # Prepare sample data for visualization
                     sample_data = sensor_data[:10].reshape(1, 10, -1)
 
+                    # Ensure the model is built
+                    if not model.built:
+                        logger.info("Building the model with sample data for visualization.")
+                        model.predict(sample_data)
+
                     # Generate feature importance visualization
                     importance_path = os.path.join(eval_dirs['model_viz'], 'feature_importance.png')
                     importance, success = visualizer.get_feature_importance(
@@ -239,12 +235,7 @@ def evaluate_model(
                 logger.warning(f"Model visualization warning: {viz_error}")
 
         # Symbolic reasoning
-        symbolic_insights = []
         try:
-            # Initialize symbolic reasoner with correct path
-            rules_path = os.path.join(project_root, 'src', 'reasoning', 'rules.pl')
-            reasoner = SymbolicReasoner(rules_path)
-
             # Process each timestep
             for i in range(len(sensor_data)):
                 sensor_dict = {
@@ -312,6 +303,10 @@ def load_evaluation_results(results_path: str) -> Dict[str, Any]:
         Dictionary containing loaded results
     """
     try:
+        if not os.path.isfile(results_path):
+            logging.getLogger(__name__).error(f"Results path is not a file: {results_path}")
+            raise ValueError(f"Results path is not a file: {results_path}")
+
         with open(results_path, 'r') as f:
             results = json.load(f)
         return results

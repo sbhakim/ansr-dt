@@ -68,7 +68,6 @@ class NEXUSDTPipeline:
         self.logger = logger
         self.config_dir = os.path.dirname(os.path.abspath(config_path))
         self.project_root = os.path.dirname(self.config_dir)
-        self.model = None  # Add this line
 
         # Initialize components
         self.data_loader = DataLoader(
@@ -76,9 +75,16 @@ class NEXUSDTPipeline:
             window_size=self.config['model']['window_size']
         )
 
-        # Initialize symbolic reasoner
-        rules_path = os.path.join(self.project_root, self.config['paths']['reasoning_rules_path'])
-        self.reasoner = SymbolicReasoner(rules_path)
+        # Add model state tracking
+        self.model = None
+        self.model_built = False
+
+        # Add rule extraction configuration
+        self.rule_extraction_config = {
+            'confidence_threshold': 0.7,
+            'importance_threshold': 0.5,
+            'min_support': 3  # Minimum sequences to form a rule
+        }
 
         # Define feature names for rule extraction
         self.feature_names = [
@@ -86,10 +92,17 @@ class NEXUSDTPipeline:
             'efficiency_index', 'system_state', 'performance_score'
         ]
 
+        # Configure logging for rule extraction
+        self.logger.info(f"Initialized with {len(self.feature_names)} features for rule extraction")
+        self.logger.info(f"Rule extraction thresholds: {self.rule_extraction_config}")
+
+        # Note: Removed initialization of self.reasoner here
+        # We will initialize self.reasoner later in the run method, after the model is trained
+
     def extract_neural_rules(
             self,
             model: tf.keras.Model,
-            X_test: np.ndarray,
+            input_data: np.ndarray,
             y_pred: np.ndarray,
             threshold: float = 0.8
     ) -> None:
@@ -97,24 +110,19 @@ class NEXUSDTPipeline:
         try:
             # Find strong anomaly predictions
             anomalous_idx = np.where(y_pred > threshold)[0]
-            normal_idx = np.where(y_pred < 0.2)[0]  # Clear normal cases
+            normal_idx = np.where(y_pred < 0.2)[0]
 
             if len(anomalous_idx) > 0:
-                # Get sequences for analysis
-                anomalous_sequences = X_test[anomalous_idx]
-                normal_sequences = X_test[normal_idx]
+                anomalous_sequences = input_data[anomalous_idx]
+                normal_sequences = input_data[normal_idx]
 
-                # Extract rules using gradient-based method
                 gradient_rules = self.reasoner.extract_rules_from_neural_model(
-                    model=model,
                     input_data=anomalous_sequences,
                     feature_names=self.feature_names,
                     threshold=0.7
                 )
 
-                # Extract rules from pattern analysis
                 pattern_rules = self.reasoner.analyze_neural_patterns(
-                    model=model,
                     anomalous_sequences=anomalous_sequences,
                     normal_sequences=normal_sequences,
                     feature_names=self.feature_names
@@ -188,7 +196,7 @@ class NEXUSDTPipeline:
             scaler_path = os.path.join(self.config['paths']['results_dir'], 'scaler.pkl')
             save_scaler(scaler, scaler_path, self.logger)
 
-            # 7. Create model before using it
+            # 7. Create model
             if self.config['model'].get('architecture', 'cnn_lstm') == 'cnn_lstm':
                 self.model = create_cnn_lstm_model(
                     input_shape=X_train_scaled.shape[1:],
@@ -217,6 +225,24 @@ class NEXUSDTPipeline:
             )
             self.logger.info("Model training completed.")
 
+            # Initialize Symbolic Reasoner with the trained model
+            rules_path = self.config['paths'].get('reasoning_rules_path')
+            if not os.path.isabs(rules_path):
+                rules_path = os.path.join(self.project_root, rules_path)
+
+            input_shape = (
+                self.config['model']['window_size'],
+                len(self.feature_names)
+            )
+
+            self.reasoner = SymbolicReasoner(
+                rules_path=rules_path,
+                input_shape=input_shape,
+                model=trained_model,  # Pass the trained model directly
+                logger=self.logger
+            )
+            self.logger.info("Symbolic Reasoner initialized.")
+
             # 8. Plot metrics
             figures_dir = os.path.join(self.config['paths']['results_dir'], 'visualization')
             os.makedirs(figures_dir, exist_ok=True)
@@ -237,7 +263,7 @@ class NEXUSDTPipeline:
             self.logger.info("Extracting rules from neural model...")
             self.extract_neural_rules(
                 model=trained_model,
-                X_test=X_test_scaled,
+                input_data=X_test_scaled,
                 y_pred=y_test_pred,
                 threshold=0.8
             )
@@ -253,28 +279,6 @@ class NEXUSDTPipeline:
                 sensor_data=sensor_data_test,
                 model=trained_model
             )
-
-            # After evaluating model and before saving final model
-            self.logger.info("Extracting rules from neural model predictions...")
-            anomaly_indices = np.where(y_test_pred > 0.8)[0]  # Get strong anomaly predictions
-            if len(anomaly_indices) > 0:
-                anomaly_sequences = X_test_scaled[anomaly_indices]
-                # Extract and update rules
-                new_rules = self.reasoner.extract_rules_from_neural_model(
-                    model=trained_model,
-                    input_data=anomaly_sequences,
-                    feature_names=self.feature_names,
-                    threshold=0.7
-                )
-                pattern_rules = self.reasoner.analyze_neural_patterns(
-                    model=trained_model,
-                    anomalous_sequences=anomaly_sequences,
-                    normal_sequences=X_test_scaled[y_test_pred < 0.2],
-                    feature_names=self.feature_names
-                )
-                # Update rules with confidence
-                self.reasoner.update_rules(new_rules + pattern_rules, min_confidence=0.7)
-                self.logger.info(f"Extracted {len(new_rules)} direct rules and {len(pattern_rules)} pattern rules")
 
             # 10. Save final model
             best_model_path = os.path.join(self.config['paths']['results_dir'], 'best_model.keras')
