@@ -40,6 +40,7 @@ class SymbolicReasoner:
         self.input_shape = input_shape
         self.rule_activations = []
         self.rule_confidence = {}
+        self.state_history = []
 
         self.rule_learner = RuleLearner()
         self.state_tracker = StateTracker()
