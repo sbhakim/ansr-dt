@@ -11,58 +11,73 @@ from src.rl.train_ppo import train_ppo_agent
 from src.nexusdt.explainable import ExplainableNEXUSDT
 from src.utils.model_utils import load_model_with_initialization
 from stable_baselines3 import PPO
+from src.visualization.neurosymbolic_visualizer import NeurosymbolicVisualizer
+from src.integration.adaptive_controller import AdaptiveController
 
-def setup_project_structure(project_root: str) -> None:
-    """
-    Create necessary project directories to ensure the pipeline runs smoothly.
-
-    Parameters:
-    - project_root (str): Root directory of the project.
-    """
+def setup_project_structure(project_root: str):
+    """Create necessary project directories."""
     required_dirs = [
         'src/reasoning',
         'results',
+        'results/models',
+        'results/metrics',
         'logs',
         'results/visualization',
-        'results/visualization/model_visualization'
+        'results/visualization/model_visualization',
+        'results/visualization/neurosymbolic',
+        'results/visualization/metrics',
+        'results/visualization/pattern_analysis'
     ]
 
     for dir_path in required_dirs:
         os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
 
-
 def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.ndarray:
-    """
-    Prepare sensor window with correct shape for models.
+    """Prepare sensor window with correct shape for models."""
+    try:
+        features = [
+            data['temperature'][:window_size],
+            data['vibration'][:window_size],
+            data['pressure'][:window_size],
+            data['operational_hours'][:window_size],
+            data['efficiency_index'][:window_size],
+            data['system_state'][:window_size],
+            data['performance_score'][:window_size]
+        ]
+        return np.stack(features, axis=1)
+    except KeyError as e:
+        raise KeyError(f"Missing required feature in data: {str(e)}")
+    except Exception as e:
+        raise RuntimeError(f"Error preparing sensor window: {str(e)}")
 
-    Args:
-        data: Loaded NPZ data file
-        window_size: Size of the sliding window
+def initialize_visualizers(logger: logging.Logger, figures_dir: str):
+    """Initialize visualization components."""
+    try:
+        os.makedirs(figures_dir, exist_ok=True)
+        visualizer = NeurosymbolicVisualizer(logger)
+        return visualizer
+    except Exception as e:
+        logger.error(f"Failed to initialize visualizers: {e}")
+        raise
 
-    Returns:
-        np.ndarray: Properly shaped sensor window (window_size, n_features)
-    """
-    # Extract and stack features in correct order
-    features = [
-        data['temperature'][:window_size],
-        data['vibration'][:window_size],
-        data['pressure'][:window_size],
-        data['operational_hours'][:window_size],
-        data['efficiency_index'][:window_size],
-        data['system_state'][:window_size],
-        data['performance_score'][:window_size]
-    ]
-
-    # Stack features to shape (window_size, n_features)
-    return np.stack(features, axis=1)
-
+def save_results(results: dict, path: str, logger: logging.Logger):
+    """Save results to JSON file."""
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w') as f:
+            json.dump(results, f, indent=2)
+        logger.info(f"Results saved to {path}")
+    except Exception as e:
+        logger.error(f"Failed to save results: {e}")
+        raise
 
 def main():
     """
-    Execute the NEXUS-DT pipeline:
-    1. Train CNN-LSTM for anomaly detection or load existing model
-    2. Train PPO for adaptive control or load existing agent
-    3. Run integrated system for reasoning and explanation
+    Execute the NEXUS-DT pipeline with enhanced neurosymbolic components:
+    1. Train/load CNN-LSTM for anomaly detection
+    2. Train/load PPO for adaptive control
+    3. Initialize neurosymbolic components
+    4. Run integrated system with visualization
     """
     # Determine project root directory
     project_root = os.path.dirname(os.path.abspath(__file__))
@@ -78,155 +93,141 @@ def main():
     logger.info("Starting NEXUS-DT Pipeline")
 
     try:
-        # Load configuration
+        # Load and validate configuration
         config_path = os.path.join(project_root, 'configs', 'config.yaml')
         config = load_config(config_path)
-        logger.info(f"Configuration loaded from {config_path}.")
+        logger.info(f"Configuration loaded from {config_path}")
 
-        # Update paths in config to be absolute
+        # Update paths to absolute
         config['paths']['results_dir'] = os.path.join(project_root, 'results')
         config['paths']['data_file'] = os.path.join(project_root, config['paths']['data_file'])
         config['paths']['plot_config_path'] = os.path.join(project_root, config['paths']['plot_config_path'])
         config['paths']['reasoning_rules_path'] = os.path.join(project_root, config['paths']['reasoning_rules_path'])
 
-        # Paths to the models
+        # Initialize model paths
         model_paths = {
             'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
             'ppo': os.path.join(config['paths']['results_dir'], 'ppo_nexus_dt.zip')
         }
 
-        # Step 1: Check if CNN-LSTM model exists, else train
+        # Load or train CNN-LSTM model
         if os.path.exists(model_paths['cnn_lstm']):
-            logger.info("Loading existing CNN-LSTM model.")
+            logger.info("Loading existing CNN-LSTM model")
             cnn_lstm_model = load_model_with_initialization(
                 path=model_paths['cnn_lstm'],
                 logger=logger,
                 input_shape=tuple(config['model']['input_shape'])
             )
-            logger.info("CNN-LSTM model loaded successfully.")
-
-            # Ensure the model is built
-            if not cnn_lstm_model.built:
-                logger.info("Model is not built. Building model with dummy input.")
-                dummy_input = np.zeros((1,) + tuple(config['model']['input_shape']), dtype=np.float32)
-                cnn_lstm_model.predict(dummy_input)
-                logger.info("Model built successfully.")
-            else:
-                logger.info("Model is already built.")
         else:
-            logger.info("CNN-LSTM model not found. Starting training.")
+            logger.info("Training new CNN-LSTM model")
             pipeline = NEXUSDTPipeline(config, config_path, logger)
             pipeline.run()
-            logger.info("Pipeline run completed.")
-
-            # Load the trained model
             cnn_lstm_model = load_model_with_initialization(
                 path=model_paths['cnn_lstm'],
                 logger=logger,
                 input_shape=tuple(config['model']['input_shape'])
             )
-            logger.info("CNN-LSTM training completed and model loaded.")
 
-            # Ensure the model is built
-            if not cnn_lstm_model.built:
-                logger.info("Model is not built after loading. Building model with dummy input.")
-                dummy_input = np.zeros((1,) + tuple(config['model']['input_shape']), dtype=np.float32)
-                cnn_lstm_model.predict(dummy_input)
-                logger.info("Model built successfully.")
-            else:
-                logger.info("Model is already built after loading.")
-
-        # Step 2: Check if PPO agent exists, else train
+        # Load or train PPO agent
         if os.path.exists(model_paths['ppo']):
-            logger.info("Loading existing PPO agent.")
+            logger.info("Loading existing PPO agent")
             ppo_agent = PPO.load(model_paths['ppo'])
-            logger.info("PPO agent loaded successfully.")
         else:
-            logger.info("PPO agent not found. Starting training.")
+            logger.info("Training new PPO agent")
             ppo_success = train_ppo_agent(config_path)
-
             if not ppo_success:
-                raise RuntimeError("PPO training failed.")
-            # Load the trained agent
+                raise RuntimeError("PPO training failed")
             ppo_agent = PPO.load(model_paths['ppo'])
-            logger.info("PPO training completed and agent loaded.")
 
-        # Verify trained models exist
+        # Verify models
         for name, path in model_paths.items():
             if not os.path.exists(path):
                 raise FileNotFoundError(f"{name} model not found at {path}")
-            else:
-                logger.info(f"{name} model confirmed at {path}")
+            logger.info(f"{name} model verified at {path}")
 
-        # Step 3: Initialize NEXUS-DT system with reasoning capabilities
-        logger.info("Initializing NEXUS-DT reasoning system...")
-
-        # Initialize ExplainableNEXUSDT with loaded models
+        # Initialize NEXUS-DT system
+        logger.info("Initializing NEXUS-DT system")
         nexusdt = ExplainableNEXUSDT(
             config_path=config_path,
             logger=logger,
             cnn_lstm_model=cnn_lstm_model,
             ppo_agent=ppo_agent
         )
-        logger.info("ExplainableNEXUSDT initialized successfully.")
 
-        # Load test data and prepare window
+        # Load test data
         test_data = np.load(config['paths']['data_file'])
         sensor_window = prepare_sensor_window(
             data=test_data,
             window_size=config['model']['window_size']
         )
 
-        # Dynamically determine the number of features
-        num_features = len(config['model']['feature_names'])
-        expected_shape = (config['model']['window_size'], num_features)
-        if sensor_window.shape != expected_shape:
-            raise ValueError(
-                f"Incorrect sensor window shape: {sensor_window.shape}, "
-                f"expected {expected_shape}"
-            )
-        logger.info(f"Sensor window prepared with shape: {sensor_window.shape}")
+        # Initialize visualizers
+        figures_dir = os.path.join(config['paths']['results_dir'], 'visualization')
+        visualizer = initialize_visualizers(logger, figures_dir)
 
-        # Run integrated inference and reasoning
-        logger.info("Running integrated inference and reasoning...")
+        # Run integrated inference
+        logger.info("Running integrated inference")
         result = nexusdt.adapt_and_explain(sensor_window)
 
-        # Save neurosymbolic results
+        # Generate visualizations with error handling
+        try:
+            if hasattr(nexusdt.reasoner, 'get_rule_activations'):
+                visualizer.visualize_rule_activations(
+                    activations=nexusdt.reasoner.get_rule_activations(),
+                    save_path=os.path.join(figures_dir, 'neurosymbolic/rule_activations.png')
+                )
+
+            if hasattr(nexusdt.reasoner, 'state_tracker'):
+                visualizer.plot_state_transitions(
+                    transition_matrix=nexusdt.reasoner.state_tracker.get_transition_probabilities(),
+                    save_path=os.path.join(figures_dir, 'neurosymbolic/state_transitions.png')
+                )
+        except Exception as viz_error:
+            logger.warning(f"Visualization error: {viz_error}")
+
+        # Prepare results
         neurosymbolic_results = {
-            'neural_rules': nexusdt.reasoner.learned_rules,
-            'rule_confidence': nexusdt.reasoner.rule_confidence,
+            'neural_rules': getattr(nexusdt.reasoner, 'learned_rules', []),
+            'rule_confidence': getattr(nexusdt.reasoner, 'rule_confidence', {}),
             'symbolic_insights': result.get('insights', []),
             'neural_confidence': result.get('confidence', 0.0),
+            'control_parameters': result.get('control_parameters', {}),
+            'state_transitions': result.get('state_transitions', []),
             'timestamp': str(np.datetime64('now'))
         }
 
-        neurosymbolic_path = os.path.join(
-            config['paths']['results_dir'],
-            'neurosymbolic_results.json'
+        # Save results
+        save_results(
+            results=neurosymbolic_results,
+            path=os.path.join(config['paths']['results_dir'], 'neurosymbolic_results.json'),
+            logger=logger
         )
 
-        with open(neurosymbolic_path, 'w') as f:
-            json.dump(neurosymbolic_results, f, indent=2)
+        # Save final state
+        save_results(
+            results={'current_state': nexusdt.current_state,
+                    'state_history': nexusdt.state_history[-100:]},
+            path=os.path.join(config['paths']['results_dir'], 'final_state.json'),
+            logger=logger
+        )
 
-        logger.info(f"Neurosymbolic results saved to {neurosymbolic_path}")
-
-        # Log Neurosymbolic Analysis Summary
-        logger.info("Neurosymbolic Analysis Summary:")
+        # Log summary
+        logger.info("\nNeurosymbolic Analysis Summary:")
         logger.info(f"- Neural Rules Extracted: {len(neurosymbolic_results['neural_rules'])}")
         logger.info(f"- Symbolic Insights Generated: {len(neurosymbolic_results['symbolic_insights'])}")
         logger.info(f"- Neural Confidence: {neurosymbolic_results['neural_confidence']:.2%}")
+        logger.info(f"- Control Parameters Applied: {len(neurosymbolic_results['control_parameters'])}")
+        logger.info(f"Final Explanation: {result.get('explanation', '')}\n")
 
-        # Save final state (assuming `nexusdt` has a `save_state` method)
-        results_file = os.path.join(config['paths']['results_dir'], 'final_state.json')
-        nexusdt.save_state(results_file)
+        logger.info("Pipeline completed successfully")
+        return True
 
-        logger.info(f"Pipeline completed successfully. Results saved to {results_file}")
-        logger.info(f"System explanation: {result.get('explanation', '')}")
-
+    except KeyboardInterrupt:
+        logger.info("Pipeline interrupted by user")
+        return False
     except Exception as e:
-        logger.exception(f"Pipeline failed: {e}")
+        logger.exception(f"Pipeline failed: {str(e)}")
         raise
-
 
 if __name__ == '__main__':
     main()

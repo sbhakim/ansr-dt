@@ -1,5 +1,3 @@
-# src/evaluation/pattern_metrics.py
-
 import numpy as np
 from typing import Dict, List
 import logging
@@ -7,33 +5,34 @@ import logging
 
 class PatternEvaluator:
     def __init__(self):
-        """Initialize pattern evaluator."""
         self.logger = logging.getLogger(__name__)
 
-    def evaluate_rules(self,
-                       predictions: np.ndarray,
-                       actual_anomalies: np.ndarray,
-                       rule_activations: List[Dict]) -> Dict[str, float]:
-        """
-        Evaluate effectiveness of learned rules.
-        """
+    def evaluate_rules(self, rules: List[Dict], predictions: np.ndarray, actual: np.ndarray) -> Dict:
+        """Evaluate effectiveness of learned rules."""
         try:
-            total_rules = len(rule_activations)
+            total_rules = len(rules)
             correct_predictions = 0
+            rule_coverage = 0
 
-            for activation in rule_activations:
-                idx = activation['index']
-                if idx < len(predictions) and predictions[idx] == actual_anomalies[idx]:
-                    correct_predictions += 1
+            # Evaluate each rule's effectiveness
+            for rule in rules:
+                condition_met = rule['condition_met']
+                idx = rule['timestep']
 
-            accuracy = correct_predictions / total_rules if total_rules > 0 else 0
+                if idx < len(predictions):
+                    if condition_met and predictions[idx] == actual[idx]:
+                        correct_predictions += 1
+                    rule_coverage += 1
 
-            return {
-                'rule_accuracy': accuracy,
+            metrics = {
+                'accuracy': correct_predictions / total_rules if total_rules > 0 else 0,
+                'coverage': rule_coverage / len(predictions),
                 'total_rules': total_rules,
-                'correct_predictions': correct_predictions
+                'valid_predictions': correct_predictions
             }
 
+            return metrics
+
         except Exception as e:
-            self.logger.error(f"Error evaluating rules: {e}")
+            self.logger.error(f"Error in rule evaluation: {e}")
             return {}

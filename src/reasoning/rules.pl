@@ -287,3 +287,151 @@ neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(
 neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).  % Confidence: 1.00, Extracted: 2024-11-19T05:56:39
 neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).  % Confidence: 1.00, Extracted: 2024-11-19T05:56:39
 
+% New Neural-Extracted Rules
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).  % Confidence: 0.86, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).  % Confidence: 0.86, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).  % Confidence: 0.83, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).  % Confidence: 0.98, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).  % Confidence: 0.88, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).  % Confidence: 1.00, Extracted: 2024-11-19T06:03:21
+
+% New Neural-Extracted Rules
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).  % Confidence: 0.87, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).  % Confidence: 0.90, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).  % Confidence: 0.89, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).  % Confidence: 0.87, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).  % Confidence: 1.00, Extracted: 2024-11-19T06:35:34
+
+% New Neural-Extracted Rules
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).  % Confidence: 0.84, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).  % Confidence: 0.93, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).  % Confidence: 0.97, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).  % Confidence: 0.88, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.55), pressure(-1),efficiency_index(0.55).  % Confidence: 0.85, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).  % Confidence: 0.99, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).  % Confidence: 0.97, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).  % Confidence: 0.95, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).  % Confidence: 1.00, Extracted: 2024-11-19T06:50:40
+

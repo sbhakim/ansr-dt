@@ -38,6 +38,8 @@ class SymbolicReasoner:
         self.rule_confidence = {}
         self.model = model  # Use the provided model if available
         self.input_shape = input_shape
+        self.rule_activations = []
+        self.rule_confidence = {}
 
         self.rule_learner = RuleLearner()
         self.state_tracker = StateTracker()
@@ -437,29 +439,74 @@ class SymbolicReasoner:
             self.logger.error(f"Error updating Prolog rules: {e}")
             raise
 
-    def reason(self, sensor_data: Dict[str, Any]) -> List[str]:
+    def get_rule_activations(self) -> List[Dict]:
         """
-        Apply both base and learned rules to the provided sensor data to generate insights.
-
-        Parameters:
-            sensor_data (Dict[str, Any]): Dictionary containing sensor readings.
+        Get list of rule activations with confidence scores.
 
         Returns:
-            List[str]: List of insights generated from applying the rules.
+            List[Dict]: List of rule activations with metadata
         """
-        insights = []
         try:
-            # Extract and cast sensor values
-            temperature = float(sensor_data.get('temperature', 0))
-            vibration = float(sensor_data.get('vibration', 0))
-            pressure = float(sensor_data.get('pressure', 0))
-            efficiency_index = float(sensor_data.get('efficiency_index', 0))
-            operational_hours = int(sensor_data.get('operational_hours', 0))
+            activations = []
+            for rule, confidence in self.rule_confidence.items():
+                activation = {
+                    'rule': rule,
+                    'confidence': confidence,
+                    'timestep': len(self.rule_activations),
+                    'type': 'learned' if rule.startswith('neural_rule') else 'base'
+                }
+                activations.append(activation)
+            return activations
+        except Exception as e:
+            self.logger.error(f"Error getting rule activations: {e}")
+            return []
 
-            # Log extracted sensor data
-            self.logger.debug(f"Sensor Data - Temperature: {temperature}, Vibration: {vibration}, "
-                              f"Pressure: {pressure}, Efficiency Index: {efficiency_index}, "
-                              f"Operational Hours: {operational_hours}")
+
+    def reason(self, sensor_dict: Dict[str, float]) -> List[str]:
+        """
+        Apply symbolic reasoning rules to sensor data and generate insights.
+
+        Args:
+            sensor_dict (Dict[str, float]): Dictionary containing sensor readings with keys:
+                - temperature
+                - vibration
+                - pressure
+                - operational_hours
+                - efficiency_index
+                - system_state
+                - performance_score
+
+        Returns:
+            List[str]: List of insights generated from rule application
+        """
+        try:
+            insights = []
+
+            # Input validation
+            required_keys = [
+                'temperature', 'vibration', 'pressure',
+                'operational_hours', 'efficiency_index',
+                'system_state', 'performance_score'
+            ]
+
+            # Verify all required keys exist
+            missing_keys = [key for key in required_keys if key not in sensor_dict]
+            if missing_keys:
+                self.logger.error(f"Missing required sensor values: {missing_keys}")
+                return insights
+
+            # Extract and validate sensor values
+            try:
+                temperature = float(sensor_dict['temperature'])
+                vibration = float(sensor_dict['vibration'])
+                pressure = float(sensor_dict['pressure'])
+                efficiency_index = float(sensor_dict['efficiency_index'])
+                operational_hours = float(sensor_dict['operational_hours'])
+                system_state = int(sensor_dict['system_state'])
+                performance_score = float(sensor_dict['performance_score'])
+            except (ValueError, TypeError) as e:
+                self.logger.error(f"Invalid sensor value format: {e}")
+                return insights
 
             # Apply base rules
             base_queries = {
@@ -469,42 +516,59 @@ class SymbolicReasoner:
                 "Maintenance Needed (Base Rule)": f"maintenance_needed({operational_hours})."
             }
 
+            # Execute base rule queries
             for insight, query in base_queries.items():
                 try:
-                    self.logger.debug(f"Executing Prolog query: {query}")
                     if list(self.prolog.query(query)):
                         insights.append(insight)
                         self.logger.info(f"Prolog Query Success: {insight}")
-                    else:
-                        self.logger.debug(f"Prolog Query Failed: {insight}")
                 except Exception as e:
-                    self.logger.warning(f"Error executing Prolog query for {insight}: {e}")
+                    self.logger.warning(f"Query failed for {insight}: {e}")
+                    continue
 
-            # Apply neural-extracted rules
-            for rule in self.learned_rules:
-                try:
-                    rule_name = rule.split(":-")[0].strip()
-                    rule_query = f"{rule_name}."
-                    self.logger.debug(f"Executing Prolog query: {rule_query}")
-                    if list(self.prolog.query(rule_query)):
-                        confidence = self.rule_confidence.get(rule, 0.0)
-                        insight = f"Neural Rule {rule_name} (Confidence: {confidence:.2f})"
-                        insights.append(insight)
-                        self.logger.info(f"Prolog Query Success: {insight}")
-                    else:
-                        self.logger.debug(f"Prolog Query Failed: Neural Rule {rule_name}")
-                except Exception as e:
-                    self.logger.warning(f"Error executing Prolog query for neural rule '{rule}': {e}")
+            # Apply learned rules if available
+            if hasattr(self, 'learned_rules'):
+                for rule in self.learned_rules:
+                    try:
+                        rule_name = rule.split(":-")[0].strip()
+                        if list(self.prolog.query(f"{rule_name}.")):
+                            confidence = self.rule_confidence.get(rule, 0.0)
+                            insight = f"Learned Rule {rule_name} (Confidence: {confidence:.2f})"
+                            insights.append(insight)
+                            self.logger.info(f"Learned Rule Activated: {insight}")
+                    except Exception as e:
+                        self.logger.warning(f"Failed to apply learned rule {rule}: {e}")
+                        continue
 
-            if not insights:
-                self.logger.info("No insights generated from reasoning.")
+            # Record rule activation
+            activation_record = {
+                'timestep': len(self.rule_activations) if hasattr(self, 'rule_activations') else 0,
+                'insights': insights,
+                'sensor_values': sensor_dict,
+                'system_state': system_state,
+                'performance': performance_score
+            }
 
-            self.logger.debug(f"Generated Insights: {insights}")
+            # Update state history
+            if hasattr(self, 'rule_activations'):
+                self.rule_activations.append(activation_record)
+                # Keep only last 1000 activations
+                if len(self.rule_activations) > 1000:
+                    self.rule_activations = self.rule_activations[-1000:]
+
+            # Update state transition matrix if state tracker exists
+            if hasattr(self, 'state_tracker'):
+                self.state_tracker.update({
+                    'system_state': system_state,
+                    'sensor_readings': sensor_dict,
+                    'insights': insights
+                })
+
             return insights
 
         except Exception as e:
-            self.logger.error(f"Error during reasoning process: {e}")
-            raise
+            self.logger.error(f"Error during reasoning process: {str(e)}")
+            return []
 
     def get_rule_statistics(self) -> Dict[str, Any]:
         """

@@ -2,674 +2,669 @@
   "gradient_rules": [
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).",
-      0.9771801829338074
-    ],
-    [
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.42), pressure(-1),efficiency_index(0.42).",
-      0.9092196226119995
+      0.8354181051254272
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).",
-      0.9774355292320251
+      0.8574420809745789
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).",
-      0.9995800852775574
+      0.9984309673309326
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.998803436756134
+      0.9299397468566895
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9998997449874878
+      0.9992395639419556
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.9998895525932312
+      0.9995599389076233
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.999928891658783
+      0.9997240900993347
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).",
-      0.9999150037765503
+      0.9997803568840027
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).",
-      0.9999490976333618
+      0.9999409914016724
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.9999524354934692
+      0.9999492168426514
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).",
-      0.9999391436576843
+      0.9999459385871887
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).",
-      0.9999098777770996
+      0.9999264478683472
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.999907910823822
+      0.9999281764030457
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9999071955680847
+      0.9999292492866516
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).",
-      0.9999092221260071
+      0.9999297261238098
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.9999105334281921
+      0.9999322891235352
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.999911367893219
+      0.9999322891235352
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).",
-      0.9999098777770996
+      0.9999323487281799
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9999106526374817
+      0.9999323487281799
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9998972415924072
+      0.9999315142631531
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.9998981952667236
+      0.999933123588562
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).",
-      0.9998952746391296
+      0.9999324083328247
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.9998980164527893
+      0.9999337196350098
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).",
-      0.9998931884765625
+      0.9999332427978516
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.9998841881752014
+      0.9999328255653381
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).",
-      0.9998831152915955
+      0.9999322891235352
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9999011754989624
+      0.9999314546585083
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).",
-      0.9998999834060669
+      0.9999313354492188
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).",
-      0.9999017715454102
+      0.9999297857284546
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).",
-      0.9999061226844788
+      0.9999279379844666
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).",
-      0.9999067783355713
+      0.9999260306358337
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).",
-      0.9999009966850281
+      0.9999247193336487
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).",
-      0.9999103546142578
+      0.9999253749847412
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).",
-      0.9999115467071533
+      0.9999238848686218
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.999907910823822
+      0.9999224543571472
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).",
-      0.9999117851257324
+      0.9999209642410278
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).",
-      0.9999062418937683
+      0.9999235272407532
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.9999162554740906
+      0.9999231696128845
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.9999139904975891
+      0.9999234080314636
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.9999157786369324
+      0.9999241232872009
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).",
-      0.9999156594276428
+      0.9999276995658875
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.9999148845672607
+      0.9999315142631531
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).",
-      0.9999095797538757
+      0.9999315738677979
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).",
-      0.9999149441719055
+      0.999933123588562
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).",
-      0.9999023079872131
+      0.9999324679374695
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.9999005794525146
+      0.9999333620071411
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).",
-      0.9999001622200012
+      0.9999321103096008
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).",
-      0.9998908638954163
+      0.9999337196350098
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9998864531517029
+      0.9999329447746277
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).",
-      0.9998905658721924
+      0.9999343156814575
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).",
-      0.9840167760848999
+      0.9737563133239746
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).",
-      0.9664791226387024
+      0.8843806385993958
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.55), pressure(-1),efficiency_index(0.55).",
-      0.9470446109771729
+      0.8461410999298096
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).",
-      0.9995908737182617
+      0.9896884560585022
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.9998077154159546
+      0.9953778982162476
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9999366998672485
+      0.9992756247520447
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.9999186396598816
+      0.998954176902771
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).",
-      0.9999406337738037
+      0.9998582005500793
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).",
-      0.9999173283576965
+      0.9997478723526001
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).",
-      0.9999458193778992
+      0.9999184608459473
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).",
-      0.9999527931213379
+      0.9999445676803589
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.999943196773529
+      0.9999447464942932
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).",
-      0.9999088048934937
+      0.999924898147583
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).",
-      0.9999108910560608
+      0.9999252557754517
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.9999082684516907
+      0.9999268054962158
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).",
-      0.9999063611030579
+      0.9999284744262695
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).",
-      0.9999091029167175
+      0.999928891658783
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.9999024868011475
+      0.9999285340309143
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).",
-      0.9999070167541504
+      0.9999331831932068
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9999058842658997
+      0.9999359250068665
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).",
-      0.9999035596847534
+      0.9999350905418396
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).",
-      0.9999021887779236
+      0.9999361634254456
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).",
-      0.9998888373374939
+      0.9999332427978516
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).",
-      0.9999020099639893
+      0.9999364614486694
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9998965263366699
+      0.999934732913971
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).",
-      0.9999004602432251
+      0.9999366402626038
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.999893844127655
+      0.9999342560768127
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.9998965859413147
+      0.9999322295188904
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.9999065399169922
+      0.999930202960968
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).",
-      0.9999070763587952
+      0.9999302625656128
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).",
-      0.9999092221260071
+      0.9999299049377441
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).",
-      0.9999015927314758
+      0.9999262690544128
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9999052882194519
+      0.9999265074729919
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).",
-      0.9999036192893982
+      0.9999265670776367
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.9999048709869385
+      0.9999268054962158
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.9999066591262817
+      0.999926745891571
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.9999074339866638
+      0.999925971031189
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).",
-      0.9999039173126221
+      0.9999257326126099
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.9999070763587952
+      0.9999252557754517
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).",
-      0.999916136264801
+      0.9999277591705322
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).",
-      0.9999150037765503
+      0.9999285936355591
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).",
-      0.9999138712882996
+      0.9999294877052307
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).",
-      0.9999164342880249
+      0.9999285936355591
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).",
-      0.9999168515205383
+      0.9999337792396545
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).",
-      0.9999099373817444
+      0.9999315142631531
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).",
-      0.9999169111251831
+      0.999933660030365
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).",
-      0.9999058842658997
+      0.9999334812164307
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).",
-      0.9998884201049805
+      0.9999359846115112
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).",
-      0.9998892545700073
+      0.9999346733093262
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9998850226402283
+      0.9999352693557739
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).",
-      0.9998880624771118
+      0.9999346733093262
     ],
     [
       "neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).",
-      0.9973099231719971
+      0.9738128185272217
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).",
-      0.9774320721626282
+      0.8147023916244507
     ],
     [
       "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).",
-      0.9789252281188965
+      0.9509401321411133
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).",
-      0.9998348355293274
+      0.9991509318351746
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).",
-      0.9998725056648254
+      0.9996305704116821
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9999340176582336
+      0.9997287392616272
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).",
-      0.9999232292175293
+      0.9996822476387024
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.9999291300773621
+      0.9998903274536133
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).",
-      0.9999088048934937
+      0.9998093843460083
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).",
-      0.9999478459358215
+      0.9999414086341858
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).",
-      0.999951958656311
+      0.9999507069587708
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).",
-      0.9999399781227112
+      0.9999489188194275
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.9999071359634399
+      0.9999322891235352
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9999067187309265
+      0.9999318718910217
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9999058842658997
+      0.9999306797981262
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9998995661735535
+      0.9999324679374695
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).",
-      0.9999062418937683
+      0.9999340772628784
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).",
-      0.999900221824646
+      0.9999328255653381
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).",
-      0.9999059438705444
+      0.9999356865882874
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9998942017555237
+      0.9999346733093262
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).",
-      0.9998815059661865
+      0.999936580657959
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).",
-      0.9998877644538879
+      0.9999362826347351
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.9998791217803955
+      0.9999350905418396
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).",
-      0.9998930096626282
+      0.9999367594718933
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).",
-      0.9998956918716431
+      0.9999366998672485
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).",
-      0.9998964071273804
+      0.9999353289604187
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).",
-      0.9998945593833923
+      0.9999358654022217
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).",
-      0.9998903870582581
+      0.9999339580535889
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).",
-      0.9998809099197388
+      0.9999325275421143
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).",
-      0.9998930096626282
+      0.9999338984489441
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).",
-      0.9999008178710938
+      0.9999324679374695
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).",
-      0.999899685382843
+      0.9999282360076904
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).",
-      0.9999020099639893
+      0.9999300837516785
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).",
-      0.9999126195907593
+      0.9999290704727173
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).",
-      0.9999152421951294
+      0.9999284744262695
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).",
-      0.9999111294746399
+      0.9999277591705322
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.9999175667762756
+      0.9999288320541382
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).",
-      0.9999174475669861
+      0.9999301433563232
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).",
-      0.9999139904975891
+      0.9999275207519531
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).",
-      0.999917209148407
+      0.9999299049377441
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).",
-      0.9999094009399414
+      0.9999290108680725
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).",
-      0.9999125599861145
+      0.9999344348907471
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).",
-      0.9999077916145325
+      0.9999346137046814
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).",
-      0.999912679195404
+      0.9999341368675232
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).",
-      0.9999091029167175
+      0.999937117099762
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).",
-      0.9999070763587952
+      0.9999417662620544
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).",
-      0.9998957514762878
+      0.9999384880065918
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.9999063611030579
+      0.9999415874481201
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).",
-      0.9998907446861267
+      0.9999372959136963
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).",
-      0.9998854398727417
+      0.9999363422393799
     ],
     [
       "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).",
-      0.999890148639679
+      0.9999365210533142
     ]
   ],
   "pattern_rules": [],
   "statistics": {
-    "total_rules": 53,
-    "neural_derived_rules": 49,
-    "high_confidence_rules": 49,
-    "average_confidence": 0.9949909886535333,
+    "total_rules": 52,
+    "neural_derived_rules": 48,
+    "high_confidence_rules": 48,
+    "average_confidence": 0.9870385974645615,
     "rules_confidence": {
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).": 0.9771801829338074,
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.42), pressure(-1),efficiency_index(0.42).": 0.9092196226119995,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).": 0.9995800852775574,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).": 0.998803436756134,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).": 0.9998997449874878,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).": 0.9998895525932312,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).": 0.9999150037765503,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).": 0.9999490976333618,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).": 0.9999524354934692,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).": 0.9999391436576843,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).": 0.9999098777770996,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).": 0.9999071955680847,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).": 0.9999092221260071,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).": 0.9999105334281921,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).": 0.9999098777770996,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).": 0.9999106526374817,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).": 0.9998931884765625,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).": 0.9998831152915955,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).": 0.9998999834060669,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).": 0.9999061226844788,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).": 0.9999067783355713,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).": 0.9999009966850281,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).": 0.9999117851257324,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).": 0.9999062418937683,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).": 0.9999139904975891,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).": 0.9999156594276428,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).": 0.9999023079872131,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).": 0.9998905658721924,
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).": 0.9840167760848999,
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).": 0.9664791226387024,
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.55), pressure(-1),efficiency_index(0.55).": 0.9470446109771729,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).": 0.9995908737182617,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).": 0.9999458193778992,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).": 0.999943196773529,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).": 0.9999063611030579,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).": 0.9999091029167175,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).": 0.9999070167541504,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).": 0.9999021887779236,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).": 0.9999020099639893,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).": 0.9999150037765503,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).": 0.9999164342880249,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).": 0.9998884201049805,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).": 0.9998880624771118,
-      "neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).": 0.9973099231719971,
-      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).": 0.9789252281188965,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).": 0.9998348355293274,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).": 0.9999059438705444,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).": 0.9999020099639893,
-      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).": 0.9999091029167175
+      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.46), pressure(-1),efficiency_index(0.46).": 0.8354181051254272,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), state_transition(0->1), pressure(-1),efficiency_index(-1.57).": 0.9984309673309326,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), pressure(-1),efficiency_index(-1.56).": 0.9299397468566895,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.55), pressure(-1),efficiency_index(-1.55).": 0.9992395639419556,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.48), pressure(-1),efficiency_index(-1.48).": 0.9995599389076233,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.43), pressure(-1),efficiency_index(-1.43).": 0.9997803568840027,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.63), pressure(-1),efficiency_index(-1.63).": 0.9999409914016724,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.53), pressure(-1),efficiency_index(-1.53).": 0.9999492168426514,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.46), pressure(-1),efficiency_index(-1.46).": 0.9999459385871887,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.59), pressure(-1),efficiency_index(-1.59).": 0.9999264478683472,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.62), pressure(-1),efficiency_index(-1.62).": 0.9999292492866516,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.45), pressure(-1),efficiency_index(-1.45).": 0.9999297261238098,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.71), pressure(-1),efficiency_index(-1.71).": 0.9999322891235352,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.70), pressure(-1),efficiency_index(-1.70).": 0.9999323487281799,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.65), pressure(-1),efficiency_index(-1.65).": 0.9999323487281799,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.68), pressure(-1),efficiency_index(-1.68).": 0.9999332427978516,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.54), pressure(-1),efficiency_index(-1.54).": 0.9999322891235352,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.51), pressure(-1),efficiency_index(-1.51).": 0.9999313354492188,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), pressure(-1),efficiency_index(-1.58).": 0.9999279379844666,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.42), pressure(-1),efficiency_index(-1.42).": 0.9999260306358337,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.47), pressure(-1),efficiency_index(-1.47).": 0.9999247193336487,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.40), pressure(-1),efficiency_index(-1.40).": 0.9999209642410278,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.49), pressure(-1),efficiency_index(-1.49).": 0.9999235272407532,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.57), pressure(-1),efficiency_index(-1.57).": 0.9999234080314636,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.72), pressure(-1),efficiency_index(-1.72).": 0.9999276995658875,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.67), pressure(-1),efficiency_index(-1.67).": 0.9999324679374695,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.74), pressure(-1),efficiency_index(-1.74).": 0.9999343156814575,
+      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.29), pressure(-1),efficiency_index(0.29).": 0.9737563133239746,
+      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.65), pressure(-1),efficiency_index(0.65).": 0.8843806385993958,
+      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.55), pressure(-1),efficiency_index(0.55).": 0.8461410999298096,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.56), state_transition(0->1), pressure(-1),efficiency_index(-1.56).": 0.9896884560585022,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.44), pressure(-1),efficiency_index(-1.44).": 0.9999184608459473,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.50), pressure(-1),efficiency_index(-1.50).": 0.9999447464942932,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.61), pressure(-1),efficiency_index(-1.61).": 0.9999284744262695,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.66), pressure(-1),efficiency_index(-1.66).": 0.999928891658783,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.76), pressure(-1),efficiency_index(-1.76).": 0.9999331831932068,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.64), pressure(-1),efficiency_index(-1.64).": 0.9999361634254456,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.77), pressure(-1),efficiency_index(-1.77).": 0.9999364614486694,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.52), pressure(-1),efficiency_index(-1.52).": 0.9999285936355591,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.69), pressure(-1),efficiency_index(-1.69).": 0.9999285936355591,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.73), pressure(-1),efficiency_index(-1.73).": 0.9999359846115112,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.60), pressure(-1),efficiency_index(-1.60).": 0.9999346733093262,
+      "neural_rule_1 :- temperature(1), vibration(1), pressure(1), efficiency_index(-0.13), state_transition(0->0), pressure(1),efficiency_index(-0.13).": 0.9738128185272217,
+      "neural_rule_1 :- temperature(0), vibration(0), pressure(-1), efficiency_index(0.53), pressure(-1),efficiency_index(0.53).": 0.9509401321411133,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.58), state_transition(0->1), pressure(-1),efficiency_index(-1.58).": 0.9991509318351746,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.78), pressure(-1),efficiency_index(-1.78).": 0.9999356865882874,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.38), pressure(-1),efficiency_index(-1.38).": 0.9999300837516785,
+      "neural_rule_1 :- temperature(-1), vibration(-1), pressure(-1), efficiency_index(-1.81), pressure(-1),efficiency_index(-1.81).": 0.999937117099762
     }
   },
-  "timestamp": "2024-11-19T05:56:39"
+  "timestamp": "2024-11-19T06:50:40"
 }

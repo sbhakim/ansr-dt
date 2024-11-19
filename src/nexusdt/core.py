@@ -8,6 +8,7 @@ from stable_baselines3 import PPO
 from src.config.config_manager import load_config
 from src.utils.model_utils import load_model_with_initialization as load_model
 from src.reasoning.reasoning import SymbolicReasoner
+from src.integration.adaptive_controller import AdaptiveController
 import json
 import os
 
@@ -39,6 +40,18 @@ class NEXUSDTCore:
 
         # Set results directory from configuration
         self.results_dir = os.path.join(self.project_root, self.config['paths']['results_dir'])
+
+        self.adaptive_controller = AdaptiveController(
+            window_size=self.config['model']['window_size']
+        )
+
+        # Initialize control parameters
+        self.control_params = {
+            'temperature_adjustment': 0.0,
+            'vibration_adjustment': 0.0,
+            'pressure_adjustment': 0.0,
+            'efficiency_target': 0.8
+        }
 
         # Initialize models
         if cnn_lstm_model is not None:
@@ -219,51 +232,187 @@ class NEXUSDTCore:
 
     def update_state(self, sensor_data: np.ndarray) -> Dict[str, Any]:
         """
-        Update system state using all components.
+        Update system state using all components: neural, symbolic, and adaptive control.
 
         Args:
-            sensor_data (np.ndarray): Input sensor data.
+            sensor_data (np.ndarray): Input sensor data of shape (timesteps, features)
+                                     or (batch, timesteps, features)
 
         Returns:
-            Dict[str, Any]: Updated state information.
+            Dict[str, Any]: Complete system state including predictions, insights,
+                           control parameters, and history
+
+        Raises:
+            ValueError: If sensor data shape is invalid
+            RuntimeError: If state update fails
         """
         try:
-            # Preprocess data
-            data = self.preprocess_data(sensor_data)
+            # 1. Validate input shape
+            if not isinstance(sensor_data, np.ndarray):
+                raise ValueError(f"Expected numpy array, got {type(sensor_data)}")
 
-            # Get CNN-LSTM predictions
-            anomaly_scores = self.cnn_lstm.predict(data, verbose=0)
+            if len(sensor_data.shape) not in [2, 3]:
+                raise ValueError(f"Expected 2D or 3D array, got shape {sensor_data.shape}")
 
-            # Prepare observation for PPO
-            obs = self._prepare_ppo_observation(data)
-            action, _ = self.ppo_agent.predict(obs, deterministic=True)
+            # 2. Preprocess data
+            try:
+                data = self.preprocess_data(sensor_data)
+                self.logger.debug(f"Preprocessed data shape: {data.shape}")
+            except Exception as prep_error:
+                raise RuntimeError(f"Data preprocessing failed: {str(prep_error)}")
 
-            # Get symbolic insights from last timestep if symbolic reasoning is enabled
-            if self.reasoner:
+            # 3. Get CNN-LSTM predictions with error handling
+            try:
+                anomaly_scores = self.cnn_lstm.predict(data, verbose=0)
+                anomaly_detected = float(anomaly_scores[0]) > 0.5
+                prediction_confidence = float(anomaly_scores[0])
+                self.logger.debug(
+                    f"Anomaly prediction - Score: {prediction_confidence:.3f}, Detected: {anomaly_detected}")
+            except Exception as pred_error:
+                raise RuntimeError(f"Anomaly prediction failed: {str(pred_error)}")
+
+            # 4. Prepare observation and get PPO action with validation
+            try:
+                obs = self._prepare_ppo_observation(data)
+                action, _ = self.ppo_agent.predict(obs, deterministic=not anomaly_detected)
+                action_validated = np.clip(action, -5.0, 5.0)  # Safety bounds
+                self.logger.debug(f"PPO action generated: {action_validated.tolist()}")
+            except Exception as ppo_error:
+                raise RuntimeError(f"PPO prediction failed: {str(ppo_error)}")
+
+            # 5. Extract and validate current sensor state
+            try:
                 current_readings = self._extract_current_state(data[0, -1])
-                insights = self.reasoner.reason(current_readings)
-            else:
-                insights = []
+                # Validate readings are within expected ranges
+                if not (15 < current_readings['temperature'] < 90 and
+                        10 < current_readings['vibration'] < 65 and
+                        18 < current_readings['pressure'] < 50):
+                    self.logger.warning("Sensor readings outside expected ranges")
+            except Exception as extract_error:
+                raise RuntimeError(f"State extraction failed: {str(extract_error)}")
 
-            # Update current state
-            self.current_state = {
-                'anomaly_score': float(anomaly_scores[0]),
-                'recommended_action': action.tolist(),
-                'insights': insights,
-                'sensor_readings': self._extract_current_state(data[0, -1]),
-                'timestamp': str(np.datetime64('now'))
+            # 6. Get symbolic reasoning insights and rule activations
+            insights = []
+            rule_activations = []
+            state_info = {}
+
+            if self.reasoner:
+                try:
+                    # Get symbolic insights
+                    insights = self.reasoner.reason(current_readings)
+
+                    # Get rule activations if method exists
+                    rule_activations = (
+                        self.reasoner.get_rule_activations()
+                        if hasattr(self.reasoner, 'get_rule_activations')
+                        else []
+                    )
+
+                    # Update state tracking if available
+                    if hasattr(self.reasoner, 'state_tracker'):
+                        state_info = self.reasoner.state_tracker.update(current_readings)
+
+                    self.logger.debug(f"Symbolic insights generated: {len(insights)}")
+                except Exception as reason_error:
+                    self.logger.warning(f"Symbolic reasoning error: {str(reason_error)}")
+                    # Continue with empty insights rather than failing
+
+            # 7. Get adaptive control parameters with fallback
+            try:
+                control_params = self.adaptive_controller.adapt_control_parameters(
+                    current_state=current_readings,
+                    predictions=anomaly_scores,
+                    rule_activations=rule_activations
+                )
+            except Exception as control_error:
+                self.logger.warning(f"Adaptive control error: {str(control_error)}")
+                control_params = {
+                    'temperature_adjustment': 0.0,
+                    'vibration_adjustment': 0.0,
+                    'pressure_adjustment': 0.0,
+                    'efficiency_target': current_readings.get('efficiency_index', 0.8)
+                }
+
+            # 8. Validate control parameters
+            control_params = {
+                'temperature_adjustment': np.clip(control_params.get('temperature_adjustment', 0.0), -5.0, 5.0),
+                'vibration_adjustment': np.clip(control_params.get('vibration_adjustment', 0.0), -5.0, 5.0),
+                'pressure_adjustment': np.clip(control_params.get('pressure_adjustment', 0.0), -5.0, 5.0),
+                'efficiency_target': np.clip(control_params.get('efficiency_target', 0.8), 0.0, 1.0)
             }
 
-            # Track state history
-            self.state_history.append(self.current_state)
-            if len(self.state_history) > 1000:  # Keep last 1000 states
-                self.state_history.pop(0)
+            # 9. Compile complete state information
+            try:
+                self.current_state = {
+                    # Anomaly detection
+                    'anomaly_score': prediction_confidence,
+                    'anomaly_detected': anomaly_detected,
 
+                    # Control actions
+                    'recommended_action': action_validated.tolist(),
+                    'control_parameters': control_params,
+
+                    # System state
+                    'sensor_readings': current_readings,
+                    'system_state': state_info.get('current_state', 0),
+                    'system_health': {
+                        'efficiency_index': current_readings.get('efficiency_index', 0.0),
+                        'performance_score': current_readings.get('performance_score', 0.0)
+                    },
+
+                    # Reasoning components
+                    'insights': insights,
+                    'rule_activations': rule_activations,
+                    'state_transitions': state_info.get('transition_matrix', []),
+
+                    # History tracking
+                    'timestamp': str(np.datetime64('now')),
+                    'confidence': prediction_confidence,
+                    'history_length': len(self.state_history)
+                }
+            except Exception as state_error:
+                raise RuntimeError(f"State compilation failed: {str(state_error)}")
+
+            # 10. Update state history with retention limit
+            try:
+                self.state_history.append(self.current_state)
+                if len(self.state_history) > 1000:
+                    self.state_history.pop(0)
+            except Exception as history_error:
+                self.logger.warning(f"State history update failed: {str(history_error)}")
+
+            # 11. Log significant state changes
+            if anomaly_detected:
+                self.logger.info(
+                    f"Anomaly detected (confidence: {prediction_confidence:.2f}) - "
+                    f"Control adjustments: Temperature ({control_params['temperature_adjustment']:.2f}), "
+                    f"Vibration ({control_params['vibration_adjustment']:.2f}), "
+                    f"Pressure ({control_params['pressure_adjustment']:.2f})"
+                )
+
+            if insights:
+                self.logger.info(f"Symbolic insights generated: {insights}")
+
+            # 12. Return validated state
             return self.current_state
 
         except Exception as e:
-            self.logger.error(f"Error updating state: {e}")
-            raise
+            self.logger.error(f"Critical error in state update: {str(e)}")
+            # Return safe default state in case of critical failure
+            default_state = {
+                'error': str(e),
+                'anomaly_detected': True,  # Fail safe
+                'control_parameters': {
+                    'temperature_adjustment': 0.0,
+                    'vibration_adjustment': 0.0,
+                    'pressure_adjustment': 0.0,
+                    'efficiency_target': 0.8
+                },
+                'timestamp': str(np.datetime64('now')),
+                'status': 'error'
+            }
+            raise RuntimeError(f"Failed to update system state: {str(e)}") from e
+
 
     def adapt_and_explain(self, sensor_data: np.ndarray) -> Dict[str, Any]:
         """
