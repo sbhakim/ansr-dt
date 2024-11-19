@@ -461,7 +461,6 @@ class SymbolicReasoner:
             self.logger.error(f"Error getting rule activations: {e}")
             return []
 
-
     def reason(self, sensor_dict: Dict[str, float]) -> List[str]:
         """
         Apply symbolic reasoning rules to sensor data and generate insights.
@@ -501,19 +500,27 @@ class SymbolicReasoner:
                 vibration = float(sensor_dict['vibration'])
                 pressure = float(sensor_dict['pressure'])
                 efficiency_index = float(sensor_dict['efficiency_index'])
-                operational_hours = float(sensor_dict['operational_hours'])
+                operational_hours = int(float(sensor_dict['operational_hours']))
                 system_state = int(sensor_dict['system_state'])
                 performance_score = float(sensor_dict['performance_score'])
             except (ValueError, TypeError) as e:
                 self.logger.error(f"Invalid sensor value format: {e}")
                 return insights
 
-            # Apply base rules
+            # Calculate thermal gradients if history exists
+            thermal_gradient = 0.0
+            if len(self.state_history) > 0:
+                prev_temp = float(self.state_history[-1]['sensor_readings']['temperature'])
+                thermal_gradient = abs(temperature - prev_temp)
+
+            # Apply base rules with enhanced queries
             base_queries = {
                 "Degraded State (Base Rule)": f"degraded_state({temperature}, {vibration}).",
                 "System Stress (Base Rule)": f"system_stress({pressure}).",
                 "Critical State (Base Rule)": f"critical_state({efficiency_index}).",
-                "Maintenance Needed (Base Rule)": f"maintenance_needed({operational_hours})."
+                "Maintenance Needed (Base Rule)": f"maintenance_needed({operational_hours}).",
+                "Thermal Stress (Base Rule)": f"thermal_stress({temperature}, {thermal_gradient}).",
+                "Sensor Correlation (Base Rule)": f"sensor_correlation({temperature}, {vibration}, {pressure})."
             }
 
             # Execute base rule queries
@@ -531,7 +538,19 @@ class SymbolicReasoner:
                 for rule in self.learned_rules:
                     try:
                         rule_name = rule.split(":-")[0].strip()
-                        if list(self.prolog.query(f"{rule_name}.")):
+                        # Create context dict for rule evaluation
+                        context = {
+                            'temperature': temperature,
+                            'vibration': vibration,
+                            'pressure': pressure,
+                            'efficiency_index': efficiency_index,
+                            'operational_hours': operational_hours,
+                            'thermal_gradient': thermal_gradient,
+                            'system_state': system_state
+                        }
+
+                        # Evaluate rule with context
+                        if list(self.prolog.query(f"{rule_name}.", context=context)):
                             confidence = self.rule_confidence.get(rule, 0.0)
                             insight = f"Learned Rule {rule_name} (Confidence: {confidence:.2f})"
                             insights.append(insight)
@@ -540,28 +559,31 @@ class SymbolicReasoner:
                         self.logger.warning(f"Failed to apply learned rule {rule}: {e}")
                         continue
 
-            # Record rule activation
+            # Record rule activation with enhanced metadata
             activation_record = {
                 'timestep': len(self.rule_activations) if hasattr(self, 'rule_activations') else 0,
                 'insights': insights,
                 'sensor_values': sensor_dict,
                 'system_state': system_state,
-                'performance': performance_score
+                'performance': performance_score,
+                'thermal_gradient': thermal_gradient,
+                'active_rules': len(insights),
+                'timestamp': str(np.datetime64('now'))
             }
 
-            # Update state history
+            # Update state history with retention
             if hasattr(self, 'rule_activations'):
                 self.rule_activations.append(activation_record)
-                # Keep only last 1000 activations
                 if len(self.rule_activations) > 1000:
                     self.rule_activations = self.rule_activations[-1000:]
 
-            # Update state transition matrix if state tracker exists
+            # Update state transition matrix
             if hasattr(self, 'state_tracker'):
                 self.state_tracker.update({
                     'system_state': system_state,
                     'sensor_readings': sensor_dict,
-                    'insights': insights
+                    'insights': insights,
+                    'thermal_gradient': thermal_gradient
                 })
 
             return insights

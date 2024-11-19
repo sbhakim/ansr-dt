@@ -1,4 +1,5 @@
 # src/pipeline/pipeline.py
+
 import json
 import logging
 import os
@@ -17,6 +18,18 @@ from src.evaluation.evaluation import evaluate_model
 from src.utils.model_utils import save_model, save_scaler
 from src.visualization.plotting import load_plot_config, plot_metrics
 from src.reasoning.reasoning import SymbolicReasoner
+
+# Custom JSON Encoder to handle NumPy data types
+class NumpyEncoder(json.JSONEncoder):
+    """Custom JSON Encoder that converts NumPy data types to native Python types."""
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NumpyEncoder, self).default(obj)
 
 
 def validate_config(config: dict, logger: logging.Logger, project_root: str, config_dir: str):
@@ -96,8 +109,11 @@ class NEXUSDTPipeline:
         self.logger.info(f"Initialized with {len(self.feature_names)} features for rule extraction")
         self.logger.info(f"Rule extraction thresholds: {self.rule_extraction_config}")
 
-        # Note: Removed initialization of self.reasoner here
-        # We will initialize self.reasoner later in the run method, after the model is trained
+        # Initialize SymbolicReasoner as None; will initialize after model is trained
+        self.reasoner = None
+
+        # Initialize rule activations list
+        self.rule_activations: List[Dict[str, Any]] = []
 
     def extract_neural_rules(
             self,
@@ -106,53 +122,186 @@ class NEXUSDTPipeline:
             y_pred: np.ndarray,
             threshold: float = 0.8
     ) -> None:
-        """Extract rules from neural model predictions."""
+        """
+        Extract rules from neural model predictions with enhanced pattern detection.
+
+        Args:
+            model: Trained neural network model
+            input_data: Input sequences
+            y_pred: Model predictions
+            threshold: Confidence threshold for rule extraction
+        """
         try:
-            # Find strong anomaly predictions
+            # Find anomalous and normal sequences
             anomalous_idx = np.where(y_pred > threshold)[0]
             normal_idx = np.where(y_pred < 0.2)[0]
 
-            if len(anomalous_idx) > 0:
-                anomalous_sequences = input_data[anomalous_idx]
-                normal_sequences = input_data[normal_idx]
+            self.logger.info(f"Found {len(anomalous_idx)} anomalous sequences based on threshold {threshold}")
 
-                gradient_rules = self.reasoner.extract_rules_from_neural_model(
-                    input_data=anomalous_sequences,
-                    feature_names=self.feature_names,
-                    threshold=0.7
-                )
+            if len(anomalous_idx) == 0:
+                self.logger.info("No anomalous sequences found. No rules extracted.")
+                return
 
-                pattern_rules = self.reasoner.analyze_neural_patterns(
-                    anomalous_sequences=anomalous_sequences,
-                    normal_sequences=normal_sequences,
-                    feature_names=self.feature_names
-                )
+            # Get sequences
+            anomalous_sequences = input_data[anomalous_idx]
+            normal_sequences = input_data[normal_idx]
 
-                # Update symbolic knowledge base
-                all_rules = gradient_rules + pattern_rules
-                self.reasoner.update_rules(all_rules)
+            # Calculate gradients for all features
+            gradients = {
+                'temperature': np.gradient(input_data[:, :, 0], axis=1),
+                'vibration': np.gradient(input_data[:, :, 1], axis=1),
+                'pressure': np.gradient(input_data[:, :, 2], axis=1),
+                'efficiency_index': np.gradient(input_data[:, :, 4], axis=1)
+            }
+
+            gradient_rules = []
+            pattern_rules = []
+
+            # Process each anomalous sequence
+            for idx in anomalous_idx:
+                sequence = input_data[idx]
+                current_values = sequence[-1]  # Last timestep
+                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values  # Previous timestep
+
+                # Update feature_values dictionary
+                feature_values = {
+                    'temperature': float(current_values[0]),
+                    'vibration': float(current_values[1]),
+                    'pressure': float(current_values[2]),
+                    'operational_hours': float(current_values[3]),
+                    'efficiency_index': float(current_values[4]),
+                    'system_state': float(current_values[5]),
+                    'performance_score': float(current_values[6])
+                }
+
+                # Check for gradient-based patterns
+                feature_patterns = []
+                for feature, gradient in gradients.items():
+                    max_grad = np.max(np.abs(gradient[idx]))
+                    if max_grad > 2.0:  # Significant change threshold
+                        feature_patterns.append({
+                            'feature': feature,
+                            'gradient': float(max_grad),
+                            'value': feature_values[feature]
+                        })
+
+                # Generate gradient rules
+                if feature_patterns:
+                    for pattern in feature_patterns:
+                        rule_conditions = []
+
+                        # Add gradient condition
+                        rule_conditions.append(
+                            f"{pattern['feature']}_gradient({pattern['gradient']:.2f})"
+                        )
+
+                        # Add value condition
+                        rule_conditions.append(
+                            f"{pattern['feature']}({int(pattern['value'])})"
+                        )
+
+                        # Add state transition if applicable
+                        if abs(current_values[5] - previous_values[5]) > 0:
+                            rule_conditions.append(
+                                f"state_transition({int(previous_values[5])}->{int(current_values[5])})"
+                            )
+
+                        # Create rule
+                        rule_name = f"gradient_rule_{len(gradient_rules) + 1}"
+                        rule_body = ", ".join(rule_conditions) + "."
+                        rule = f"{rule_name} :- {rule_body}"
+                        confidence = float(y_pred[idx])
+
+                        gradient_rules.append({
+                            'rule': rule,
+                            'confidence': confidence,
+                            'patterns': feature_patterns,
+                            'timestep': idx
+                        })
+
+                # Check for combined feature patterns
+                if feature_values['temperature'] > 75 and feature_values['vibration'] > 50:
+                    pattern_rules.append({
+                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
+                                 f"temperature({int(feature_values['temperature'])}), "
+                                 f"vibration({int(feature_values['vibration'])})."),
+                        'confidence': float(y_pred[idx]),
+                        'type': 'temp_vib_correlation',
+                        'timestep': idx
+                    })
+
+                if feature_values['pressure'] < 25 and feature_values['efficiency_index'] < 0.7:
+                    pattern_rules.append({
+                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
+                                 f"pressure({int(feature_values['pressure'])}), "
+                                 f"efficiency_index({feature_values['efficiency_index']:.2f})."),
+                        'confidence': float(y_pred[idx]),
+                        'type': 'press_eff_correlation',
+                        'timestep': idx
+                    })
+
+            # Extract additional patterns using sequence analysis via SymbolicReasoner
+            temporal_patterns = self.reasoner.analyze_neural_patterns(
+                anomalous_sequences=anomalous_sequences,
+                normal_sequences=normal_sequences,
+                feature_names=self.feature_names
+            )
+
+            # Combine all rules
+            all_rules = []
+
+            # Add gradient rules
+            for rule in gradient_rules:
+                if rule['confidence'] >= threshold:
+                    all_rules.append((rule['rule'], rule['confidence']))
+
+            # Add pattern rules
+            for rule in pattern_rules:
+                if rule['confidence'] >= threshold:
+                    all_rules.append((rule['rule'], rule['confidence']))
+
+            # Add temporal patterns
+            for pattern in temporal_patterns:
+                if pattern.get('confidence', 0) >= threshold:
+                    all_rules.append((pattern['rule'], pattern['confidence']))
+
+            # Update symbolic knowledge base
+            if all_rules:
+                self.update_rules(all_rules)
 
                 # Log statistics
-                stats = self.reasoner.get_rule_statistics()
+                stats = self.get_rule_statistics()
                 self.logger.info(f"Neural rule extraction stats: {stats}")
 
                 # Save extracted rules summary
                 rules_summary = {
                     'gradient_rules': gradient_rules,
                     'pattern_rules': pattern_rules,
+                    'temporal_patterns': temporal_patterns,
                     'statistics': stats,
+                    'total_rules': len(all_rules),
                     'timestamp': str(np.datetime64('now'))
                 }
 
+                # Save summary
                 summary_path = os.path.join(
                     self.config['paths']['results_dir'],
                     'neurosymbolic_rules.json'
                 )
 
+                # Serialize rules_summary with custom encoder
                 with open(summary_path, 'w') as f:
-                    json.dump(rules_summary, f, indent=2)
+                    json.dump(rules_summary, f, indent=2, cls=NumpyEncoder)
 
                 self.logger.info(f"Neurosymbolic rules saved to {summary_path}")
+
+                # Track rule activations
+                self.rule_activations.extend([{
+                    'rule': rule[0],
+                    'confidence': rule[1],
+                    'timestep': len(self.rule_activations),
+                    'type': 'neural_derived'
+                } for rule in all_rules])
 
         except Exception as e:
             self.logger.error(f"Error in neural rule extraction: {e}")
@@ -289,3 +438,44 @@ class NEXUSDTPipeline:
         except Exception as e:
             self.logger.exception(f"Pipeline error: {e}")
             raise
+
+    def update_rules(self, rules: List[Tuple[str, float]]):
+        """
+        Update the Prolog rules file with new rules.
+
+        Args:
+            rules: List of tuples containing rule strings and their confidence scores.
+        """
+        try:
+            rules_file_path = self.config['paths']['reasoning_rules_path']
+            with open(rules_file_path, 'a') as f:
+                for rule, confidence in rules:
+                    # Optionally, you can append confidence as a comment or integrate it into the rule
+                    f.write(f"% Confidence: {confidence:.2f}\n")
+                    f.write(f"{rule}\n")
+            self.logger.info(f"Added {len(rules)} new rules to {rules_file_path}")
+        except Exception as e:
+            self.logger.error(f"Failed to update rules: {e}")
+            raise
+
+    def get_rule_statistics(self) -> Dict[str, Any]:
+        """
+        Get statistics about the extracted rules.
+
+        Returns:
+            Dictionary containing rule statistics.
+        """
+        try:
+            total_rules = len(self.rule_activations)
+            high_confidence = len([r for r in self.rule_activations if r['confidence'] >= 0.8])
+            low_confidence = total_rules - high_confidence
+
+            stats = {
+                'total_rules': total_rules,
+                'high_confidence': high_confidence,
+                'low_confidence': low_confidence
+            }
+            return stats
+        except Exception as e:
+            self.logger.error(f"Failed to get rule statistics: {e}")
+            return {}

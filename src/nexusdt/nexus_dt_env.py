@@ -198,3 +198,24 @@ class NexusDTEnv(gym.Env):
     def close(self):
         """Cleanup when the environment is closed."""
         pass  # Not implemented
+
+    def calculate_reward(self, state: Dict[str, float], action: np.ndarray) -> float:
+        """Enhanced reward calculation"""
+        # Base efficiency rewards
+        efficiency_reward = 1.0 - abs(state['efficiency_index'] - 1.0)
+
+        # Action smoothness penalty
+        action_magnitude = np.linalg.norm(action)
+        smoothness_penalty = -0.1 * action_magnitude if action_magnitude > 2.0 else 0
+
+        # State transition penalty
+        state_penalty = -0.5 if state['system_state'] > 0 else 0
+
+        # Safety bounds reward
+        safety_reward = 0
+        if (15 <= state['temperature'] <= 90 and
+                10 <= state['vibration'] <= 65 and
+                18 <= state['pressure'] <= 50):
+            safety_reward = 0.2
+
+        return efficiency_reward + smoothness_penalty + state_penalty + safety_reward
