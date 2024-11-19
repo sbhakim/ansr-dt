@@ -7,6 +7,9 @@ import numpy as np
 import tensorflow as tf
 from typing import Dict, List, Any, Tuple, Optional
 from src.utils.model_utils import load_model_with_initialization
+from .rule_learning import RuleLearner
+from .state_tracker import StateTracker
+
 
 
 class SymbolicReasoner:
@@ -35,6 +38,9 @@ class SymbolicReasoner:
         self.rule_confidence = {}
         self.model = model  # Use the provided model if available
         self.input_shape = input_shape
+
+        self.rule_learner = RuleLearner()
+        self.state_tracker = StateTracker()
 
         # Validate rules file existence
         if not os.path.exists(rules_path):
@@ -115,48 +121,122 @@ class SymbolicReasoner:
             # Process each anomalous sequence
             for idx in anomaly_indices:
                 sequence = input_data[idx]
-                last_timestep = sequence[-1]
+                current_values = sequence[-1]  # Last timestep
+                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values  # Previous timestep
 
-                # Extract relevant conditions
+                # Dictionary to store features for combined rules
+                feature_values = {}
                 important_features = []
 
-                # Add conditions based on feature values and predefined thresholds
+                # Process each feature
                 for feat_idx, feat_name in enumerate(feature_names):
-                    feat_value = float(last_timestep[feat_idx])
+                    feat_value = float(current_values[feat_idx])
+                    prev_value = float(previous_values[feat_idx])
+                    feature_values[feat_name] = feat_value
 
-                    if feat_name == 'temperature' and feat_value > 80:
-                        important_features.append((feat_name, feat_value, 'high_temp'))
-                    elif feat_name == 'vibration' and feat_value > 55:
-                        important_features.append((feat_name, feat_value, 'high_vib'))
-                    elif feat_name == 'pressure' and feat_value < 20:
-                        important_features.append((feat_name, feat_value, 'low_pressure'))
-                    elif feat_name == 'efficiency_index' and feat_value < 0.6:
-                        important_features.append((feat_name, feat_value, 'low_efficiency'))
+                    # Individual feature rules with expanded thresholds
+                    if feat_name == 'temperature':
+                        if feat_value > 80:
+                            important_features.append((feat_name, feat_value, 'high'))
+                        elif feat_value < 40:
+                            important_features.append((feat_name, feat_value, 'low'))
+                        # Add significant change detection
+                        if abs(feat_value - prev_value) > 10:
+                            important_features.append((f"{feat_name}_change", feat_value, 'rapid'))
 
-                # Generate rule if important features found
+                    elif feat_name == 'vibration':
+                        if feat_value > 55:
+                            important_features.append((feat_name, feat_value, 'high'))
+                        elif feat_value < 20:
+                            important_features.append((feat_name, feat_value, 'low'))
+                        # Add change detection
+                        if abs(feat_value - prev_value) > 5:
+                            important_features.append((f"{feat_name}_change", feat_value, 'rapid'))
+
+                    elif feat_name == 'pressure':
+                        if feat_value < 20:
+                            important_features.append((feat_name, feat_value, 'low'))
+                        elif feat_value > 40:
+                            important_features.append((feat_name, feat_value, 'high'))
+
+                    elif feat_name == 'efficiency_index':
+                        if feat_value < 0.6:
+                            important_features.append((feat_name, feat_value, 'low'))
+                        elif feat_value < 0.8:
+                            important_features.append((feat_name, feat_value, 'medium'))
+
+                    elif feat_name == 'operational_hours':
+                        if feat_value % 1000 < 10:  # Near maintenance
+                            important_features.append(('maintenance_needed', int(feat_value), 'true'))
+
+                    elif feat_name == 'system_state':
+                        if feat_value != prev_value:  # State transition
+                            important_features.append(('state_transition',
+                                                       f"{int(prev_value)}->{int(feat_value)}",
+                                                       'change'))
+
+                # Add combined feature rules
+                if 'temperature' in feature_values and 'vibration' in feature_values:
+                    temp_val = feature_values['temperature']
+                    vib_val = feature_values['vibration']
+                    if temp_val > 75 and vib_val > 50:
+                        important_features.append(
+                            ('combined_temp_vib',
+                             f"temperature({int(temp_val)}),vibration({int(vib_val)})",
+                             'high')
+                        )
+
+                if 'pressure' in feature_values and 'efficiency_index' in feature_values:
+                    press_val = feature_values['pressure']
+                    eff_val = feature_values['efficiency_index']
+                    if press_val < 25 and eff_val < 0.7:
+                        important_features.append(
+                            ('combined_press_eff',
+                             f"pressure({int(press_val)}),efficiency_index({eff_val:.2f})",
+                             'critical')
+                        )
+
+
+                # Create rules for important features
                 if important_features:
-                    # Format conditions based on feature type
+                    # Format conditions
                     conditions = []
                     for feat_name, feat_value, condition_type in important_features:
-                        if feat_name == 'efficiency_index':
+                        if isinstance(feat_value, float) and feat_name != 'efficiency_index':
+                            feat_value = int(feat_value)
+
+                        if '_change' in feat_name or 'state_transition' in feat_name:
+                            conditions.append(f"{feat_name}({feat_value})")
+                        elif 'combined' in feat_name:
+                            conditions.append(feat_value)  # Already formatted
+                        elif feat_name == 'efficiency_index':
                             conditions.append(f"{feat_name}({feat_value:.2f})")
                         else:
-                            conditions.append(f"{feat_name}({int(feat_value)})")
+                            conditions.append(f"{feat_name}({feat_value})")
 
-                    # Create rule
+                    # Create unique rule name and full rule
                     rule_name = f"neural_rule_{len(self.learned_rules) + 1}"
                     rule_body = ", ".join(conditions) + "."
                     rule = f"{rule_name} :- {rule_body}"
 
-                    # Calculate rule confidence from model prediction
+                    # Calculate confidence using model prediction
                     confidence = float(predictions[idx])
 
-                    # Add rule and confidence
                     new_rules.append((rule, confidence))
                     self.rule_confidence[rule] = confidence
                     self.logger.info(f"Extracted rule: {rule} with confidence: {confidence:.2f}")
 
             self.logger.info(f"Total new rules extracted: {len(new_rules)}")
+
+            # Add after existing rule extraction
+            temporal_patterns = self.rule_learner.analyze_temporal_patterns(
+                sequences=input_data,
+                labels=self.model.predict(input_data)
+            )
+            temporal_rules = self.rule_learner.extract_rules(temporal_patterns)
+
+            # Add temporal rules to existing rules
+            new_rules.extend([(rule, 0.8) for rule in temporal_rules])
             return new_rules
 
         except Exception as e:

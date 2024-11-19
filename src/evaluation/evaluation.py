@@ -23,28 +23,21 @@ from src.visualization.plotting import (
 )
 from src.visualization.model_visualization import ModelVisualizer
 from src.reasoning.reasoning import SymbolicReasoner
+from .pattern_metrics import PatternEvaluator
 
 
 def get_project_root(config_path: str) -> str:
     """Get project root directory from config path."""
     return os.path.dirname(os.path.dirname(config_path))
 
-
 def setup_evaluation_dirs(results_dir: str) -> Dict[str, str]:
-    """
-    Create and return evaluation directory structure.
-
-    Args:
-        results_dir: Base results directory
-
-    Returns:
-        Dictionary of directory paths
-    """
+    """Create and return evaluation directory structure."""
     dirs = {
         'base': results_dir,
         'figures': os.path.join(results_dir, 'visualization'),
         'model_viz': os.path.join(results_dir, 'visualization', 'model_visualization'),
-        'metrics': os.path.join(results_dir, 'metrics')
+        'metrics': os.path.join(results_dir, 'metrics'),
+        'patterns': os.path.join(results_dir, 'pattern_analysis')  # New directory
     }
 
     for dir_path in dirs.values():
@@ -52,19 +45,8 @@ def setup_evaluation_dirs(results_dir: str) -> Dict[str, str]:
 
     return dirs
 
-
 def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_scores: np.ndarray) -> Dict[str, Any]:
-    """
-    Calculate comprehensive evaluation metrics.
-
-    Args:
-        y_true: True labels
-        y_pred: Predicted labels
-        y_scores: Prediction scores/probabilities
-
-    Returns:
-        Dictionary of calculated metrics
-    """
+    """Calculate comprehensive evaluation metrics."""
     metrics = {
         'classification_report': classification_report(y_true, y_pred, zero_division=0),
         'confusion_matrix': confusion_matrix(y_true, y_pred).tolist(),
@@ -72,7 +54,6 @@ def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_scores: np.ndarr
         'avg_precision': float(average_precision_score(y_true, y_scores))
     }
 
-    # Calculate precision-recall curve and AUC
     precision, recall, _ = precision_recall_curve(y_true, y_scores)
     metrics['pr_auc'] = float(auc(recall, precision))
 
@@ -90,20 +71,7 @@ def evaluate_model(
         model: Optional[Any] = None
 ) -> Dict[str, Any]:
     """
-    Comprehensive model evaluation with visualization and symbolic reasoning.
-
-    Args:
-        y_true: True labels
-        y_pred: Predicted labels
-        y_scores: Prediction scores
-        figures_dir: Directory to save figures
-        plot_config_path: Path to plotting configuration
-        config_path: Path to main configuration
-        sensor_data: Sensor data for analysis
-        model: Optional trained model for visualization
-
-    Returns:
-        Dictionary containing evaluation results
+    Enhanced model evaluation with visualization, symbolic reasoning, and pattern analysis.
     """
     logger = logging.getLogger(__name__)
     if os.path.isdir(config_path):
@@ -111,35 +79,25 @@ def evaluate_model(
         logger.info(f"Using config file: {config_path}")
 
     symbolic_insights = []
+    pattern_insights = []
 
     try:
-        # Check if config_path is a file
+        # Config validation
         if not os.path.isfile(config_path):
             logger.error(f"Config path is not a file: {config_path}")
             raise ValueError(f"Config path is not a file: {config_path}")
 
-        # Load configuration
         with open(config_path, 'r') as f:
             config = yaml.safe_load(f)
 
-        # Determine project root
         project_root = get_project_root(config_path)
 
-        # Initialize symbolic reasoner with correct path
-        rules_path = config['paths'].get('reasoning_rules_path')
-        if not rules_path:
-            logger.error("reasoning_rules_path not found in configuration.")
-            raise KeyError("reasoning_rules_path not found in configuration.")
-
-        if not os.path.isabs(rules_path):
-            rules_path = os.path.join(project_root, rules_path)
-
-        # Check if rules_path is a file
+        # Initialize components
+        rules_path = os.path.join(project_root, config['paths'].get('reasoning_rules_path', ''))
         if not os.path.isfile(rules_path):
             logger.error(f"Prolog rules file not found at: {rules_path}")
             raise FileNotFoundError(f"Prolog rules file not found at: {rules_path}")
 
-        # Initialize reasoner with proper parameters
         input_shape = (config['model']['window_size'], len(config['model']['feature_names']))
         reasoner = SymbolicReasoner(
             rules_path=rules_path,
@@ -148,73 +106,63 @@ def evaluate_model(
             logger=logger
         )
 
-        # Setup evaluation directories
-        eval_dirs = setup_evaluation_dirs(figures_dir)
+        # Initialize pattern evaluator
+        pattern_evaluator = PatternEvaluator()
 
-        # Load and apply plot configuration
+        # Setup directories and configuration
+        eval_dirs = setup_evaluation_dirs(figures_dir)
         plot_config = load_plot_config(plot_config_path)
         apply_plot_config(plot_config)
 
-        # Calculate metrics
+        # Calculate base metrics
         metrics = calculate_metrics(y_true, y_pred, y_scores)
         logger.info(f"Classification Report:\n{metrics['classification_report']}")
         logger.info(f"Confusion Matrix:\n{metrics['confusion_matrix']}")
 
-        # Save classification report
+        # Save report
         report_path = os.path.join(eval_dirs['metrics'], 'classification_report.txt')
         with open(report_path, 'w') as f:
             f.write(metrics['classification_report'])
 
-        # Generate and save plots
+        # Generate plots
         plot_paths = {}
 
-        # Confusion Matrix
-        cm_path = os.path.join(eval_dirs['figures'], 'confusion_matrix.png')
+        # Standard plots
+        plot_paths['confusion_matrix'] = os.path.join(eval_dirs['figures'], 'confusion_matrix.png')
         plot_confusion_matrix(
             cm=np.array(metrics['confusion_matrix']),
             classes=['Normal', 'Anomaly'],
             title='Confusion Matrix',
-            save_path=cm_path,
+            save_path=plot_paths['confusion_matrix'],
             config=plot_config
         )
-        plot_paths['confusion_matrix'] = cm_path
 
-        # ROC Curve
-        roc_path = os.path.join(eval_dirs['figures'], 'roc_curve.png')
+        plot_paths['roc_curve'] = os.path.join(eval_dirs['figures'], 'roc_curve.png')
         plot_roc_curve(
             y_true=y_true,
             y_scores=y_scores,
-            save_path=roc_path,
+            save_path=plot_paths['roc_curve'],
             config=plot_config
         )
-        plot_paths['roc_curve'] = roc_path
 
-        # Precision-Recall Curve
-        pr_path = os.path.join(eval_dirs['figures'], 'precision_recall_curve.png')
+        plot_paths['precision_recall'] = os.path.join(eval_dirs['figures'], 'precision_recall_curve.png')
         plot_precision_recall_curve(
             y_true=y_true,
             y_scores=y_scores,
-            save_path=pr_path,
+            save_path=plot_paths['precision_recall'],
             config=plot_config
         )
-        plot_paths['precision_recall'] = pr_path
 
-        # Model visualization if model is provided
+        # Model visualization and feature importance
         feature_importance_scores = None
         if model is not None:
             try:
                 visualizer = ModelVisualizer(model, logger)
-
                 if hasattr(model, 'input_shape'):
-                    # Prepare sample data for visualization
                     sample_data = sensor_data[:10].reshape(1, 10, -1)
-
-                    # Ensure the model is built
                     if not model.built:
-                        logger.info("Building the model with sample data for visualization.")
                         model.predict(sample_data)
 
-                    # Generate feature importance visualization
                     importance_path = os.path.join(eval_dirs['model_viz'], 'feature_importance.png')
                     importance, success = visualizer.get_feature_importance(
                         input_data=sample_data,
@@ -223,27 +171,24 @@ def evaluate_model(
 
                     if success and importance is not None:
                         feature_importance_scores = dict(zip(
-                            ['temperature', 'vibration', 'pressure', 'operational_hours',
-                             'efficiency_index', 'system_state', 'performance_score'],
+                            config['model']['feature_names'],
                             importance.tolist()
                         ))
 
-                        # Save feature importance scores
                         scores_path = os.path.join(eval_dirs['model_viz'], 'feature_importance.json')
                         with open(scores_path, 'w') as f:
                             json.dump(feature_importance_scores, f, indent=2)
                         plot_paths['feature_importance'] = importance_path
 
-                # Save model architecture
                 arch_path = os.path.join(eval_dirs['model_viz'], 'model_architecture.txt')
                 visualizer.visualize_model_architecture(arch_path)
 
             except Exception as viz_error:
                 logger.warning(f"Model visualization warning: {viz_error}")
 
-        # Symbolic reasoning
+        # Enhanced symbolic reasoning with pattern analysis
         try:
-            # Process each timestep
+            # Process sequences
             for i in range(len(sensor_data)):
                 sensor_dict = {
                     'temperature': float(sensor_data[i][0]),
@@ -254,6 +199,8 @@ def evaluate_model(
                     'system_state': float(sensor_data[i][5]),
                     'performance_score': float(sensor_data[i][6])
                 }
+
+                # Get symbolic insights
                 insight = reasoner.reason(sensor_dict)
                 if insight:
                     symbolic_insights.append({
@@ -262,15 +209,26 @@ def evaluate_model(
                         'readings': sensor_dict
                     })
 
-            # Save insights
+            # Evaluate patterns
+            pattern_metrics = pattern_evaluator.evaluate_rules(
+                predictions=y_pred,
+                actual_anomalies=y_true,
+                rule_activations=reasoner.get_rule_activations() if hasattr(reasoner, 'get_rule_activations') else []
+            )
+
+            # Save insights and patterns
             insights_path = os.path.join(eval_dirs['metrics'], 'symbolic_insights.json')
             with open(insights_path, 'w') as f:
                 json.dump(symbolic_insights, f, indent=2)
 
-        except Exception as reasoning_error:
-            logger.warning(f"Symbolic reasoning warning: {reasoning_error}")
+            patterns_path = os.path.join(eval_dirs['patterns'], 'pattern_analysis.json')
+            with open(patterns_path, 'w') as f:
+                json.dump(pattern_metrics, f, indent=2)
 
-        # Compile final evaluation results
+        except Exception as reasoning_error:
+            logger.warning(f"Reasoning and pattern analysis warning: {reasoning_error}")
+
+        # Compile results
         evaluation_results = {
             'metrics': metrics,
             'plot_paths': plot_paths,
@@ -279,16 +237,20 @@ def evaluate_model(
                 'total_insights': len(symbolic_insights),
                 'insights_path': insights_path if symbolic_insights else None
             },
+            'pattern_analysis': {
+                'metrics': pattern_metrics,
+                'analysis_path': patterns_path
+            },
             'timestamp': str(np.datetime64('now')),
             'success': True
         }
 
-        # Save evaluation summary
+        # Save summary
         summary_path = os.path.join(eval_dirs['base'], 'evaluation_summary.json')
         with open(summary_path, 'w') as f:
             json.dump(evaluation_results, f, indent=2)
 
-        logger.info("Evaluation completed successfully")
+        logger.info("Enhanced evaluation completed successfully")
         return evaluation_results
 
     except Exception as e:
