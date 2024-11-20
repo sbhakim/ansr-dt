@@ -1,9 +1,10 @@
-# src/reasoning/prob_query.py - Executes ProbLog Queries and Outputs Probabilities
-
+#!/usr/bin/env python3
 import os
 import sys
 import logging
-from problog.program import PrologString
+
+from problog.program import SimpleProgram
+from problog.logic import Term
 from problog import get_evaluatable
 
 # Ensure logs directory exists
@@ -29,7 +30,14 @@ def run_prob_log_queries():
 
     # Initialize ProbLog model
     try:
-        model = PrologString(prolog_code)
+        # Use SimpleProgram instead of PrologString:
+        model = SimpleProgram()
+        for line in prolog_code.split('\n'):
+            if line.strip() and not line.strip().startswith('%'):  # Ignore comments and empty lines
+                model.add_clause(Term.from_string(line))
+
+        # Define the query/1 predicate
+        model.add_clause(Term.from_string("query(X) :- X."))
         query = get_evaluatable().create_from(model)
         logging.info("ProbLog model initialized.")
     except Exception as e:
@@ -48,9 +56,9 @@ def run_prob_log_queries():
 
     # Extract probabilities
     try:
-        failure_risk_prob = result.get('failure_risk', 0.0)
-        system_stress_prob = result.get('system_stress', 0.0)
-        efficiency_drop_prob = result.get('efficiency_drop', 0.0)
+        failure_risk_prob = result.get(Term('failure_risk'), 0.0)
+        system_stress_prob = result.get(Term('system_stress'), 0.0)
+        efficiency_drop_prob = result.get(Term('efficiency_drop'), 0.0)
         logging.info(f"ProbLog results: failure_risk={failure_risk_prob}, "
                      f"system_stress={system_stress_prob}, "
                      f"efficiency_drop={efficiency_drop_prob}")

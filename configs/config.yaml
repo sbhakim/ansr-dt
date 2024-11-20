@@ -30,7 +30,7 @@ model:
 training:
   batch_size: 32
   learning_rate: 0.001
-  epochs: 20
+  epochs: 100
   validation_split: 0.2
   test_split: 0.1
   early_stopping_patience: 5
@@ -40,7 +40,7 @@ training:
 # ===============================
 ppo:
   enabled: true
-  total_timesteps: 10000
+  total_timesteps: 30000
   reward_weights:
     efficiency: 1.0
     satisfaction: 1.0

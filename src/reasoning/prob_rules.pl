@@ -17,8 +17,8 @@
 0.3::maintenance_required :- maintenance_needed, efficiency_drop.
 
 % Queries
-query(failure_risk).
-query(system_stress).
-query(efficiency_drop).
-query(overheating).
-query(maintenance_required).
+:- query(failure_risk).
+:- query(system_stress).
+:- query(efficiency_drop).
+:- query(overheating).
+:- query(maintenance_required).
