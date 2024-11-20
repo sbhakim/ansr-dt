@@ -1,5 +1,4 @@
-% src/reasoning/prob_rules.pl
-
+% src/reasoning/prob_rules.pl - Probabilistic Logic Programming Rules for NEXUS-DT
 
 % Probabilistic Facts
 0.8::high_temperature.
@@ -13,12 +12,13 @@
 0.8::efficiency_drop :- high_temperature, low_pressure.
 0.5::efficiency_drop :- high_vibration, low_pressure.
 
-% Additional Rules (if any)
-% Example:
-% 0.4::overheating :- high_temperature, system_stress.
-% 0.3::maintenance_required :- maintenance_needed, efficiency_drop.
+% Additional Probabilistic Rules
+0.4::overheating :- high_temperature, system_stress.
+0.3::maintenance_required :- maintenance_needed, efficiency_drop.
 
 % Queries
 query(failure_risk).
 query(system_stress).
 query(efficiency_drop).
+query(overheating).
+query(maintenance_required).

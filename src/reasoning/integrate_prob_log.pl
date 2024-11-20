@@ -1,4 +1,4 @@
-% integrate_prob_log.pl - Integrates ProbLog Queries into Prolog
+% src/reasoning/integrate_prob_log.pl - Integrates ProbLog Queries into Prolog
 
 % Import necessary libraries
 :- use_module(library(process)).
@@ -44,7 +44,6 @@ split_pair(Line, Key-Value) :-
     atom_number(ValueStr, Value),
     Value >= 0,  % Ensure Value is a number
     Value =< 1.0, % Ensure Value is a valid probability
-    Value > 0.0,  % Optionally filter out zero probabilities
     Value >= 0.0,  % Allow zero probabilities if needed
     Value =< 1.0.
 

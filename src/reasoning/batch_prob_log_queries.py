@@ -1,4 +1,4 @@
-# batch_prob_log_queries.py - Executes multiple ProbLog Queries and Saves Results
+# src/reasoning/batch_prob_log_queries.py - Executes multiple ProbLog Queries and Saves Results
 
 import sys
 import json

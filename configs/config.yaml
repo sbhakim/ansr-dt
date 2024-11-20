@@ -1,5 +1,8 @@
 # configs/config.yaml
 
+# ===============================
+# Model Configuration
+# ===============================
 model:
   window_size: 10
   feature_names:
@@ -10,17 +13,20 @@ model:
     - efficiency_index
     - system_state
     - performance_score
-  input_shape: [ 10, 7 ]
-  architecture: "cnn_lstm"  # Specifies the model type
+  input_shape: [10, 7]
+  architecture: "cnn_lstm"
   cnn_lstm:
-    conv_filters: [64, 128]  # Number of filters for each Conv1D layer
-    kernel_sizes: [3, 3]      # Kernel sizes for Conv1D layers
-    pool_sizes: [2, 2]        # Pool sizes for MaxPooling1D layers
-    lstm_units: [100, 50]     # Units for each LSTM layer
-    dropout_rates: [0.3, 0.3, 0.3, 0.3]  # Dropout rates after Conv and LSTM layers
-    dense_units: 1            # Units for Dense layer
-    activation: "sigmoid"     # Activation function for output layer
+    conv_filters: [64, 128]
+    kernel_sizes: [3, 3]
+    pool_sizes: [2, 2]
+    lstm_units: [100, 50]
+    dropout_rates: [0.3, 0.3, 0.3, 0.3]
+    dense_units: 1
+    activation: "sigmoid"
 
+# ===============================
+# Training Configuration
+# ===============================
 training:
   batch_size: 32
   learning_rate: 0.001
@@ -29,29 +35,103 @@ training:
   test_split: 0.1
   early_stopping_patience: 5
 
+# ===============================
+# Proximal Policy Optimization (PPO) Configuration
+# ===============================
 ppo:
-  enabled: true  # Flag to enable/disable PPO training
-  total_timesteps: 10000  # Total timesteps for PPO training
+  enabled: true
+  total_timesteps: 10000
   reward_weights:
     efficiency: 1.0
     satisfaction: 1.0
     safety: 1.0
 
+# ===============================
+# Path Configuration
+# ===============================
 paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
-  plot_config_path: 'configs/plot_config.yaml'  # Change this line
-  reasoning_rules_path: 'src/reasoning/rules.pl'
+  plot_config_path: 'configs/plot_config.yaml'
+  reasoning_rules_path: 'src/reasoning/rules.pl'  # Path to deterministic Prolog rules
+  prob_log_rules_file: 'prob_rules.pl'  # Path to ProbLog rules (relative to src/reasoning/)
+  knowledge_graphs_dir: 'results/knowledge_graphs'
 
+# ===============================
+# Symbolic Reasoning Configuration
+# ===============================
 symbolic_reasoning:
   enabled: true
-  rules_path: 'src/reasoning/rules.pl'
+  rules_path: 'src/reasoning/rules.pl'  # Path to deterministic Prolog rules
+  rule_extraction:
+    confidence_threshold: 0.7
+    min_support: 3
+    max_rules: 100
 
-
+# ===============================
+# Knowledge Graph Configuration
+# ===============================
 knowledge_graph:
-  prob_log:
-    prob_log_script: "src/reasoning/prob_query.py"
-    prob_log_batch_script: "src/reasoning/batch_prob_log_queries.py"
-    prob_log_save_script: "src/reasoning/save_prob_log_results.py"
-    prob_log_rules_file: "src/reasoning/prob_rules.pl"
+  enabled: true
+  visualization:
+    max_nodes: 100
+    update_interval: 10
+    node_types:
+      sensor: '#lightblue'
+      state: '#lightgreen'
+      rule: '#lightpink'
+      anomaly: '#salmon'
+      insight: '#lightyellow'
+    network_layout:
+      type: 'spring'
+      k: 1.0
+      iterations: 50
+  storage:
+    format: 'png'
+    save_interval: 10
+    keep_history: 100
 
+# ===============================
+# ProbLog Configuration
+# ===============================
+prob_log:
+  python_interpreter: "python3"  # Use absolute path if necessary, e.g., "/home/safayatb/.../venv/bin/python3"
+  prob_log_script: "prob_query.py"  # Relative to src/reasoning/
+  prob_log_batch_script: "batch_prob_log_queries.py"  # Relative to src/reasoning/
+  prob_log_save_script: "save_prob_log_results.py"  # Relative to src/reasoning/
+  prob_log_rules_file: "prob_rules.pl"  # Relative to src/reasoning/
+  thresholds:
+    failure_risk: 0.5
+    system_stress: 0.6
+    efficiency_drop: 0.5
+    overheating: 0.4  # Added to align with rules.pl
+    maintenance_required: 0.3  # Added to align with rules.pl
+  query_settings:
+    batch_size: 100
+    timeout: 30
+
+# ===============================
+# Reasoning Configuration
+# ===============================
+reasoning:
+  rule_learning:
+    thresholds:
+      temperature:
+        high: 80.0
+        low: 40.0
+        gradient: 10.0
+      vibration:
+        high: 55.0
+        low: 20.0
+        gradient: 5.0
+      pressure:
+        high: 40.0
+        low: 20.0
+        gradient: 2.0
+      efficiency_index:
+        high: 0.9
+        low: 0.6
+        gradient: 0.1
+    pattern_detection:
+      correlation_threshold: 0.8
+      min_occurrences: 5

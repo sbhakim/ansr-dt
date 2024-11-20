@@ -1,4 +1,4 @@
-# save_prob_log_results.py - Executes ProbLog Queries and Saves Results to JSON
+# src/reasoning/save_prob_log_results.py - Executes ProbLog Queries and Saves Results to JSON
 
 import sys
 import json
