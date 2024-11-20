@@ -34,6 +34,7 @@ class SymbolicReasoner:
         self.logger = logger or logging.getLogger(__name__)
         self.prolog = Prolog()
         self.rules_path = rules_path
+        self.rules_dir = os.path.dirname(rules_path)  # Store rules directory
         self.learned_rules = []
         self.rule_confidence = {}
         self.model = model  # Use the provided model if available
@@ -50,9 +51,13 @@ class SymbolicReasoner:
             self.logger.error(f"Prolog rules file not found at: {rules_path}")
             raise FileNotFoundError(f"Prolog rules file not found at: {rules_path}")
 
-        # Load Prolog rules
-        self.prolog.consult(rules_path)
-        self.logger.info(f"Prolog rules loaded from {rules_path}")
+        # Load Prolog files in correct order
+        self._load_prolog_files([
+            'load_config.pl',    # Load configuration first
+            'prob_rules.pl',     # Load probabilistic rules
+            'integrate_prob_log.pl',  # Load integration
+            'rules.pl'            # Load main rules last
+        ])
 
         # Load and initialize the model if not provided
         if self.model is None and model_path is not None:
@@ -69,6 +74,18 @@ class SymbolicReasoner:
             self.logger.info("Model provided directly to SymbolicReasoner.")
         else:
             self.logger.warning("No model provided to SymbolicReasoner.")
+
+    def _load_prolog_files(self, files: List[str]):
+        """Load Prolog files in specified order."""
+        for file in files:
+            path = os.path.join(self.rules_dir, file)
+            if os.path.exists(path):
+                try:
+                    self.prolog.consult(path)
+                    self.logger.info(f"Loaded Prolog file: {file}")
+                except Exception as e:
+                    self.logger.warning(f"Failed to load {file}: {e}")
+
 
     def extract_rules_from_neural_model(
             self,
