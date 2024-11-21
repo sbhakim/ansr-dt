@@ -86,7 +86,6 @@ class SymbolicReasoner:
                 except Exception as e:
                     self.logger.warning(f"Failed to load {file}: {e}")
 
-
     def extract_rules_from_neural_model(
             self,
             input_data: np.ndarray,
@@ -95,173 +94,81 @@ class SymbolicReasoner:
             model: Optional[tf.keras.Model] = None
     ) -> List[Tuple[str, float]]:
         """
-        Extract rules from neural model using gradient analysis and predefined thresholds.
-
-        Parameters:
-            input_data (np.ndarray): Input data used for rule extraction.
-            feature_names (List[str]): Names of the input features.
-            threshold (float): Threshold to determine feature importance.
-            model (Optional[tf.keras.Model]): Model to use for rule extraction. If None, uses self.model.
-
-        Returns:
-            List[Tuple[str, float]]: List of extracted rules with their confidence scores.
+        Extract probabilistic rules from neural model using ProbLog compliant format.
         """
         try:
-            # Use provided model if available, otherwise use self.model
             model_to_use = model if model is not None else self.model
-
             if model_to_use is None:
-                self.logger.error("No model available for rule extraction.")
+                self.logger.error("No model available for rule extraction")
                 return []
 
             # Format input data
             if len(input_data.shape) == 2:
                 input_data = np.expand_dims(input_data, axis=0)
-            elif len(input_data.shape) != 3:
-                self.logger.error(f"Invalid input shape: {input_data.shape}. Expected (batch, timesteps, features)")
-                return []
 
-            self.logger.debug(f"Input data shape: {input_data.shape}")
-            input_data = input_data.astype(np.float32)
-
-            # Get predictions
             predictions = model_to_use.predict(input_data, verbose=0).flatten()
-            self.logger.debug(f"Model predictions shape: {predictions.shape}")
-
-            # Find anomalous sequences
             anomaly_indices = np.where(predictions > threshold)[0]
-            self.logger.info(f"Found {len(anomaly_indices)} anomalous sequences based on the threshold of {threshold}.")
-
-            if len(anomaly_indices) == 0:
-                self.logger.info("No anomalous sequences found. No rules extracted.")
-                return []
 
             new_rules = []
-
-            # Process each anomalous sequence
             for idx in anomaly_indices:
                 sequence = input_data[idx]
-                current_values = sequence[-1]  # Last timestep
-                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values  # Previous timestep
+                current_values = sequence[-1]
 
-                # Dictionary to store features for combined rules
-                feature_values = {}
-                important_features = []
+                # Generate ProbLog compliant rules
+                confidence = float(predictions[idx])
+                conditions = []
 
-                # Process each feature
-                for feat_idx, feat_name in enumerate(feature_names):
-                    feat_value = float(current_values[feat_idx])
-                    prev_value = float(previous_values[feat_idx])
-                    feature_values[feat_name] = feat_value
+                # Add temperature conditions
+                if current_values[0] > 80:
+                    conditions.append("high_temp")
 
-                    # Individual feature rules with expanded thresholds
-                    if feat_name == 'temperature':
-                        if feat_value > 80:
-                            important_features.append((feat_name, feat_value, 'high'))
-                        elif feat_value < 40:
-                            important_features.append((feat_name, feat_value, 'low'))
-                        # Add significant change detection
-                        if abs(feat_value - prev_value) > 10:
-                            important_features.append((f"{feat_name}_change", feat_value, 'rapid'))
+                # Add vibration conditions
+                if current_values[1] > 55:
+                    conditions.append("high_vib")
 
-                    elif feat_name == 'vibration':
-                        if feat_value > 55:
-                            important_features.append((feat_name, feat_value, 'high'))
-                        elif feat_value < 20:
-                            important_features.append((feat_name, feat_value, 'low'))
-                        # Add change detection
-                        if abs(feat_value - prev_value) > 5:
-                            important_features.append((f"{feat_name}_change", feat_value, 'rapid'))
+                # Add pressure conditions
+                if current_values[2] < 20:
+                    conditions.append("low_press")
 
-                    elif feat_name == 'pressure':
-                        if feat_value < 20:
-                            important_features.append((feat_name, feat_value, 'low'))
-                        elif feat_value > 40:
-                            important_features.append((feat_name, feat_value, 'high'))
-
-                    elif feat_name == 'efficiency_index':
-                        if feat_value < 0.6:
-                            important_features.append((feat_name, feat_value, 'low'))
-                        elif feat_value < 0.8:
-                            important_features.append((feat_name, feat_value, 'medium'))
-
-                    elif feat_name == 'operational_hours':
-                        if feat_value % 1000 < 10:  # Near maintenance
-                            important_features.append(('maintenance_needed', int(feat_value), 'true'))
-
-                    elif feat_name == 'system_state':
-                        if feat_value != prev_value:  # State transition
-                            important_features.append(('state_transition',
-                                                       f"{int(prev_value)}->{int(feat_value)}",
-                                                       'change'))
-
-                # Add combined feature rules
-                if 'temperature' in feature_values and 'vibration' in feature_values:
-                    temp_val = feature_values['temperature']
-                    vib_val = feature_values['vibration']
-                    if temp_val > 75 and vib_val > 50:
-                        important_features.append(
-                            ('combined_temp_vib',
-                             f"temperature({int(temp_val)}),vibration({int(vib_val)})",
-                             'high')
-                        )
-
-                if 'pressure' in feature_values and 'efficiency_index' in feature_values:
-                    press_val = feature_values['pressure']
-                    eff_val = feature_values['efficiency_index']
-                    if press_val < 25 and eff_val < 0.7:
-                        important_features.append(
-                            ('combined_press_eff',
-                             f"pressure({int(press_val)}),efficiency_index({eff_val:.2f})",
-                             'critical')
-                        )
-
-
-                # Create rules for important features
-                if important_features:
-                    # Format conditions
-                    conditions = []
-                    for feat_name, feat_value, condition_type in important_features:
-                        if isinstance(feat_value, float) and feat_name != 'efficiency_index':
-                            feat_value = int(feat_value)
-
-                        if '_change' in feat_name or 'state_transition' in feat_name:
-                            conditions.append(f"{feat_name}({feat_value})")
-                        elif 'combined' in feat_name:
-                            conditions.append(feat_value)  # Already formatted
-                        elif feat_name == 'efficiency_index':
-                            conditions.append(f"{feat_name}({feat_value:.2f})")
-                        else:
-                            conditions.append(f"{feat_name}({feat_value})")
-
-                    # Create unique rule name and full rule
+                # Create ProbLog rule
+                if conditions:
                     rule_name = f"neural_rule_{len(self.learned_rules) + 1}"
-                    rule_body = ", ".join(conditions) + "."
-                    rule = f"{rule_name} :- {rule_body}"
-
-                    # Calculate confidence using model prediction
-                    confidence = float(predictions[idx])
+                    rule_body = ", ".join(conditions)
+                    rule = f"{confidence}::{rule_name} :- {rule_body}."
 
                     new_rules.append((rule, confidence))
-                    self.rule_confidence[rule] = confidence
-                    self.logger.info(f"Extracted rule: {rule} with confidence: {confidence:.2f}")
 
-            self.logger.info(f"Total new rules extracted: {len(new_rules)}")
-
-            # Add after existing rule extraction
-            temporal_patterns = self.rule_learner.analyze_temporal_patterns(
-                sequences=input_data,
-                labels=self.model.predict(input_data)
-            )
-            temporal_rules = self.rule_learner.extract_rules(temporal_patterns)
-
-            # Add temporal rules to existing rules
-            new_rules.extend([(rule, 0.8) for rule in temporal_rules])
             return new_rules
 
         except Exception as e:
-            self.logger.error(f"Error extracting rules from neural model: {e}")
-            raise
+            self.logger.error(f"Error extracting rules: {e}")
+            return []
+
+    def update_problog_rules(self, new_rules: List[Tuple[str, float]], min_confidence: float = 0.7):
+        """
+        Update ProbLog rules file with new learned rules.
+        """
+        try:
+            with open(self.rules_path, 'r') as f:
+                existing_content = f.read()
+
+            with open(self.rules_path, 'a') as f:
+                if not existing_content.endswith('\n\n'):
+                    f.write('\n\n')
+
+                f.write("% Neural-derived probabilistic rules\n")
+                for rule, confidence in new_rules:
+                    if confidence >= min_confidence:
+                        f.write(f"% Confidence: {confidence:.2f}\n")
+                        f.write(f"{rule}\n")
+
+                f.write("\n")
+
+            # Reload ProbLog rules
+            self.prolog.consult(self.rules_path)
+
+        except Exception as e:
+            self.logger.error(f"Error updating ProbLog rules: {e}")
 
     def analyze_neural_patterns(
             self,

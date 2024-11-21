@@ -146,7 +146,7 @@ class NEXUSDTPipeline:
             anomalous_sequences = input_data[anomalous_idx]
             normal_sequences = input_data[normal_idx]
 
-            # Calculate gradients for all features
+            # Calculate gradients
             gradients = {
                 'temperature': np.gradient(input_data[:, :, 0], axis=1),
                 'vibration': np.gradient(input_data[:, :, 1], axis=1),
@@ -160,10 +160,11 @@ class NEXUSDTPipeline:
             # Process each anomalous sequence
             for idx in anomalous_idx:
                 sequence = input_data[idx]
-                current_values = sequence[-1]  # Last timestep
-                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values  # Previous timestep
+                current_values = sequence[-1]
+                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values
+                confidence = float(y_pred[idx])
 
-                # Update feature_values dictionary
+                # Feature values dictionary
                 feature_values = {
                     'temperature': float(current_values[0]),
                     'vibration': float(current_values[1]),
@@ -174,96 +175,81 @@ class NEXUSDTPipeline:
                     'performance_score': float(current_values[6])
                 }
 
-                # Check for gradient-based patterns
-                feature_patterns = []
-                for feature, gradient in gradients.items():
-                    max_grad = np.max(np.abs(gradient[idx]))
-                    if max_grad > 2.0:  # Significant change threshold
-                        feature_patterns.append({
-                            'feature': feature,
-                            'gradient': float(max_grad),
-                            'value': feature_values[feature]
-                        })
+                # Generate base probabilistic facts
+                if feature_values['temperature'] > 80:
+                    gradient_rules.append({
+                        'rule': f"high_temp",
+                        'confidence': confidence,
+                        'type': 'fact',
+                        'timestep': idx
+                    })
 
-                # Generate gradient rules
-                if feature_patterns:
-                    for pattern in feature_patterns:
-                        rule_conditions = []
+                if feature_values['vibration'] > 55:
+                    gradient_rules.append({
+                        'rule': f"high_vib",
+                        'confidence': confidence,
+                        'type': 'fact',
+                        'timestep': idx
+                    })
 
-                        # Add gradient condition
-                        rule_conditions.append(
-                            f"{pattern['feature']}_gradient({pattern['gradient']:.2f})"
-                        )
-
-                        # Add value condition
-                        rule_conditions.append(
-                            f"{pattern['feature']}({int(pattern['value'])})"
-                        )
-
-                        # Add state transition if applicable
-                        if abs(current_values[5] - previous_values[5]) > 0:
-                            rule_conditions.append(
-                                f"state_transition({int(previous_values[5])}->{int(current_values[5])})"
-                            )
-
-                        # Create rule
-                        rule_name = f"gradient_rule_{len(gradient_rules) + 1}"
-                        rule_body = ", ".join(rule_conditions) + "."
-                        rule = f"{rule_name} :- {rule_body}"
-                        confidence = float(y_pred[idx])
-
-                        gradient_rules.append({
-                            'rule': rule,
-                            'confidence': confidence,
-                            'patterns': feature_patterns,
-                            'timestep': idx
-                        })
+                if feature_values['pressure'] < 20:
+                    gradient_rules.append({
+                        'rule': f"low_press",
+                        'confidence': confidence,
+                        'type': 'fact',
+                        'timestep': idx
+                    })
 
                 # Check for combined feature patterns
                 if feature_values['temperature'] > 75 and feature_values['vibration'] > 50:
                     pattern_rules.append({
-                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
-                                 f"temperature({int(feature_values['temperature'])}), "
-                                 f"vibration({int(feature_values['vibration'])})."),
-                        'confidence': float(y_pred[idx]),
-                        'type': 'temp_vib_correlation',
+                        'rule': "temp_vib_correlation :- high_temp, high_vib",
+                        'confidence': confidence,
+                        'type': 'correlation',
                         'timestep': idx
                     })
 
                 if feature_values['pressure'] < 25 and feature_values['efficiency_index'] < 0.7:
                     pattern_rules.append({
-                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
-                                 f"pressure({int(feature_values['pressure'])}), "
-                                 f"efficiency_index({feature_values['efficiency_index']:.2f})."),
-                        'confidence': float(y_pred[idx]),
-                        'type': 'press_eff_correlation',
+                        'rule': "press_eff_correlation :- low_press, low_efficiency",
+                        'confidence': confidence,
+                        'type': 'correlation',
                         'timestep': idx
                     })
 
-            # Extract additional patterns using sequence analysis via SymbolicReasoner
+            # Extract additional patterns using sequence analysis
             temporal_patterns = self.reasoner.analyze_neural_patterns(
                 anomalous_sequences=anomalous_sequences,
                 normal_sequences=normal_sequences,
                 feature_names=self.feature_names
             )
 
-            # Combine all rules
+            # Combine all rules with proper ProbLog formatting
             all_rules = []
 
             # Add gradient rules
             for rule in gradient_rules:
                 if rule['confidence'] >= threshold:
-                    all_rules.append((rule['rule'], rule['confidence']))
+                    all_rules.append((
+                        f"{rule['confidence']}::{rule['rule']}.",
+                        rule['confidence']
+                    ))
 
             # Add pattern rules
             for rule in pattern_rules:
                 if rule['confidence'] >= threshold:
-                    all_rules.append((rule['rule'], rule['confidence']))
+                    all_rules.append((
+                        f"{rule['confidence']}::{rule['rule']}.",
+                        rule['confidence']
+                    ))
 
             # Add temporal patterns
             for pattern in temporal_patterns:
                 if pattern.get('confidence', 0) >= threshold:
-                    all_rules.append((pattern['rule'], pattern['confidence']))
+                    all_rules.append((
+                        f"{pattern['confidence']}::{pattern['rule']}.",
+                        pattern['confidence']
+                    ))
 
             # Update symbolic knowledge base
             if all_rules:
@@ -273,7 +259,7 @@ class NEXUSDTPipeline:
                 stats = self.get_rule_statistics()
                 self.logger.info(f"Neural rule extraction stats: {stats}")
 
-                # Save extracted rules summary
+                # Save rules summary
                 rules_summary = {
                     'gradient_rules': gradient_rules,
                     'pattern_rules': pattern_rules,
@@ -283,13 +269,11 @@ class NEXUSDTPipeline:
                     'timestamp': str(np.datetime64('now'))
                 }
 
-                # Save summary
                 summary_path = os.path.join(
                     self.config['paths']['results_dir'],
                     'neurosymbolic_rules.json'
                 )
 
-                # Serialize rules_summary with custom encoder
                 with open(summary_path, 'w') as f:
                     json.dump(rules_summary, f, indent=2, cls=NumpyEncoder)
 
@@ -439,9 +423,9 @@ class NEXUSDTPipeline:
             self.logger.exception(f"Pipeline error: {e}")
             raise
 
-    def update_rules(self, rules: List[Tuple[str, float]]):
+    def update_rules(self, rules: List[Tuple[str, float]]) -> None:
         """
-        Update the Prolog rules file with new rules.
+        Update the Prolog rules file with new rules in ProbLog 2.2 format.
 
         Args:
             rules: List of tuples containing rule strings and their confidence scores.
@@ -449,11 +433,18 @@ class NEXUSDTPipeline:
         try:
             rules_file_path = self.config['paths']['reasoning_rules_path']
             with open(rules_file_path, 'a') as f:
+                f.write("\n% Neural-derived probabilistic rules\n")
+                f.write(f"% Generated: {str(np.datetime64('now'))}\n\n")
+
                 for rule, confidence in rules:
-                    # Optionally, you can append confidence as a comment or integrate it into the rule
-                    f.write(f"% Confidence: {confidence:.2f}\n")
+                    # Rule is already formatted with proper ProbLog 2.2 syntax
+                    # Format: confidence::predicate.
+                    # or: confidence::head :- body.
                     f.write(f"{rule}\n")
-            self.logger.info(f"Added {len(rules)} new rules to {rules_file_path}")
+
+                f.write("\n")
+
+            self.logger.info(f"Added {len(rules)} new ProbLog rules to {rules_file_path}")
         except Exception as e:
             self.logger.error(f"Failed to update rules: {e}")
             raise

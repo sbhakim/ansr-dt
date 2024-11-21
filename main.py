@@ -15,27 +15,26 @@ from stable_baselines3 import PPO
 from src.visualization.neurosymbolic_visualizer import NeurosymbolicVisualizer
 from src.integration.adaptive_controller import AdaptiveController
 from src.reasoning.knowledge_graph import KnowledgeGraphGenerator
+from src.reasoning.rule_learning import RuleLearner
+from src.reasoning.prob_log_interface import ProbLogInterface
+from src.reasoning.reasoning import SymbolicReasoner
 
 
 def setup_project_structure(project_root: str):
     """Create necessary project directories."""
     required_dirs = [
         'src/reasoning',
-        'results',
         'results/models',
         'results/metrics',
         'logs',
-        'results/visualization',
         'results/visualization/model_visualization',
         'results/visualization/neurosymbolic',
         'results/visualization/metrics',
         'results/visualization/pattern_analysis',
-        'results/knowledge_graphs'  # Added for knowledge graphs
+        'results/knowledge_graphs'
     ]
-
     for dir_path in required_dirs:
         os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
-
 
 def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.ndarray:
     """Prepare sensor window with correct shape for models."""
@@ -55,22 +54,13 @@ def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.nd
     except Exception as e:
         raise RuntimeError(f"Error preparing sensor window: {str(e)}")
 
-
-def initialize_visualizers(logger: logging.Logger, figures_dir: str, config: dict):
+def initialize_visualizers(logger: logging.Logger, figures_dir: str):
     """Initialize visualization components."""
-    try:
-        os.makedirs(figures_dir, exist_ok=True)
-        neurosymbolic_visualizer = NeurosymbolicVisualizer(logger)
-        knowledge_graph_generator = KnowledgeGraphGenerator(logger=logger)
-
-        return {
-            'neurosymbolic': neurosymbolic_visualizer,
-            'knowledge_graph': knowledge_graph_generator
-        }
-    except Exception as e:
-        logger.error(f"Failed to initialize visualizers: {e}")
-        raise
-
+    os.makedirs(figures_dir, exist_ok=True)
+    return {
+        'neurosymbolic': NeurosymbolicVisualizer(logger),
+        'knowledge_graph': KnowledgeGraphGenerator(logger=logger)
+    }
 
 def save_results(results: dict, path: str, logger: logging.Logger):
     """Save results to JSON file."""
@@ -83,46 +73,32 @@ def save_results(results: dict, path: str, logger: logging.Logger):
         logger.error(f"Failed to save results: {e}")
         raise
 
-
 def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
-                               output_dir: str,
-                               timestamp: str,
-                               logger: logging.Logger):
+                             output_dir: str,
+                             timestamp: str,
+                             logger: logging.Logger):
     """Save knowledge graph state and visualization."""
     try:
-        # Save visualization
         graph_path = os.path.join(output_dir, f'knowledge_graph_{timestamp}.png')
         graph_generator.visualize(graph_path)
 
-        # Save graph state
         state_path = os.path.join(output_dir, f'graph_state_{timestamp}.json')
-        graph_state = {
+        state = {
             'nodes': len(graph_generator.graph.nodes),
             'edges': len(graph_generator.graph.edges),
             'timestamp': timestamp
         }
-        save_results(graph_state, state_path, logger)
-
+        with open(state_path, 'w') as f:
+            json.dump(state, f, indent=2)
     except Exception as e:
         logger.error(f"Failed to save knowledge graph state: {e}")
         raise
 
 
 def main():
-    """
-    Execute the NEXUS-DT pipeline with enhanced neurosymbolic components:
-    1. Train/load CNN-LSTM for anomaly detection
-    2. Train/load PPO for adaptive control
-    3. Initialize neurosymbolic components
-    4. Run integrated system with visualization and knowledge graph generation
-    """
-    # Determine project root directory
+    """Execute the NEXUS-DT pipeline with neurosymbolic components."""
     project_root = os.path.dirname(os.path.abspath(__file__))
-
-    # Setup project directory structure
     setup_project_structure(project_root)
-
-    # Initialize logging
     logger = setup_logging(
         log_file=os.path.join(project_root, 'logs', 'nexus_dt.log'),
         log_level=logging.INFO
@@ -130,34 +106,29 @@ def main():
     logger.info("Starting NEXUS-DT Pipeline")
 
     try:
-        # Load and validate configuration
+        # Load configuration
         config_path = os.path.join(project_root, 'configs', 'config.yaml')
         config = load_config(config_path)
-        logger.info(f"Configuration loaded from {config_path}")
 
-        # Update paths to absolute
-        config['paths']['results_dir'] = os.path.join(project_root, 'results')
-        config['paths']['data_file'] = os.path.join(project_root, config['paths']['data_file'])
-        config['paths']['plot_config_path'] = os.path.join(project_root, config['paths']['plot_config_path'])
-        config['paths']['reasoning_rules_path'] = os.path.join(project_root, config['paths']['reasoning_rules_path'])
-        config['paths']['knowledge_graphs_dir'] = os.path.join(project_root, 'results', 'knowledge_graphs')
+        # Update absolute paths
+        for path_key in ['results_dir', 'data_file', 'plot_config_path', 'reasoning_rules_path',
+                         'prob_log_rules_path', 'knowledge_graphs_dir']:
+            config['paths'][path_key] = os.path.join(project_root, config['paths'][path_key])
 
-        # Initialize model paths
+        # Model paths
         model_paths = {
             'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
             'ppo': os.path.join(config['paths']['results_dir'], 'ppo_nexus_dt.zip')
         }
 
-        # Load or train CNN-LSTM model
+        # Load or train models
         if os.path.exists(model_paths['cnn_lstm']):
-            logger.info("Loading existing CNN-LSTM model")
             cnn_lstm_model = load_model_with_initialization(
                 path=model_paths['cnn_lstm'],
                 logger=logger,
                 input_shape=tuple(config['model']['input_shape'])
             )
         else:
-            logger.info("Training new CNN-LSTM model")
             pipeline = NEXUSDTPipeline(config, config_path, logger)
             pipeline.run()
             cnn_lstm_model = load_model_with_initialization(
@@ -166,145 +137,137 @@ def main():
                 input_shape=tuple(config['model']['input_shape'])
             )
 
-        # Load or train PPO agent
         if os.path.exists(model_paths['ppo']):
-            logger.info("Loading existing PPO agent")
             ppo_agent = PPO.load(model_paths['ppo'])
         else:
-            logger.info("Training new PPO agent")
-            ppo_success = train_ppo_agent(config_path)
-            if not ppo_success:
+            if not train_ppo_agent(config_path):
                 raise RuntimeError("PPO training failed")
             ppo_agent = PPO.load(model_paths['ppo'])
 
-        # Verify models
-        for name, path in model_paths.items():
-            if not os.path.exists(path):
-                raise FileNotFoundError(f"{name} model not found at {path}")
-            logger.info(f"{name} model verified at {path}")
+        # Initialize components
+        rule_learner = RuleLearner(
+            base_threshold=config['reasoning']['rule_learning']['base_threshold'],
+            window_size=config['reasoning']['rule_learning']['window_size'],
+            rules_path=config['paths']['reasoning_rules_path'],
+            logger=logger
+        )
 
-        # Initialize NEXUS-DT system
-        logger.info("Initializing NEXUS-DT system")
+        prob_log_interface = ProbLogInterface(
+            rules_path=config['paths']['prob_log_rules_path'],
+            logger=logger
+        )
+
+        symbolic_reasoner = SymbolicReasoner(
+            rules_path=config['paths']['reasoning_rules_path'],
+            input_shape=tuple(config['model']['input_shape']),
+            logger=logger
+        )
+        symbolic_reasoner.rule_learner = rule_learner
+        symbolic_reasoner.prob_log_interface = prob_log_interface
+
+        knowledge_graph = KnowledgeGraphGenerator(logger=logger)
+        neurosymbolic_visualizer = NeurosymbolicVisualizer(logger)
+
+        # Initialize NEXUS-DT
         nexusdt = ExplainableNEXUSDT(
             config_path=config_path,
             logger=logger,
             cnn_lstm_model=cnn_lstm_model,
-            ppo_agent=ppo_agent
+            ppo_agent=ppo_agent,
+            symbolic_reasoner=symbolic_reasoner,
+            knowledge_graph=knowledge_graph
         )
 
-        # Load test data
+        # Load and process test data
         test_data = np.load(config['paths']['data_file'])
         sensor_window = prepare_sensor_window(
             data=test_data,
             window_size=config['model']['window_size']
         )
 
-        # Logging after loading test data
-        logger.info(f"Loaded test data shape: {sensor_window.shape}")
-
-        # Initialize visualizers and knowledge graph
-        figures_dir = os.path.join(config['paths']['results_dir'], 'visualization')
-        visualizers = initialize_visualizers(logger, figures_dir, config)
-
-        # Logging before running inference
-        logger.info("Input data validation:")
-        logger.info(f"- Shape: {sensor_window.shape}")
-        logger.info(f"- Range: [{np.min(sensor_window)}, {np.max(sensor_window)}]")
-        logger.info(f"- Contains NaN: {np.isnan(sensor_window).any()}")
-
-        # Run integrated inference
-        logger.info("Running integrated inference")
+        # Run inference
         result = nexusdt.adapt_and_explain(sensor_window)
 
-        # Logging after running inference
-        logger.info("Inference results:")
-        logger.info(f"- Result type: {type(result)}")
-        logger.info(f"- Result keys: {result.keys() if isinstance(result, dict) else 'Not a dictionary'}")
+        # Process results
+        temporal_patterns = rule_learner.analyze_temporal_patterns(
+            sequences=sensor_window,
+            labels=result.get('labels', [])
+        )
+        new_rules = rule_learner.extract_rules(temporal_patterns)
+        symbolic_reasoner.update_rules(new_rules, min_confidence=config['reasoning']['rule_learning']['min_confidence'])
 
-        # Generate visualizations with error handling
-        try:
-            # Standard visualizations
-            if hasattr(nexusdt.reasoner, 'get_rule_activations'):
-                visualizers['neurosymbolic'].visualize_rule_activations(
-                    activations=nexusdt.reasoner.get_rule_activations(),
-                    save_path=os.path.join(figures_dir, 'neurosymbolic/rule_activations.png')
-                )
+        result = {
+            'insights': [],
+            'current_state': {},
+            'anomaly_status': {},
+            'labels': [],
+            'control_parameters': {},
+            'state_transitions': [],
+            'confidence': 0.0
+        }
 
-            if hasattr(nexusdt.reasoner, 'state_tracker'):
-                visualizers['neurosymbolic'].plot_state_transitions(
-                    transition_matrix=nexusdt.reasoner.state_tracker.get_transition_probabilities(),
-                    save_path=os.path.join(figures_dir, 'neurosymbolic/state_transitions.png')
-                )
+        if config['reasoning']['prob_log']['enabled']:
+            try:
+                prob_log_results = prob_log_interface.run_single_query()
+                if prob_log_results:
+                    prob_log_insight = f"ProbLog Failure Risk: {prob_log_results.get('failure_risk', 0.0):.2f}"
+                    if 'insights' not in result:
+                        result['insights'] = []
+                    result['insights'].append(prob_log_insight)
+            except Exception as e:
+                logger.warning(f"ProbLog processing warning: {str(e)}")
+                # Continue execution even if ProbLog fails
 
-            # Knowledge graph generation and update
-            if config['knowledge_graph']['enabled']:
-                current_state = result.get('current_state', {})
-                insights = result.get('insights', [])
-                rules = [{'rule': rule, 'confidence': nexusdt.reasoner.rule_confidence.get(rule, 0.0)}
-                         for rule in nexusdt.reasoner.learned_rules]
+        # Generate visualizations
+        if hasattr(symbolic_reasoner, 'get_rule_activations'):
+            neurosymbolic_visualizer.visualize_rule_activations(
+                activations=symbolic_reasoner.get_rule_activations(),
+                save_path=os.path.join(config['paths']['results_dir'],
+                                       'visualization/neurosymbolic/rule_activations.png')
+            )
 
-                # Update knowledge graph
-                visualizers['knowledge_graph'].update_graph(
-                    current_state=current_state,
-                    insights=insights,
-                    rules=rules,
-                    anomalies=result.get('anomaly_status', {})
-                )
+        if config['knowledge_graph']['enabled']:
+            knowledge_graph.update_graph(
+                current_state=result.get('current_state', {}),
+                insights=result.get('insights', []),
+                rules=[{'rule': rule.id, 'confidence': rule.confidence} for rule in
+                       rule_learner.learned_rules.values()],
+                anomalies=result.get('anomaly_status', {})
+            )
 
-                # Save knowledge graph state
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                save_knowledge_graph_state(
-                    graph_generator=visualizers['knowledge_graph'],
-                    output_dir=config['paths']['knowledge_graphs_dir'],
-                    timestamp=timestamp,
-                    logger=logger
-                )
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            save_knowledge_graph_state(
+                graph_generator=knowledge_graph,
+                output_dir=config['paths']['knowledge_graphs_dir'],
+                timestamp=timestamp,
+                logger=logger
+            )
 
-        except Exception as viz_error:
-            logger.warning(f"Visualization error: {viz_error}")
-
-        # Prepare results
+        # Save results
         neurosymbolic_results = {
-            'neural_rules': getattr(nexusdt.reasoner, 'learned_rules', []),
-            'rule_confidence': getattr(nexusdt.reasoner, 'rule_confidence', {}),
+            'neural_rules': [rule.id for rule in rule_learner.learned_rules.values()],
+            'rule_confidence': {rule.id: rule.confidence for rule in rule_learner.learned_rules.values()},
             'symbolic_insights': result.get('insights', []),
+            'prob_log_results': prob_log_results if config['reasoning']['prob_log']['enabled'] else {},
             'neural_confidence': result.get('confidence', 0.0),
             'control_parameters': result.get('control_parameters', {}),
             'state_transitions': result.get('state_transitions', []),
             'timestamp': str(np.datetime64('now'))
         }
 
-        # Save results
-        save_results(
-            results=neurosymbolic_results,
-            path=os.path.join(config['paths']['results_dir'], 'neurosymbolic_results.json'),
-            logger=logger
-        )
+        with open(os.path.join(config['paths']['results_dir'], 'neurosymbolic_results.json'), 'w') as f:
+            json.dump(neurosymbolic_results, f, indent=2)
 
-        # Save final state
-        save_results(
-            results={
+        with open(os.path.join(config['paths']['results_dir'], 'final_state.json'), 'w') as f:
+            json.dump({
                 'current_state': nexusdt.current_state,
                 'state_history': nexusdt.state_history[-100:],
                 'knowledge_graph_state': {
-                    'nodes': len(visualizers['knowledge_graph'].graph.nodes),
-                    'edges': len(visualizers['knowledge_graph'].graph.edges),
+                    'nodes': len(knowledge_graph.graph.nodes),
+                    'edges': len(knowledge_graph.graph.edges),
                     'timestamp': str(np.datetime64('now'))
                 }
-            },
-            path=os.path.join(config['paths']['results_dir'], 'final_state.json'),
-            logger=logger
-        )
-
-        # Log summary
-        logger.info("\nNeurosymbolic Analysis Summary:")
-        logger.info(f"- Neural Rules Extracted: {len(neurosymbolic_results['neural_rules'])}")
-        logger.info(f"- Symbolic Insights Generated: {len(neurosymbolic_results['symbolic_insights'])}")
-        logger.info(f"- Neural Confidence: {neurosymbolic_results['neural_confidence']:.2%}")
-        logger.info(f"- Control Parameters Applied: {len(neurosymbolic_results['control_parameters'])}")
-        logger.info(f"- Knowledge Graph Nodes: {len(visualizers['knowledge_graph'].graph.nodes)}")
-        logger.info(f"- Knowledge Graph Edges: {len(visualizers['knowledge_graph'].graph.edges)}")
-        logger.info(f"Final Explanation: {result.get('explanation', '')}\n")
+            }, f, indent=2)
 
         logger.info("Pipeline completed successfully")
         return True

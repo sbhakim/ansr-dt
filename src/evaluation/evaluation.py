@@ -238,13 +238,27 @@ def evaluate_model(
                     'performance_score': float(sensor_data[i][6])
                 }
 
+                # Create ProbLog evidence format
+                evidence = {}
+                if sensor_dict['temperature'] > 80:
+                    evidence['high_temp'] = 'true'
+                if sensor_dict['vibration'] > 55:
+                    evidence['high_vib'] = 'true'
+                if sensor_dict['pressure'] < 20:
+                    evidence['low_press'] = 'true'
+
+                # Add evidence before getting insights
+                if hasattr(reasoner, 'problog_interface'):
+                    reasoner.problog_interface.add_evidence(evidence)
+
                 # Get insights
                 insight = reasoner.reason(sensor_dict)
                 if insight:
                     symbolic_insights.append({
                         'timestep': i,
                         'insights': insight,
-                        'readings': sensor_dict
+                        'readings': sensor_dict,
+                        'evidence': evidence  # Include evidence in insights
                     })
                     pattern_metrics['active_rules'] += len(insight)
 

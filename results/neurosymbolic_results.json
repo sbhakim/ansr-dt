@@ -1,9 +1,22 @@
 {
   "neural_rules": [],
   "rule_confidence": {},
-  "symbolic_insights": [],
-  "neural_confidence": 0.2745321989059448,
+  "symbolic_insights": [
+    "ProbLog Failure Risk: 0.00"
+  ],
+  "prob_log_results": {
+    "system_state_normal": 0.0,
+    "system_state_degraded": 0.0,
+    "system_state_critical": 0.0,
+    "failure_risk": 0.0,
+    "system_stress": 0.0,
+    "efficiency_drop": 0.0,
+    "abnormal_pattern": 0.0,
+    "safety_critical": 0.0,
+    "performance_degraded": 0.0
+  },
+  "neural_confidence": 0.0,
   "control_parameters": {},
   "state_transitions": [],
-  "timestamp": "2024-11-20T03:16:53"
+  "timestamp": "2024-11-21T07:11:47"
 }

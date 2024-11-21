@@ -413,16 +413,9 @@ class NEXUSDTCore:
             }
             raise RuntimeError(f"Failed to update system state: {str(e)}") from e
 
-
     def adapt_and_explain(self, sensor_data: np.ndarray) -> Dict[str, Any]:
         """
-        Generate actions and explanations based on sensor data.
-
-        Args:
-            sensor_data (np.ndarray): Input sensor data.
-
-        Returns:
-            Dict[str, Any]: Decision with action and explanation.
+        Generate actions and explanations using ProbLog-based reasoning.
         """
         try:
             # Update state
@@ -430,25 +423,48 @@ class NEXUSDTCore:
 
             # Extract rules from current prediction if it's a strong anomaly
             if state['anomaly_score'] > 0.5 and self.reasoner:
+                # Format data for ProbLog
+                evidence = {}
+                current_readings = state['sensor_readings']
+
+                # Create ProbLog evidence
+                if current_readings['temperature'] > 80:
+                    evidence['high_temp'] = 'true'
+                if current_readings['vibration'] > 55:
+                    evidence['high_vib'] = 'true'
+                if current_readings['pressure'] < 20:
+                    evidence['low_press'] = 'true'
+
+                # Add evidence to ProbLog
+                self.reasoner.problog_interface.add_evidence(evidence)
+
+                # Extract rules with ProbLog format
                 new_rules = self.reasoner.extract_rules_from_neural_model(
                     model=self.cnn_lstm,
                     input_data=sensor_data,
                     feature_names=self.feature_names,
                     threshold=0.7
                 )
+
                 if new_rules:
                     self.reasoner.update_rules(new_rules, min_confidence=0.7)
-                    self.logger.info(f"Extracted {len(new_rules)} new rules from current prediction")
+                    self.logger.info(f"Extracted {len(new_rules)} new ProbLog rules")
 
-            # Generate decision
+            # Get ProbLog query results
+            if self.reasoner and hasattr(self.reasoner, 'problog_interface'):
+                problog_results = self.reasoner.problog_interface.run_single_query()
+            else:
+                problog_results = {}
+
+            # Generate decision with ProbLog probabilities
             decision = {
                 'timestamp': state['timestamp'],
                 'action': None,
                 'explanation': 'Normal operation',
-                'confidence': state['anomaly_score']
+                'confidence': state['anomaly_score'],
+                'problog_probabilities': problog_results
             }
 
-            # Check for anomalies
             if state['anomaly_score'] > 0.5:
                 decision.update({
                     'action': state['recommended_action'],
@@ -532,14 +548,7 @@ class NEXUSDTCore:
 
     def integrated_inference(self, sensor_data: np.ndarray) -> Dict[str, Any]:
         """
-        Run integrated inference combining all components: anomaly detection,
-        adaptive control, and symbolic reasoning.
-
-        Args:
-            sensor_data (np.ndarray): Input sensor data.
-
-        Returns:
-            Dict[str, Any]: Comprehensive inference results.
+        Run integrated inference combining neural and ProbLog-based reasoning.
         """
         try:
             # Preprocess data
@@ -549,12 +558,25 @@ class NEXUSDTCore:
             anomaly_scores = self.cnn_lstm.predict(data, verbose=0)
             anomaly_detected = anomaly_scores[0] > 0.5
 
-            # 2. Get current state assessment
+            # 2. Get current state assessment with ProbLog evidence
             current_state = self._extract_current_state(data[0, -1])
+
+            # Create ProbLog evidence from current state
+            evidence = {}
+            if current_state['temperature'] > 80:
+                evidence['high_temp'] = 'true'
+            if current_state['vibration'] > 55:
+                evidence['high_vib'] = 'true'
+            if current_state['pressure'] < 20:
+                evidence['low_press'] = 'true'
+
+            # Get symbolic insights with evidence
             if self.reasoner:
                 symbolic_insights = self.reasoner.reason(current_state)
+                problog_results = self.reasoner.problog_interface.run_single_query()
             else:
                 symbolic_insights = []
+                problog_results = {}
 
             # 3. Prepare observation for PPO
             obs = self._prepare_ppo_observation(data)
@@ -562,15 +584,16 @@ class NEXUSDTCore:
             # 4. Get PPO action
             action, _ = self.ppo_agent.predict(
                 obs,
-                deterministic=not anomaly_detected  # More exploration if anomaly
+                deterministic=not anomaly_detected
             )
 
-            # 5. Integrate results
+            # 5. Integrate results with ProbLog probabilities
             result = {
                 'timestamp': str(np.datetime64('now')),
                 'anomaly_score': float(anomaly_scores[0]),
                 'anomaly_detected': bool(anomaly_detected),
                 'symbolic_insights': symbolic_insights,
+                'problog_probabilities': problog_results,
                 'recommended_action': action.tolist(),
                 'current_state': current_state
             }

@@ -1,1331 +1,1841 @@
 {
   "gradient_rules": [
     {
-      "rule": "gradient_rule_1 :- pressure_gradient(2.25), pressure(-1).",
-      "confidence": 0.9621852040290833,
-      "patterns": [
-        {
-          "feature": "pressure",
-          "gradient": 2.2510569348761313,
-          "value": -1.1817463445900007
-        }
-      ],
+      "rule": "low_press",
+      "confidence": 0.9612529873847961,
+      "type": "fact",
+      "timestep": 9
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9724326729774475,
+      "type": "fact",
       "timestep": 75
     },
     {
-      "rule": "gradient_rule_2 :- temperature_gradient(2.10), temperature(-1), state_transition(0->1).",
-      "confidence": 0.9997137188911438,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.5541141363819337
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.5381496552217453
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.566407018149009
-        }
-      ],
+      "rule": "low_press",
+      "confidence": 0.9645239114761353,
+      "type": "fact",
+      "timestep": 108
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9978137016296387,
+      "type": "fact",
       "timestep": 111
     },
     {
-      "rule": "gradient_rule_3 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).",
-      "confidence": 0.9997137188911438,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.5541141363819337
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.5381496552217453
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.566407018149009
-        }
-      ],
-      "timestep": 111
+      "rule": "low_press",
+      "confidence": 0.9974256753921509,
+      "type": "fact",
+      "timestep": 112
     },
     {
-      "rule": "gradient_rule_4 :- efficiency_index_gradient(2.33), efficiency_index(-1), state_transition(0->1).",
-      "confidence": 0.9997137188911438,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.5541141363819337
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.5381496552217453
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.566407018149009
-        }
-      ],
-      "timestep": 111
+      "rule": "low_press",
+      "confidence": 0.9996644258499146,
+      "type": "fact",
+      "timestep": 113
     },
     {
-      "rule": "gradient_rule_5 :- temperature_gradient(2.10), temperature(-1).",
-      "confidence": 0.9997596740722656,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.4719325499923903
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.4255287118419082
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.4604357171260325
-        }
-      ],
+      "rule": "low_press",
+      "confidence": 0.9998403191566467,
+      "type": "fact",
+      "timestep": 114
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998188018798828,
+      "type": "fact",
+      "timestep": 115
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999175071716309,
+      "type": "fact",
+      "timestep": 116
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999356269836426,
+      "type": "fact",
+      "timestep": 117
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999334216117859,
+      "type": "fact",
+      "timestep": 118
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998655319213867,
+      "type": "fact",
       "timestep": 119
     },
     {
-      "rule": "gradient_rule_6 :- vibration_gradient(2.23), vibration(-1).",
+      "rule": "low_press",
+      "confidence": 0.999762237071991,
+      "type": "fact",
+      "timestep": 120
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997523427009583,
+      "type": "fact",
+      "timestep": 121
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997637271881104,
+      "type": "fact",
+      "timestep": 122
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997708201408386,
+      "type": "fact",
+      "timestep": 123
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997914433479309,
+      "type": "fact",
+      "timestep": 124
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998108744621277,
+      "type": "fact",
+      "timestep": 125
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998024702072144,
+      "type": "fact",
+      "timestep": 126
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999817430973053,
+      "type": "fact",
+      "timestep": 127
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997999668121338,
+      "type": "fact",
+      "timestep": 128
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998037815093994,
+      "type": "fact",
+      "timestep": 129
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997850060462952,
+      "type": "fact",
+      "timestep": 130
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999790370464325,
+      "type": "fact",
+      "timestep": 131
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997792840003967,
+      "type": "fact",
+      "timestep": 132
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999748945236206,
+      "type": "fact",
+      "timestep": 133
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997562766075134,
+      "type": "fact",
+      "timestep": 134
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997212886810303,
+      "type": "fact",
+      "timestep": 135
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997352361679077,
+      "type": "fact",
+      "timestep": 136
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9996881484985352,
+      "type": "fact",
+      "timestep": 137
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997333884239197,
+      "type": "fact",
+      "timestep": 138
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997403025627136,
+      "type": "fact",
+      "timestep": 139
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997449517250061,
+      "type": "fact",
+      "timestep": 140
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999747097492218,
+      "type": "fact",
+      "timestep": 141
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997360706329346,
+      "type": "fact",
+      "timestep": 142
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997431635856628,
+      "type": "fact",
+      "timestep": 143
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997425675392151,
+      "type": "fact",
+      "timestep": 144
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997681379318237,
+      "type": "fact",
+      "timestep": 145
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997782707214355,
+      "type": "fact",
+      "timestep": 146
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997674822807312,
+      "type": "fact",
+      "timestep": 147
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997803568840027,
+      "type": "fact",
+      "timestep": 148
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999806821346283,
+      "type": "fact",
+      "timestep": 149
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998164176940918,
+      "type": "fact",
+      "timestep": 150
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998013377189636,
+      "type": "fact",
+      "timestep": 151
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997977614402771,
+      "type": "fact",
+      "timestep": 152
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.99977046251297,
+      "type": "fact",
+      "timestep": 153
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997844099998474,
+      "type": "fact",
+      "timestep": 154
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997904300689697,
+      "type": "fact",
+      "timestep": 155
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997929930686951,
+      "type": "fact",
+      "timestep": 156
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997753500938416,
+      "type": "fact",
+      "timestep": 157
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997650980949402,
+      "type": "fact",
+      "timestep": 158
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.8876440525054932,
+      "type": "fact",
+      "timestep": 178
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9324121475219727,
+      "type": "fact",
+      "timestep": 198
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9983088374137878,
+      "type": "fact",
+      "timestep": 279
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9994984865188599,
+      "type": "fact",
+      "timestep": 280
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998252987861633,
+      "type": "fact",
+      "timestep": 281
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999096989631653,
+      "type": "fact",
+      "timestep": 282
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998787641525269,
+      "type": "fact",
+      "timestep": 283
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999015927314758,
+      "type": "fact",
+      "timestep": 284
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999356269836426,
+      "type": "fact",
+      "timestep": 285
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999923586845398,
+      "type": "fact",
+      "timestep": 286
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998589158058167,
+      "type": "fact",
+      "timestep": 287
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997677206993103,
+      "type": "fact",
+      "timestep": 288
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997829794883728,
+      "type": "fact",
+      "timestep": 289
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997562170028687,
+      "type": "fact",
+      "timestep": 290
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997608661651611,
+      "type": "fact",
+      "timestep": 291
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997746348381042,
+      "type": "fact",
+      "timestep": 292
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997488856315613,
+      "type": "fact",
+      "timestep": 293
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998076558113098,
+      "type": "fact",
+      "timestep": 294
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999803364276886,
+      "type": "fact",
+      "timestep": 295
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997949004173279,
+      "type": "fact",
+      "timestep": 296
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997997879981995,
+      "type": "fact",
+      "timestep": 297
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997621774673462,
+      "type": "fact",
+      "timestep": 298
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999780535697937,
+      "type": "fact",
+      "timestep": 299
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997686147689819,
+      "type": "fact",
+      "timestep": 300
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997727870941162,
+      "type": "fact",
+      "timestep": 301
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997473955154419,
+      "type": "fact",
+      "timestep": 302
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997121691703796,
+      "type": "fact",
+      "timestep": 303
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997377991676331,
+      "type": "fact",
+      "timestep": 304
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997379183769226,
+      "type": "fact",
+      "timestep": 305
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997571110725403,
+      "type": "fact",
+      "timestep": 306
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997590184211731,
+      "type": "fact",
+      "timestep": 307
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997437000274658,
+      "type": "fact",
+      "timestep": 308
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997363686561584,
+      "type": "fact",
+      "timestep": 309
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999744713306427,
+      "type": "fact",
+      "timestep": 310
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999752402305603,
+      "type": "fact",
+      "timestep": 311
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997630715370178,
+      "type": "fact",
+      "timestep": 312
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997576475143433,
+      "type": "fact",
+      "timestep": 313
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999756932258606,
+      "type": "fact",
+      "timestep": 314
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997599720954895,
+      "type": "fact",
+      "timestep": 315
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999734103679657,
+      "type": "fact",
+      "timestep": 316
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997518658638,
+      "type": "fact",
+      "timestep": 317
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997702240943909,
+      "type": "fact",
+      "timestep": 318
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998006224632263,
+      "type": "fact",
+      "timestep": 319
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998098015785217,
+      "type": "fact",
+      "timestep": 320
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998084902763367,
+      "type": "fact",
+      "timestep": 321
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997671842575073,
+      "type": "fact",
+      "timestep": 322
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997559189796448,
+      "type": "fact",
+      "timestep": 323
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997538924217224,
+      "type": "fact",
+      "timestep": 324
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997510313987732,
+      "type": "fact",
+      "timestep": 325
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997547268867493,
+      "type": "fact",
+      "timestep": 326
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9974366426467896,
+      "type": "fact",
+      "timestep": 358
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9620034694671631,
+      "type": "fact",
+      "timestep": 368
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9807299971580505,
+      "type": "fact",
+      "timestep": 414
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.8739749193191528,
+      "type": "fact",
+      "timestep": 421
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9995434880256653,
+      "type": "fact",
+      "timestep": 447
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9994493722915649,
+      "type": "fact",
+      "timestep": 448
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998343586921692,
+      "type": "fact",
+      "timestep": 449
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998915791511536,
+      "type": "fact",
+      "timestep": 450
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998816847801208,
+      "type": "fact",
+      "timestep": 451
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999185800552368,
+      "type": "fact",
+      "timestep": 452
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999388456344604,
+      "type": "fact",
+      "timestep": 453
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9999290704727173,
+      "type": "fact",
+      "timestep": 454
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998571872711182,
+      "type": "fact",
+      "timestep": 455
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997361302375793,
+      "type": "fact",
+      "timestep": 456
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997323155403137,
+      "type": "fact",
+      "timestep": 457
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997689127922058,
+      "type": "fact",
+      "timestep": 458
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997771978378296,
+      "type": "fact",
+      "timestep": 459
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997799396514893,
+      "type": "fact",
+      "timestep": 460
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997787475585938,
+      "type": "fact",
+      "timestep": 461
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998046159744263,
+      "type": "fact",
+      "timestep": 462
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998034238815308,
+      "type": "fact",
+      "timestep": 463
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997887015342712,
+      "type": "fact",
+      "timestep": 464
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997784495353699,
+      "type": "fact",
+      "timestep": 465
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997307062149048,
+      "type": "fact",
+      "timestep": 466
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997382164001465,
+      "type": "fact",
+      "timestep": 467
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999733030796051,
+      "type": "fact",
+      "timestep": 468
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997036457061768,
+      "type": "fact",
+      "timestep": 469
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997687339782715,
+      "type": "fact",
+      "timestep": 470
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997650384902954,
+      "type": "fact",
+      "timestep": 471
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997462034225464,
+      "type": "fact",
+      "timestep": 472
+    },
+    {
+      "rule": "low_press",
       "confidence": 0.9997596740722656,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.4719325499923903
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.4255287118419082
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.4604357171260325
-        }
-      ],
-      "timestep": 119
+      "type": "fact",
+      "timestep": 473
     },
     {
-      "rule": "gradient_rule_7 :- efficiency_index_gradient(2.33), efficiency_index(-1).",
-      "confidence": 0.9997596740722656,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.103867678376006,
-          "value": -1.4719325499923903
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2349121073727805,
-          "value": -1.4255287118419082
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3336700493484,
-          "value": -1.4604357171260325
-        }
-      ],
-      "timestep": 119
+      "rule": "low_press",
+      "confidence": 0.9997503757476807,
+      "type": "fact",
+      "timestep": 474
     },
     {
-      "rule": "gradient_rule_8 :- temperature_gradient(2.58), temperature(-1), state_transition(0->1).",
-      "confidence": 0.9996978044509888,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.5469188964858256
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.5307519206626967
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5582447777949402
-        }
-      ],
-      "timestep": 279
+      "rule": "low_press",
+      "confidence": 0.9997199773788452,
+      "type": "fact",
+      "timestep": 475
     },
     {
-      "rule": "gradient_rule_9 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).",
-      "confidence": 0.9996978044509888,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.5469188964858256
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.5307519206626967
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5582447777949402
-        }
-      ],
-      "timestep": 279
+      "rule": "low_press",
+      "confidence": 0.9997407793998718,
+      "type": "fact",
+      "timestep": 476
     },
     {
-      "rule": "gradient_rule_10 :- efficiency_index_gradient(2.10), efficiency_index(-1), state_transition(0->1).",
-      "confidence": 0.9996978044509888,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.5469188964858256
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.5307519206626967
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5582447777949402
-        }
-      ],
-      "timestep": 279
+      "rule": "low_press",
+      "confidence": 0.9997466802597046,
+      "type": "fact",
+      "timestep": 477
     },
     {
-      "rule": "gradient_rule_11 :- temperature_gradient(2.58), temperature(-1).",
-      "confidence": 0.9997695684432983,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.4868199472318733
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.501642301061163
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5048774480640301
-        }
-      ],
-      "timestep": 287
+      "rule": "low_press",
+      "confidence": 0.9997409582138062,
+      "type": "fact",
+      "timestep": 478
     },
     {
-      "rule": "gradient_rule_12 :- vibration_gradient(2.23), vibration(-1).",
-      "confidence": 0.9997695684432983,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.4868199472318733
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.501642301061163
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5048774480640301
-        }
-      ],
-      "timestep": 287
+      "rule": "low_press",
+      "confidence": 0.9997468590736389,
+      "type": "fact",
+      "timestep": 479
     },
     {
-      "rule": "gradient_rule_13 :- efficiency_index_gradient(2.10), efficiency_index(-1).",
-      "confidence": 0.9997695684432983,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.5812546083805916,
-          "value": -1.4868199472318733
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.230759828762886,
-          "value": -1.501642301061163
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.097142222329074,
-          "value": -1.5048774480640301
-        }
-      ],
-      "timestep": 287
+      "rule": "low_press",
+      "confidence": 0.9997584223747253,
+      "type": "fact",
+      "timestep": 480
     },
     {
-      "rule": "gradient_rule_14 :- temperature_gradient(2.07), temperature(-1), state_transition(0->1).",
-      "confidence": 0.9996346235275269,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.5822128189000906
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.5337712532455745
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.5832073555625408
-        }
-      ],
-      "timestep": 447
+      "rule": "low_press",
+      "confidence": 0.9997762441635132,
+      "type": "fact",
+      "timestep": 481
     },
     {
-      "rule": "gradient_rule_15 :- vibration_gradient(2.20), vibration(-1), state_transition(0->1).",
-      "confidence": 0.9996346235275269,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.5822128189000906
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.5337712532455745
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.5832073555625408
-        }
-      ],
-      "timestep": 447
+      "rule": "low_press",
+      "confidence": 0.999784529209137,
+      "type": "fact",
+      "timestep": 482
     },
     {
-      "rule": "gradient_rule_16 :- efficiency_index_gradient(2.34), efficiency_index(-1), state_transition(0->1).",
-      "confidence": 0.9996346235275269,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.5822128189000906
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.5337712532455745
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.5832073555625408
-        }
-      ],
-      "timestep": 447
+      "rule": "low_press",
+      "confidence": 0.9997773170471191,
+      "type": "fact",
+      "timestep": 483
     },
     {
-      "rule": "gradient_rule_17 :- temperature_gradient(2.07), temperature(-1).",
-      "confidence": 0.9997748732566833,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.595751430704412
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.571774936865195
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.6094786806105417
-        }
-      ],
-      "timestep": 455
+      "rule": "low_press",
+      "confidence": 0.9997364282608032,
+      "type": "fact",
+      "timestep": 484
     },
     {
-      "rule": "gradient_rule_18 :- vibration_gradient(2.20), vibration(-1).",
-      "confidence": 0.9997748732566833,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.595751430704412
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.571774936865195
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.6094786806105417
-        }
-      ],
-      "timestep": 455
+      "rule": "low_press",
+      "confidence": 0.9997647404670715,
+      "type": "fact",
+      "timestep": 485
     },
     {
-      "rule": "gradient_rule_19 :- efficiency_index_gradient(2.34), efficiency_index(-1).",
-      "confidence": 0.9997748732566833,
-      "patterns": [
-        {
-          "feature": "temperature",
-          "gradient": 2.0737314046368187,
-          "value": -1.595751430704412
-        },
-        {
-          "feature": "vibration",
-          "gradient": 2.2002799858146385,
-          "value": -1.571774936865195
-        },
-        {
-          "feature": "efficiency_index",
-          "gradient": 2.3446043100169542,
-          "value": -1.6094786806105417
-        }
-      ],
-      "timestep": 455
+      "rule": "low_press",
+      "confidence": 0.9997549057006836,
+      "type": "fact",
+      "timestep": 486
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997577667236328,
+      "type": "fact",
+      "timestep": 487
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.999794602394104,
+      "type": "fact",
+      "timestep": 488
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998316168785095,
+      "type": "fact",
+      "timestep": 489
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998043179512024,
+      "type": "fact",
+      "timestep": 490
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9998332262039185,
+      "type": "fact",
+      "timestep": 491
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997652769088745,
+      "type": "fact",
+      "timestep": 492
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997366070747375,
+      "type": "fact",
+      "timestep": 493
+    },
+    {
+      "rule": "low_press",
+      "confidence": 0.9997425079345703,
+      "type": "fact",
+      "timestep": 494
     }
   ],
   "pattern_rules": [
     {
-      "rule": "pattern_rule_1 :- pressure(-1), efficiency_index(0.46).",
-      "confidence": 0.8989498615264893,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9612529873847961,
+      "type": "correlation",
       "timestep": 9
     },
     {
-      "rule": "pattern_rule_2 :- pressure(-1), efficiency_index(0.42).",
-      "confidence": 0.9621852040290833,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9724326729774475,
+      "type": "correlation",
       "timestep": 75
     },
     {
-      "rule": "pattern_rule_3 :- pressure(-1), efficiency_index(0.46).",
-      "confidence": 0.8895060420036316,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9645239114761353,
+      "type": "correlation",
       "timestep": 108
     },
     {
-      "rule": "pattern_rule_4 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9997137188911438,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9978137016296387,
+      "type": "correlation",
       "timestep": 111
     },
     {
-      "rule": "pattern_rule_5 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9873813390731812,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9974256753921509,
+      "type": "correlation",
       "timestep": 112
     },
     {
-      "rule": "pattern_rule_6 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9997889995574951,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9996644258499146,
+      "type": "correlation",
       "timestep": 113
     },
     {
-      "rule": "pattern_rule_7 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9997628331184387,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998403191566467,
+      "type": "correlation",
       "timestep": 114
     },
     {
-      "rule": "pattern_rule_8 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9996835589408875,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998188018798828,
+      "type": "correlation",
       "timestep": 115
     },
     {
-      "rule": "pattern_rule_9 :- pressure(-1), efficiency_index(-1.43).",
-      "confidence": 0.999665379524231,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999175071716309,
+      "type": "correlation",
       "timestep": 116
     },
     {
-      "rule": "pattern_rule_10 :- pressure(-1), efficiency_index(-1.63).",
-      "confidence": 0.9998732805252075,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999356269836426,
+      "type": "correlation",
       "timestep": 117
     },
     {
-      "rule": "pattern_rule_11 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9998275637626648,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999334216117859,
+      "type": "correlation",
       "timestep": 118
     },
     {
-      "rule": "pattern_rule_12 :- pressure(-1), efficiency_index(-1.46).",
-      "confidence": 0.9997596740722656,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998655319213867,
+      "type": "correlation",
       "timestep": 119
     },
     {
-      "rule": "pattern_rule_13 :- pressure(-1), efficiency_index(-1.59).",
-      "confidence": 0.9994811415672302,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999762237071991,
+      "type": "correlation",
       "timestep": 120
     },
     {
-      "rule": "pattern_rule_14 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9993887543678284,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997523427009583,
+      "type": "correlation",
       "timestep": 121
     },
     {
-      "rule": "pattern_rule_15 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9994744062423706,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997637271881104,
+      "type": "correlation",
       "timestep": 122
     },
     {
-      "rule": "pattern_rule_16 :- pressure(-1), efficiency_index(-1.45).",
-      "confidence": 0.999404788017273,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997708201408386,
+      "type": "correlation",
       "timestep": 123
     },
     {
-      "rule": "pattern_rule_17 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.9995133280754089,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997914433479309,
+      "type": "correlation",
       "timestep": 124
     },
     {
-      "rule": "pattern_rule_18 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9994738698005676,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998108744621277,
+      "type": "correlation",
       "timestep": 125
     },
     {
-      "rule": "pattern_rule_19 :- pressure(-1), efficiency_index(-1.70).",
-      "confidence": 0.9995075464248657,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998024702072144,
+      "type": "correlation",
       "timestep": 126
     },
     {
-      "rule": "pattern_rule_20 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.9995006322860718,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999817430973053,
+      "type": "correlation",
       "timestep": 127
     },
     {
-      "rule": "pattern_rule_21 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.999454140663147,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997999668121338,
+      "type": "correlation",
       "timestep": 128
     },
     {
-      "rule": "pattern_rule_22 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.999497652053833,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998037815093994,
+      "type": "correlation",
       "timestep": 129
     },
     {
-      "rule": "pattern_rule_23 :- pressure(-1), efficiency_index(-1.63).",
-      "confidence": 0.9994753003120422,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997850060462952,
+      "type": "correlation",
       "timestep": 130
     },
     {
-      "rule": "pattern_rule_24 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.9994874596595764,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999790370464325,
+      "type": "correlation",
       "timestep": 131
     },
     {
-      "rule": "pattern_rule_25 :- pressure(-1), efficiency_index(-1.68).",
-      "confidence": 0.9994602799415588,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997792840003967,
+      "type": "correlation",
       "timestep": 132
     },
     {
-      "rule": "pattern_rule_26 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9994655847549438,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999748945236206,
+      "type": "correlation",
       "timestep": 133
     },
     {
-      "rule": "pattern_rule_27 :- pressure(-1), efficiency_index(-1.54).",
-      "confidence": 0.999458372592926,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997562766075134,
+      "type": "correlation",
       "timestep": 134
     },
     {
-      "rule": "pattern_rule_28 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9994766116142273,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997212886810303,
+      "type": "correlation",
       "timestep": 135
     },
     {
-      "rule": "pattern_rule_29 :- pressure(-1), efficiency_index(-1.51).",
-      "confidence": 0.9994485974311829,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997352361679077,
+      "type": "correlation",
       "timestep": 136
     },
     {
-      "rule": "pattern_rule_30 :- pressure(-1), efficiency_index(-1.45).",
-      "confidence": 0.9994378685951233,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9996881484985352,
+      "type": "correlation",
       "timestep": 137
     },
     {
-      "rule": "pattern_rule_31 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.9994505643844604,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997333884239197,
+      "type": "correlation",
       "timestep": 138
     },
     {
-      "rule": "pattern_rule_32 :- pressure(-1), efficiency_index(-1.42).",
-      "confidence": 0.9993792772293091,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997403025627136,
+      "type": "correlation",
       "timestep": 139
     },
     {
-      "rule": "pattern_rule_33 :- pressure(-1), efficiency_index(-1.47).",
-      "confidence": 0.9994111657142639,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997449517250061,
+      "type": "correlation",
       "timestep": 140
     },
     {
-      "rule": "pattern_rule_34 :- pressure(-1), efficiency_index(-1.46).",
-      "confidence": 0.9994117617607117,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999747097492218,
+      "type": "correlation",
       "timestep": 141
     },
     {
-      "rule": "pattern_rule_35 :- pressure(-1), efficiency_index(-1.54).",
-      "confidence": 0.999352753162384,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997360706329346,
+      "type": "correlation",
       "timestep": 142
     },
     {
-      "rule": "pattern_rule_36 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9993944764137268,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997431635856628,
+      "type": "correlation",
       "timestep": 143
     },
     {
-      "rule": "pattern_rule_37 :- pressure(-1), efficiency_index(-1.40).",
-      "confidence": 0.9993731379508972,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997425675392151,
+      "type": "correlation",
       "timestep": 144
     },
     {
-      "rule": "pattern_rule_38 :- pressure(-1), efficiency_index(-1.49).",
-      "confidence": 0.9993893504142761,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997681379318237,
+      "type": "correlation",
       "timestep": 145
     },
     {
-      "rule": "pattern_rule_39 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.999370813369751,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997782707214355,
+      "type": "correlation",
       "timestep": 146
     },
     {
-      "rule": "pattern_rule_40 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9994012117385864,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997674822807312,
+      "type": "correlation",
       "timestep": 147
     },
     {
-      "rule": "pattern_rule_41 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9993535280227661,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997803568840027,
+      "type": "correlation",
       "timestep": 148
     },
     {
-      "rule": "pattern_rule_42 :- pressure(-1), efficiency_index(-1.72).",
-      "confidence": 0.9994655251502991,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999806821346283,
+      "type": "correlation",
       "timestep": 149
     },
     {
-      "rule": "pattern_rule_43 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9994014501571655,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998164176940918,
+      "type": "correlation",
       "timestep": 150
     },
     {
-      "rule": "pattern_rule_44 :- pressure(-1), efficiency_index(-1.68).",
-      "confidence": 0.9994713664054871,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998013377189636,
+      "type": "correlation",
       "timestep": 151
     },
     {
-      "rule": "pattern_rule_45 :- pressure(-1), efficiency_index(-1.70).",
-      "confidence": 0.9995070099830627,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997977614402771,
+      "type": "correlation",
       "timestep": 152
     },
     {
-      "rule": "pattern_rule_46 :- pressure(-1), efficiency_index(-1.67).",
-      "confidence": 0.9994561672210693,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.99977046251297,
+      "type": "correlation",
       "timestep": 153
     },
     {
-      "rule": "pattern_rule_47 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.999498724937439,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997844099998474,
+      "type": "correlation",
       "timestep": 154
     },
     {
-      "rule": "pattern_rule_48 :- pressure(-1), efficiency_index(-1.68).",
-      "confidence": 0.9995015263557434,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997904300689697,
+      "type": "correlation",
       "timestep": 155
     },
     {
-      "rule": "pattern_rule_49 :- pressure(-1), efficiency_index(-1.70).",
-      "confidence": 0.9994835257530212,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997929930686951,
+      "type": "correlation",
       "timestep": 156
     },
     {
-      "rule": "pattern_rule_50 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9994966387748718,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997753500938416,
+      "type": "correlation",
       "timestep": 157
     },
     {
-      "rule": "pattern_rule_51 :- pressure(-1), efficiency_index(-1.74).",
-      "confidence": 0.9995002746582031,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997650980949402,
+      "type": "correlation",
       "timestep": 158
     },
     {
-      "rule": "pattern_rule_52 :- pressure(-1), efficiency_index(0.29).",
-      "confidence": 0.9471700191497803,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.8876440525054932,
+      "type": "correlation",
       "timestep": 178
     },
     {
-      "rule": "pattern_rule_53 :- pressure(-1), efficiency_index(0.65).",
-      "confidence": 0.817833423614502,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9324121475219727,
+      "type": "correlation",
       "timestep": 198
     },
     {
-      "rule": "pattern_rule_54 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9996978044509888,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9983088374137878,
+      "type": "correlation",
       "timestep": 279
     },
     {
-      "rule": "pattern_rule_55 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9996772408485413,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9994984865188599,
+      "type": "correlation",
       "timestep": 280
     },
     {
-      "rule": "pattern_rule_56 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9996677041053772,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998252987861633,
+      "type": "correlation",
       "timestep": 281
     },
     {
-      "rule": "pattern_rule_57 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9997502565383911,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999096989631653,
+      "type": "correlation",
       "timestep": 282
     },
     {
-      "rule": "pattern_rule_58 :- pressure(-1), efficiency_index(-1.47).",
-      "confidence": 0.9995988607406616,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998787641525269,
+      "type": "correlation",
       "timestep": 283
     },
     {
-      "rule": "pattern_rule_59 :- pressure(-1), efficiency_index(-1.49).",
-      "confidence": 0.9996678233146667,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999015927314758,
+      "type": "correlation",
       "timestep": 284
     },
     {
-      "rule": "pattern_rule_60 :- pressure(-1), efficiency_index(-1.44).",
-      "confidence": 0.9998582601547241,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999356269836426,
+      "type": "correlation",
       "timestep": 285
     },
     {
-      "rule": "pattern_rule_61 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.9998347759246826,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999923586845398,
+      "type": "correlation",
       "timestep": 286
     },
     {
-      "rule": "pattern_rule_62 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9997695684432983,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998589158058167,
+      "type": "correlation",
       "timestep": 287
     },
     {
-      "rule": "pattern_rule_63 :- pressure(-1), efficiency_index(-1.51).",
-      "confidence": 0.9994227290153503,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997677206993103,
+      "type": "correlation",
       "timestep": 288
     },
     {
-      "rule": "pattern_rule_64 :- pressure(-1), efficiency_index(-1.59).",
-      "confidence": 0.999457597732544,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997829794883728,
+      "type": "correlation",
       "timestep": 289
     },
     {
-      "rule": "pattern_rule_65 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9994251132011414,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997562170028687,
+      "type": "correlation",
       "timestep": 290
     },
     {
-      "rule": "pattern_rule_66 :- pressure(-1), efficiency_index(-1.61).",
-      "confidence": 0.9994521141052246,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997608661651611,
+      "type": "correlation",
       "timestep": 291
     },
     {
-      "rule": "pattern_rule_67 :- pressure(-1), efficiency_index(-1.66).",
-      "confidence": 0.9994560480117798,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997746348381042,
+      "type": "correlation",
       "timestep": 292
     },
     {
-      "rule": "pattern_rule_68 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9994550943374634,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997488856315613,
+      "type": "correlation",
       "timestep": 293
     },
     {
-      "rule": "pattern_rule_69 :- pressure(-1), efficiency_index(-1.76).",
-      "confidence": 0.9995559453964233,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998076558113098,
+      "type": "correlation",
       "timestep": 294
     },
     {
-      "rule": "pattern_rule_70 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9995012879371643,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999803364276886,
+      "type": "correlation",
       "timestep": 295
     },
     {
-      "rule": "pattern_rule_71 :- pressure(-1), efficiency_index(-1.66).",
-      "confidence": 0.9995280504226685,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997949004173279,
+      "type": "correlation",
       "timestep": 296
     },
     {
-      "rule": "pattern_rule_72 :- pressure(-1), efficiency_index(-1.64).",
-      "confidence": 0.9995303750038147,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997997879981995,
+      "type": "correlation",
       "timestep": 297
     },
     {
-      "rule": "pattern_rule_73 :- pressure(-1), efficiency_index(-1.61).",
-      "confidence": 0.9994837045669556,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997621774673462,
+      "type": "correlation",
       "timestep": 298
     },
     {
-      "rule": "pattern_rule_74 :- pressure(-1), efficiency_index(-1.77).",
-      "confidence": 0.9995537400245667,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999780535697937,
+      "type": "correlation",
       "timestep": 299
     },
     {
-      "rule": "pattern_rule_75 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9995164275169373,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997686147689819,
+      "type": "correlation",
       "timestep": 300
     },
     {
-      "rule": "pattern_rule_76 :- pressure(-1), efficiency_index(-1.54).",
-      "confidence": 0.9995217323303223,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997727870941162,
+      "type": "correlation",
       "timestep": 301
     },
     {
-      "rule": "pattern_rule_77 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9995335936546326,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997473955154419,
+      "type": "correlation",
       "timestep": 302
     },
     {
-      "rule": "pattern_rule_78 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9994790554046631,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997121691703796,
+      "type": "correlation",
       "timestep": 303
     },
     {
-      "rule": "pattern_rule_79 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9995220899581909,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997377991676331,
+      "type": "correlation",
       "timestep": 304
     },
     {
-      "rule": "pattern_rule_80 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.9994980096817017,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997379183769226,
+      "type": "correlation",
       "timestep": 305
     },
     {
-      "rule": "pattern_rule_81 :- pressure(-1), efficiency_index(-1.51).",
-      "confidence": 0.999488890171051,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997571110725403,
+      "type": "correlation",
       "timestep": 306
     },
     {
-      "rule": "pattern_rule_82 :- pressure(-1), efficiency_index(-1.49).",
-      "confidence": 0.9994673728942871,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997590184211731,
+      "type": "correlation",
       "timestep": 307
     },
     {
-      "rule": "pattern_rule_83 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9994646906852722,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997437000274658,
+      "type": "correlation",
       "timestep": 308
     },
     {
-      "rule": "pattern_rule_84 :- pressure(-1), efficiency_index(-1.46).",
-      "confidence": 0.9994474053382874,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997363686561584,
+      "type": "correlation",
       "timestep": 309
     },
     {
-      "rule": "pattern_rule_85 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9994161128997803,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999744713306427,
+      "type": "correlation",
       "timestep": 310
     },
     {
-      "rule": "pattern_rule_86 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9994212985038757,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999752402305603,
+      "type": "correlation",
       "timestep": 311
     },
     {
-      "rule": "pattern_rule_87 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9994167685508728,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997630715370178,
+      "type": "correlation",
       "timestep": 312
     },
     {
-      "rule": "pattern_rule_88 :- pressure(-1), efficiency_index(-1.45).",
-      "confidence": 0.9994204044342041,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997576475143433,
+      "type": "correlation",
       "timestep": 313
     },
     {
-      "rule": "pattern_rule_89 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9994004368782043,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999756932258606,
+      "type": "correlation",
       "timestep": 314
     },
     {
-      "rule": "pattern_rule_90 :- pressure(-1), efficiency_index(-1.64).",
-      "confidence": 0.9994497299194336,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997599720954895,
+      "type": "correlation",
       "timestep": 315
     },
     {
-      "rule": "pattern_rule_91 :- pressure(-1), efficiency_index(-1.52).",
-      "confidence": 0.9994152188301086,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999734103679657,
+      "type": "correlation",
       "timestep": 316
     },
     {
-      "rule": "pattern_rule_92 :- pressure(-1), efficiency_index(-1.52).",
-      "confidence": 0.9994459748268127,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997518658638,
+      "type": "correlation",
       "timestep": 317
     },
     {
-      "rule": "pattern_rule_93 :- pressure(-1), efficiency_index(-1.69).",
-      "confidence": 0.9994901418685913,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997702240943909,
+      "type": "correlation",
       "timestep": 318
     },
     {
-      "rule": "pattern_rule_94 :- pressure(-1), efficiency_index(-1.69).",
-      "confidence": 0.9994561672210693,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998006224632263,
+      "type": "correlation",
       "timestep": 319
     },
     {
-      "rule": "pattern_rule_95 :- pressure(-1), efficiency_index(-1.72).",
-      "confidence": 0.9994910359382629,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998098015785217,
+      "type": "correlation",
       "timestep": 320
     },
     {
-      "rule": "pattern_rule_96 :- pressure(-1), efficiency_index(-1.74).",
-      "confidence": 0.9995280504226685,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998084902763367,
+      "type": "correlation",
       "timestep": 321
     },
     {
-      "rule": "pattern_rule_97 :- pressure(-1), efficiency_index(-1.66).",
-      "confidence": 0.9995051026344299,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997671842575073,
+      "type": "correlation",
       "timestep": 322
     },
     {
-      "rule": "pattern_rule_98 :- pressure(-1), efficiency_index(-1.73).",
-      "confidence": 0.9994989633560181,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997559189796448,
+      "type": "correlation",
       "timestep": 323
     },
     {
-      "rule": "pattern_rule_99 :- pressure(-1), efficiency_index(-1.63).",
-      "confidence": 0.9994930624961853,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997538924217224,
+      "type": "correlation",
       "timestep": 324
     },
     {
-      "rule": "pattern_rule_100 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.9994845390319824,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997510313987732,
+      "type": "correlation",
       "timestep": 325
     },
     {
-      "rule": "pattern_rule_101 :- pressure(-1), efficiency_index(-1.60).",
-      "confidence": 0.9995144009590149,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997547268867493,
+      "type": "correlation",
       "timestep": 326
     },
     {
-      "rule": "pattern_rule_102 :- pressure(1), efficiency_index(-0.13).",
-      "confidence": 0.9967276453971863,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9974366426467896,
+      "type": "correlation",
       "timestep": 358
     },
     {
-      "rule": "pattern_rule_103 :- pressure(-1), efficiency_index(0.65).",
-      "confidence": 0.9585197567939758,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9620034694671631,
+      "type": "correlation",
       "timestep": 368
     },
     {
-      "rule": "pattern_rule_104 :- pressure(-1), efficiency_index(0.53).",
-      "confidence": 0.9611266255378723,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9807299971580505,
+      "type": "correlation",
       "timestep": 414
     },
     {
-      "rule": "pattern_rule_105 :- pressure(-1), efficiency_index(0.54).",
-      "confidence": 0.9650393128395081,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.8739749193191528,
+      "type": "correlation",
       "timestep": 421
     },
     {
-      "rule": "pattern_rule_106 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.9996346235275269,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9995434880256653,
+      "type": "correlation",
       "timestep": 447
     },
     {
-      "rule": "pattern_rule_107 :- pressure(-1), efficiency_index(-1.69).",
-      "confidence": 0.9996054172515869,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9994493722915649,
+      "type": "correlation",
       "timestep": 448
     },
     {
-      "rule": "pattern_rule_108 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.999715268611908,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998343586921692,
+      "type": "correlation",
       "timestep": 449
     },
     {
-      "rule": "pattern_rule_109 :- pressure(-1), efficiency_index(-1.59).",
-      "confidence": 0.9997677803039551,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998915791511536,
+      "type": "correlation",
       "timestep": 450
     },
     {
-      "rule": "pattern_rule_110 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9997103810310364,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998816847801208,
+      "type": "correlation",
       "timestep": 451
     },
     {
-      "rule": "pattern_rule_111 :- pressure(-1), efficiency_index(-1.45).",
-      "confidence": 0.9997383952140808,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999185800552368,
+      "type": "correlation",
       "timestep": 452
     },
     {
-      "rule": "pattern_rule_112 :- pressure(-1), efficiency_index(-1.52).",
-      "confidence": 0.9998746514320374,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999388456344604,
+      "type": "correlation",
       "timestep": 453
     },
     {
-      "rule": "pattern_rule_113 :- pressure(-1), efficiency_index(-1.44).",
-      "confidence": 0.9998344779014587,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9999290704727173,
+      "type": "correlation",
       "timestep": 454
     },
     {
-      "rule": "pattern_rule_114 :- pressure(-1), efficiency_index(-1.61).",
-      "confidence": 0.9997748732566833,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998571872711182,
+      "type": "correlation",
       "timestep": 455
     },
     {
-      "rule": "pattern_rule_115 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9994815587997437,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997361302375793,
+      "type": "correlation",
       "timestep": 456
     },
     {
-      "rule": "pattern_rule_116 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9994871020317078,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997323155403137,
+      "type": "correlation",
       "timestep": 457
     },
     {
-      "rule": "pattern_rule_117 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9994899034500122,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997689127922058,
+      "type": "correlation",
       "timestep": 458
     },
     {
-      "rule": "pattern_rule_118 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.9994964599609375,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997771978378296,
+      "type": "correlation",
       "timestep": 459
     },
     {
-      "rule": "pattern_rule_119 :- pressure(-1), efficiency_index(-1.69).",
-      "confidence": 0.9995046257972717,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997799396514893,
+      "type": "correlation",
       "timestep": 460
     },
     {
-      "rule": "pattern_rule_120 :- pressure(-1), efficiency_index(-1.67).",
-      "confidence": 0.9994966983795166,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997787475585938,
+      "type": "correlation",
       "timestep": 461
     },
     {
-      "rule": "pattern_rule_121 :- pressure(-1), efficiency_index(-1.78).",
-      "confidence": 0.9995300769805908,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998046159744263,
+      "type": "correlation",
       "timestep": 462
     },
     {
-      "rule": "pattern_rule_122 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.9995067715644836,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998034238815308,
+      "type": "correlation",
       "timestep": 463
     },
     {
-      "rule": "pattern_rule_123 :- pressure(-1), efficiency_index(-1.67).",
-      "confidence": 0.9995231032371521,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997887015342712,
+      "type": "correlation",
       "timestep": 464
     },
     {
-      "rule": "pattern_rule_124 :- pressure(-1), efficiency_index(-1.67).",
-      "confidence": 0.9995352029800415,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997784495353699,
+      "type": "correlation",
       "timestep": 465
     },
     {
-      "rule": "pattern_rule_125 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9995054006576538,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997307062149048,
+      "type": "correlation",
       "timestep": 466
     },
     {
-      "rule": "pattern_rule_126 :- pressure(-1), efficiency_index(-1.65).",
-      "confidence": 0.999525249004364,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997382164001465,
+      "type": "correlation",
       "timestep": 467
     },
     {
-      "rule": "pattern_rule_127 :- pressure(-1), efficiency_index(-1.66).",
-      "confidence": 0.9995285868644714,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999733030796051,
+      "type": "correlation",
       "timestep": 468
     },
     {
-      "rule": "pattern_rule_128 :- pressure(-1), efficiency_index(-1.61).",
-      "confidence": 0.9995258450508118,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997036457061768,
+      "type": "correlation",
       "timestep": 469
     },
     {
-      "rule": "pattern_rule_129 :- pressure(-1), efficiency_index(-1.68).",
-      "confidence": 0.9995561242103577,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997687339782715,
+      "type": "correlation",
       "timestep": 470
     },
     {
-      "rule": "pattern_rule_130 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.999533474445343,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997650384902954,
+      "type": "correlation",
       "timestep": 471
     },
     {
-      "rule": "pattern_rule_131 :- pressure(-1), efficiency_index(-1.48).",
-      "confidence": 0.9995158314704895,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997462034225464,
+      "type": "correlation",
       "timestep": 472
     },
     {
-      "rule": "pattern_rule_132 :- pressure(-1), efficiency_index(-1.50).",
-      "confidence": 0.9995332956314087,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997596740722656,
+      "type": "correlation",
       "timestep": 473
     },
     {
-      "rule": "pattern_rule_133 :- pressure(-1), efficiency_index(-1.51).",
-      "confidence": 0.9994663000106812,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997503757476807,
+      "type": "correlation",
       "timestep": 474
     },
     {
-      "rule": "pattern_rule_134 :- pressure(-1), efficiency_index(-1.44).",
-      "confidence": 0.9995043277740479,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997199773788452,
+      "type": "correlation",
       "timestep": 475
     },
     {
-      "rule": "pattern_rule_135 :- pressure(-1), efficiency_index(-1.38).",
-      "confidence": 0.9994603991508484,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997407793998718,
+      "type": "correlation",
       "timestep": 476
     },
     {
-      "rule": "pattern_rule_136 :- pressure(-1), efficiency_index(-1.55).",
-      "confidence": 0.9995143413543701,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997466802597046,
+      "type": "correlation",
       "timestep": 477
     },
     {
-      "rule": "pattern_rule_137 :- pressure(-1), efficiency_index(-1.44).",
-      "confidence": 0.9994306564331055,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997409582138062,
+      "type": "correlation",
       "timestep": 478
     },
     {
-      "rule": "pattern_rule_138 :- pressure(-1), efficiency_index(-1.46).",
-      "confidence": 0.9995107650756836,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997468590736389,
+      "type": "correlation",
       "timestep": 479
     },
     {
-      "rule": "pattern_rule_139 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9994738698005676,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997584223747253,
+      "type": "correlation",
       "timestep": 480
     },
     {
-      "rule": "pattern_rule_140 :- pressure(-1), efficiency_index(-1.62).",
-      "confidence": 0.9994651079177856,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997762441635132,
+      "type": "correlation",
       "timestep": 481
     },
     {
-      "rule": "pattern_rule_141 :- pressure(-1), efficiency_index(-1.58).",
-      "confidence": 0.9994763731956482,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999784529209137,
+      "type": "correlation",
       "timestep": 482
     },
     {
-      "rule": "pattern_rule_142 :- pressure(-1), efficiency_index(-1.57).",
-      "confidence": 0.9994966983795166,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997773170471191,
+      "type": "correlation",
       "timestep": 483
     },
     {
-      "rule": "pattern_rule_143 :- pressure(-1), efficiency_index(-1.56).",
-      "confidence": 0.9994813799858093,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997364282608032,
+      "type": "correlation",
       "timestep": 484
     },
     {
-      "rule": "pattern_rule_144 :- pressure(-1), efficiency_index(-1.73).",
-      "confidence": 0.9995095133781433,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997647404670715,
+      "type": "correlation",
       "timestep": 485
     },
     {
-      "rule": "pattern_rule_145 :- pressure(-1), efficiency_index(-1.73).",
-      "confidence": 0.9995216727256775,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997549057006836,
+      "type": "correlation",
       "timestep": 486
     },
     {
-      "rule": "pattern_rule_146 :- pressure(-1), efficiency_index(-1.53).",
-      "confidence": 0.9994957447052002,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997577667236328,
+      "type": "correlation",
       "timestep": 487
     },
     {
-      "rule": "pattern_rule_147 :- pressure(-1), efficiency_index(-1.81).",
-      "confidence": 0.9996180534362793,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.999794602394104,
+      "type": "correlation",
       "timestep": 488
     },
     {
-      "rule": "pattern_rule_148 :- pressure(-1), efficiency_index(-1.69).",
-      "confidence": 0.9995561242103577,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998316168785095,
+      "type": "correlation",
       "timestep": 489
     },
     {
-      "rule": "pattern_rule_149 :- pressure(-1), efficiency_index(-1.70).",
-      "confidence": 0.9996088743209839,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998043179512024,
+      "type": "correlation",
       "timestep": 490
     },
     {
-      "rule": "pattern_rule_150 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.9996119141578674,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9998332262039185,
+      "type": "correlation",
       "timestep": 491
     },
     {
-      "rule": "pattern_rule_151 :- pressure(-1), efficiency_index(-1.64).",
-      "confidence": 0.9995795488357544,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997652769088745,
+      "type": "correlation",
       "timestep": 492
     },
     {
-      "rule": "pattern_rule_152 :- pressure(-1), efficiency_index(-1.63).",
-      "confidence": 0.9995746612548828,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997366070747375,
+      "type": "correlation",
       "timestep": 493
     },
     {
-      "rule": "pattern_rule_153 :- pressure(-1), efficiency_index(-1.71).",
-      "confidence": 0.9996029138565063,
-      "type": "press_eff_correlation",
+      "rule": "press_eff_correlation :- low_press, low_efficiency",
+      "confidence": 0.9997425079345703,
+      "type": "correlation",
       "timestep": 494
     }
   ],
@@ -1335,6 +1845,6 @@
     "high_confidence": 0,
     "low_confidence": 0
   },
-  "total_rules": 172,
-  "timestamp": "2024-11-20T03:14:27"
+  "total_rules": 306,
+  "timestamp": "2024-11-21T07:11:03"
 }

@@ -1,126 +1,141 @@
-% src/reasoning/integrate_prob_log.pl
-% Integrates ProbLog Queries into Prolog
-
+%% src/reasoning/integrate_prob_log.pl
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Import Necessary Libraries
+% NEXUS-DT ProbLog Integration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-:- use_module(library(process)).    % For executing external processes
-:- use_module(library(readutil)).   % For reading from streams
-:- use_module(library(lists)).      % For list manipulation
+%%% NEXUS-DT ProbLog Integration
+%% Compliant with ProbLog 2.2
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Define Configuration Paths
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Import required ProbLog libraries
+:- use_module(library(problog)).
 
-% Path to the Python interpreter. Adjust if using a different version or path.
-python_interpreter('python3').
+% Load sensor monitoring rules
+:- [prob_rules].
 
-% Path to the ProbLog Python script that executes queries.
-prob_log_script('prob_query.py').
+% Constants for thresholds
+threshold(temperature, high, 80.0).
+threshold(temperature, low, 40.0).
+threshold(vibration, high, 55.0).
+threshold(vibration, low, 20.0).
+threshold(pressure, high, 40.0).
+threshold(pressure, low, 20.0).
+threshold(efficiency_index, low, 0.6).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Main Predicate: run_prob_log_queries/3
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Probabilistic sensor analysis
+0.9::sensor_above_threshold(Sensor, Type) :-
+    threshold(Sensor, Type, Thresh),
+    sensor_value(Sensor, Value),
+    Value > Thresh.
 
-% run_prob_log_queries(+FailureRisk, +SystemStress, +EfficiencyDrop)
-% Executes the ProbLog queries via the Python script and retrieves probabilities.
-%
-% Parameters:
-% - FailureRisk: Variable to store the probability of failure risk.
-% - SystemStress: Variable to store the probability of system stress.
-% - EfficiencyDrop: Variable to store the probability of efficiency drop.
+0.9::sensor_below_threshold(Sensor, Type) :-
+    threshold(Sensor, Type, Thresh),
+    sensor_value(Sensor, Value),
+    Value < Thresh.
 
-run_prob_log_queries(FailureRisk, SystemStress, EfficiencyDrop) :-
-    % Retrieve the Python interpreter and script paths from the facts.
-    python_interpreter(Python),
-    prob_log_script(Script),
+% System state determination
+system_state(critical) :-
+    sensor_above_threshold(temperature, high),
+    sensor_above_threshold(vibration, high),
+    sensor_below_threshold(pressure, low),
+    sensor_below_threshold(efficiency_index, low).
 
-    % Execute the Python script using the defined interpreter.
-    % Capture both stdout and stderr.
-    process_create(path(Python), [Script], [stdout(pipe(Out)), stderr(pipe(Err))]),
+system_state(degraded) :-
+    sensor_above_threshold(temperature, high),
+    sensor_above_threshold(vibration, high),
+    \+ system_state(critical).
 
-    % Read the output and error streams.
-    read_string(Out, _, OutString),
-    read_string(Err, _, ErrString),
+system_state(normal) :-
+    \+ system_state(critical),
+    \+ system_state(degraded).
 
-    % Close the streams to free resources.
-    close(Out),
-    close(Err),
+% Probabilistic correlation detection
+0.8::sensor_correlation(Sensor1, Sensor2) :-
+    sensor_above_threshold(Sensor1, high),
+    sensor_above_threshold(Sensor2, high).
 
-    % Check if there were any errors during script execution.
-    (   ErrString \= ""
-    ->  % If there are errors, log them and set Fail flag.
-        format('Error from ProbLog: ~w~n', [ErrString]),
-        Fail = 1
-    ;   % If no errors, proceed normally.
-        Fail = 0
-    ),
+% Pattern analysis
+0.85::pattern_detected(temp_vib) :-
+    sensor_correlation(temperature, vibration).
 
-    % If execution was successful, parse the output.
-    (   Fail = 0
-    ->  % Split the output string into individual lines.
-        split_string(OutString, "\n", "", Lines),
+0.75::pattern_detected(press_eff) :-
+    sensor_below_threshold(pressure, low),
+    sensor_below_threshold(efficiency_index, low).
 
-        % Apply split_pair to each line to get Key-Value pairs.
-        maplist(split_pair, Lines, Pairs),
+% Risk assessment
+0.9::high_risk :-
+    system_state(critical).
 
-        % Extract specific probabilities from the pairs.
-        (   member(failure_risk:FRStr, Pairs),
-            member(system_stress:SSStr, Pairs),
-            member(efficiency_drop:EDStr, Pairs)
-        ->  % Convert string representations to numerical values.
-            number_string(FailureRisk, FRStr),
-            number_string(SystemStress, SSStr),
-            number_string(EfficiencyDrop, EDStr)
-        ;   % If any expected key is missing, default to 0.0.
-            format('Warning: Missing expected probability keys. Defaulting to 0.0.~n'),
-            FailureRisk = 0.0,
-            SystemStress = 0.0,
-            EfficiencyDrop = 0.0
-        )
-    ;   % If execution failed, default all probabilities to 0.0.
-        FailureRisk = 0.0,
-        SystemStress = 0.0,
-        EfficiencyDrop = 0.0
-    ).
+0.7::medium_risk :-
+    system_state(degraded).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Helper Predicate: split_pair/2
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+0.2::low_risk :-
+    system_state(normal).
 
-% split_pair(+Line, -Key-Value)
-% Splits a string of the format 'key:value' into a Key-Value pair.
-%
-% Parameters:
-% - Line: The input string to split.
-% - Key-Value: The resulting Key-Value pair.
+% Query declarations
+query(system_state(State)).
+query(pattern_detected(Pattern)).
+query(high_risk).
+query(medium_risk).
+query(low_risk).
 
-split_pair(Line, Key-Value) :-
-    % Split the line at the colon ':'.
-    split_string(Line, ":", "", [KeyStr, ValueStr]),
+% Evidence declarations
+evidence(sensor_above_threshold(temperature, high), true) :-
+    sensor_value(temperature, Value),
+    threshold(temperature, high, Thresh),
+    Value > Thresh.
 
-    % Convert the key string to an atom.
-    atom_string(Key, KeyStr),
+evidence(sensor_above_threshold(vibration, high), true) :-
+    sensor_value(vibration, Value),
+    threshold(vibration, high, Thresh),
+    Value > Thresh.
 
-    % Attempt to convert the value string to a number.
-    (   atom_number(ValueStr, Value)
-    ->  % Ensure the value is within the valid probability range.
-        (   Value >= 0.0,
-            Value =< 1.0
-        ->  true
-        ;   % If out of range, default to 0.0 and log a warning.
-            format('Warning: Value for ~w is out of range (0.0 - 1.0). Defaulting to 0.0.~n', [Key]),
-            Value = 0.0
-        )
-    ;   % If conversion fails, default to 0.0 and log a warning.
-        format('Warning: Invalid value format for ~w. Defaulting to 0.0.~n', [Key]),
-        Value = 0.0
-    ),
+evidence(sensor_below_threshold(pressure, low), true) :-
+    sensor_value(pressure, Value),
+    threshold(pressure, low, Thresh),
+    Value < Thresh.
 
-    % Form the Key-Value pair.
-    Key = Value.
+% Combined analysis predicates
+system_analysis(State, Risk) :-
+    system_state(State),
+    (State = critical -> high_risk;
+     State = degraded -> medium_risk;
+     low_risk).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% End of integrate_prob_log.pl
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Probabilistic insights
+0.8::requires_attention :-
+    system_state(critical);
+    (system_state(degraded), pattern_detected(_)).
+
+0.7::requires_monitoring :-
+    system_state(degraded);
+    pattern_detected(_).
+
+% Anomaly detection
+anomaly_detected :-
+    requires_attention;
+    (requires_monitoring, sensor_correlation(_, _)).
+
+% Insight generation
+generate_insight(critical_alert) :-
+    system_state(critical),
+    requires_attention.
+
+generate_insight(degradation_warning) :-
+    system_state(degraded),
+    requires_monitoring.
+
+generate_insight(correlation_alert) :-
+    sensor_correlation(Sensor1, Sensor2),
+    requires_monitoring.
+
+% Query interface
+analyze_system :-
+    findall(State-Risk, system_analysis(State, Risk), Analysis),
+    findall(Insight, generate_insight(Insight), Insights).
+
+% Exported predicates for Python interface
+:- export(system_state/1).
+:- export(pattern_detected/1).
+:- export(generate_insight/1).
+:- export(analyze_system/0).
+:- export(anomaly_detected/0).
