@@ -17,7 +17,7 @@
 
 ## Overview
 
-ANSyLF-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, NEXUS-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
+ANSyLF-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSyLF-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
 
 ## Features
 
@@ -47,7 +47,7 @@ The ANSyLF-DT system is modular, comprising the following key components:
     - Manages state updates, decision-making processes, and maintains historical data.
 
 3.  **Reinforcement Learning**
-    - Custom Gym environment tailored for NEXUS-DT.
+    - Custom Gym environment tailored for ANSyLF-DT.
     - Scripts for training PPO agents using Stable Baselines3.
 
 4.  **Visualization**
