@@ -1,4 +1,4 @@
-# ANSYLF-DT
+**# ANSYLF-DT
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
@@ -33,7 +33,7 @@ ANSYLF-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomal
 
 The ANSyLF-DT framework consists of modular layers that facilitate anomaly detection and adaptive control. Below is the framework architecture:
 
-![ANSyLF-DT Code Architecture](./images/ansylf_dt_code_architecture.png)
+![ANSyLF-DT Code Architecture](src/media/images/ansylf_dt_code_architecture.png)
 
 This diagram highlights key components such as the physical environment layer, processing layer, and adaptation layer, showing data flow and dynamic adaptation mechanisms.
 
@@ -213,4 +213,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For any questions or inquiries, please contact Safayat at safayat.b.hakim@gmail.com.
+For any questions or inquiries, please contact Safayat at safayat.b.hakim@gmail.com.**
