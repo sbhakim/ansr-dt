@@ -17,17 +17,25 @@
 
 ## 🎯 Project Overview
 
-ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSR-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
+
+**ANSR-DT** (**A**daptive **N**euro-**S**ymbolic Learning and **R**easoning Framework for **D**igital **T**wins) (formerly NEXUS-DT) is an open-source framework designed to enable real-time learning, adaptive decision-making, and interpretable human-machine collaboration. It integrates:
+
+- **CNN-LSTM Models**: For spatial and temporal pattern recognition.
+- **Reinforcement Learning**: Proximal Policy Optimization (PPO) for adaptive control in dynamic environments.
+- **Symbolic Reasoning**: Prolog-based rule integration for logical and interpretable decisions.
+- **Dynamic Rule Updates**: Continuously evolves symbolic rules based on new data and patterns.
+
+ANSR-DT combines neural networks, reinforcement learning, and symbolic reasoning to enhance decision accuracy, adaptability, and interpretability for digital twin applications.
 
 ## ⚡ Features
 
-- **Anomaly Detection**: Utilizes CNN-LSTM models to identify anomalies in real-time sensor data.
-- **Adaptive Control**: Implements PPO (Proximal Policy Optimization) agents to adaptively manage system parameters based on detected anomalies.
-- **Symbolic Reasoning**: Integrates Prolog and ProbLog for rule-based reasoning, enhancing system interpretability and decision-making transparency.
-- **Knowledge Graphs**: Generates and visualizes knowledge graphs representing system states, rules, and anomalies.
-- **Comprehensive Evaluation**: Provides detailed metrics, classification reports, ROC/AUC curves, and Precision-Recall analyses.
-- **Visualization Tools**: Offers a suite of visualization utilities for model architectures, feature importances, rule activations, and state transitions.
-- **Robust Logging**: Implements extensive logging for monitoring system performance and debugging.
+- **Pattern Recognition**: Employs CNN-LSTM models with attention mechanisms to capture spatial and temporal patterns in sensor data.
+- **Adaptive Decision-Making**: Utilizes PPO (Proximal Policy Optimization) for continuous learning and dynamic system adaptation.
+- **Symbolic Reasoning**: Integrates Prolog-based rule reasoning for logical clarity, interpretability, and transparent decision-making.
+- **Dynamic Rule Updates**: Continuously evolves symbolic rules based on neural outputs and changing operational conditions.
+- **Comprehensive Evaluation**: Includes precision, recall, F1-score, ROC-AUC metrics, and adaptation performance analyses.
+- **Visualization Tools**: Provides utilities for data insights, rule activations, state transitions, and model performance trends.
+- **Open Source**: Fully documented implementation with examples for reproducibility and further research.
 
 ## 🏗️ Architecture
 
