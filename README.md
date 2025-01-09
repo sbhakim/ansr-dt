@@ -19,7 +19,7 @@
 
 ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSyLF-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
 
-## Features
+## ⚡ Features
 
 - **Anomaly Detection**: Utilizes CNN-LSTM models to identify anomalies in real-time sensor data.
 - **Adaptive Control**: Implements PPO (Proximal Policy Optimization) agents to adaptively manage system parameters based on detected anomalies.
@@ -29,7 +29,7 @@ ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly 
 - **Visualization Tools**: Offers a suite of visualization utilities for model architectures, feature importances, rule activations, and state transitions.
 - **Robust Logging**: Implements extensive logging for monitoring system performance and debugging.
 
-## Architecture
+## 🏗️ Architecture
 
 The ANSR-DT framework consists of modular layers that facilitate anomaly detection and adaptive control. Below is the framework architecture:
 
@@ -66,16 +66,18 @@ The ANSR-DT system is modular, comprising the following key components:
 8.  **Integration and Execution**
     - Orchestrates the training, evaluation, reasoning, and visualization processes.
 
-## Installation
+## 🛠️ Installation
 
-### Prerequisites
+### 📋 Prerequisites
 
 - Python 3.8 or higher
 - [Anaconda](https://www.anaconda.com/) (recommended for environment management)
 - Prolog (e.g., [SWI-Prolog](https://www.swi-prolog.org/))
 - ProbLog
+- 
+## 🚀 Getting Started
 
-### Steps
+### 📝 Steps
 
 1.  **Clone the Repository**
     ```bash
@@ -108,7 +110,7 @@ The ANSR-DT system is modular, comprising the following key components:
       ```
     - Edit `configs/config.yaml` to set paths and parameters according to your environment.
 
-## Usage
+## 🔧 Usage
 
 1.  **Train the CNN-LSTM Model**
     ```bash
@@ -133,7 +135,7 @@ The ANSR-DT system is modular, comprising the following key components:
 5.  **Visualize Results**
     - Generated visualizations are saved in the `results/visualization/` directory.
 
-## Project Structure
+## 📁 Project Structure
 
 ansr-dt/
 ├── configs/
@@ -196,21 +198,22 @@ ansr-dt/
 ├── README.md
 └── requirements.txt
 
-## References
+## 🔗 External Links
+## 📑 References 
 
 For more details and documentation on the tools and libraries used in this project, refer to the following resources:
 
 - [ProbLog 2.2 Documentation](https://problog.readthedocs.io/en/latest/)
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 
-## License
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
+## 📫 Contact
 
 For any questions or inquiries, please contact Safayat at safayat.b.hakim@gmail.com.**
