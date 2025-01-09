@@ -17,7 +17,7 @@
 
 ## 🎯 Project Overview
 
-ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSyLF-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
+ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSR-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
 
 ## ⚡ Features
 
