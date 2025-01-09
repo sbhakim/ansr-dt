@@ -1,4 +1,4 @@
-## ANSyLF-DT
+## ANSR-DT
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
@@ -17,7 +17,7 @@
 
 ## Overview
 
-ANSyLF-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSyLF-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
+ANSR-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomaly detection and adaptive control using a combination of neural networks, reinforcement learning, and symbolic reasoning. The project leverages CNN-LSTM models for detecting anomalies in sensor data, PPO agents for making adaptive control decisions, and Prolog-based symbolic reasoning for enhanced interpretability and decision transparency. Additionally, ANSyLF-DT incorporates comprehensive evaluation and visualization tools to assess model performance and system behavior.
 
 ## Features
 
@@ -31,13 +31,13 @@ ANSyLF-DT (formerly NEXUS-DT) an advanced, integrated system designed for anomal
 
 ## Architecture
 
-The ANSyLF-DT framework consists of modular layers that facilitate anomaly detection and adaptive control. Below is the framework architecture:
+The ANSR-DT framework consists of modular layers that facilitate anomaly detection and adaptive control. Below is the framework architecture:
 
-![ANSyLF-DT Code Architecture](src/media/images/ansylf_dt_code_architecture.png)
+![ANSyLF-DT Code Architecture](src/media/images/ansr-dt-arch.png)
 
 This diagram highlights key components such as the physical environment layer, processing layer, and adaptation layer, showing data flow and dynamic adaptation mechanisms.
 
-The ANSyLF-DT system is modular, comprising the following key components:
+The ANSR-DT system is modular, comprising the following key components:
 
 1.  **Configuration Management**
     - Handles loading and validating YAML configuration files.
@@ -47,7 +47,7 @@ The ANSyLF-DT system is modular, comprising the following key components:
     - Manages state updates, decision-making processes, and maintains historical data.
 
 3.  **Reinforcement Learning**
-    - Custom Gym environment tailored for ANSyLF-DT.
+    - Custom Gym environment tailored for ANSR-DT.
     - Scripts for training PPO agents using Stable Baselines3.
 
 4.  **Visualization**
@@ -79,14 +79,14 @@ The ANSyLF-DT system is modular, comprising the following key components:
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/sbhakim/ansylf-dt.git](https://github.com/sbhakim/ansylf-dt.git) 
-    cd ansylf-dt
+    git clone [https://github.com/sbhakim/ansr-dt.git](https://github.com/sbhakim/ansr-dt.git) 
+    cd ansr-dt
     ```
 
 2.  **Set Up Python Environment**
     ```bash
-    conda create -n ansylf_dt_env python=3.9 
-    conda activate ansylf_dt_env
+    conda create -n ansr_dt_env python=3.9 
+    conda activate ansr_dt_env
     ```
 
 3.  **Install Python Dependencies**
@@ -135,7 +135,7 @@ The ANSyLF-DT system is modular, comprising the following key components:
 
 ## Project Structure
 
-ansylf-dt/
+ansr-dt/
 ├── configs/
 │   └── config.yaml
 ├── logs/
