@@ -145,6 +145,7 @@ The ANSR-DT system is modular, comprising the following key components:
 
 ## 📁 Project Structure
 
+```plaintext
 ansr-dt/
 ├── configs/
 │   └── config.yaml
@@ -205,6 +206,7 @@ ansr-dt/
 ├── main.py
 ├── README.md
 └── requirements.txt
+```
 
 ## 🔗 External Links
 ## 📑 References 
