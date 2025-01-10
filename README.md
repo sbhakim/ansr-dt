@@ -146,65 +146,78 @@ The ANSR-DT system is modular, comprising the following key components:
 ## 📁 Project Structure
 
 ```plaintext
-ansr-dt/
-├── configs/
-│   └── config.yaml
-├── logs/
-│   └── nexus_dt.log
-├── results/
-│   ├── models/
-│   ├── metrics/
-│   ├── visualization/
-│   │   ├── model_visualization/
-│   │   ├── neurosymbolic/
-│   │   └── knowledge_graphs/
-│   └── knowledge_graphs/
-├── src/
-│   ├── config/
-│   │   └── config_manager.py
-│   ├── core/
-│   │   ├── core.py
-│   │   └── explainable.py
-│   ├── data/
-│   │   ├── data_loader.py
-│   │   └── data_processing.py
-│   ├── evaluation/
-│   │   ├── evaluation.py
-│   │   ├── pattern_metrics.py
-│   │   └── init.py
-│   ├── integration/
-│   │   └── adaptive_controller.py
-│   ├── logging/
-│   │   └── logging_setup.py
-│   ├── models/
-│   │   └── cnn_lstm_model.py
-│   ├── preprocessing/
-│   │   └── preprocessing.py
-│   ├── reasoning/
-│   │   ├── prob_rules.pl
-│   │   ├── prob_query.py
-│   │   ├── integrate_prob_log.pl
-│   │   ├── rules.pl
-│   │   ├── rule_learning.py
-│   │   ├── knowledge_graph.py
-│   │   ├── reasoning.py
-│   │   └── init.py
-│   ├── rl/
-│   │   ├── nexus_dt_env.py
-│   │   └── train_ppo.py
-│   ├── training/
-│   │   ├── trainer.py
-│   │   └── init.py
-│   ├── utils/
-│   │   ├── model_utils.py
-│   │   └── init.py
-│   └── visualization/
-│       ├── model_visualization.py
-│       ├── plotting.py
-│       ├── neurosymbolic_visualizer.py
-│       └── init.py
+.
+├── configs
+│   ├── config.yaml
+│   └── plot_config.yaml
+├── data
+│   ├── synthetic_sensor_data_with_anomalies.csv
+│   └── synthetic_sensor_data_with_anomalies.npz
 ├── main.py
-├── README.md
+├── rule_extraction_sample.log
+├── src
+│   ├── config
+│   │   ├── config_manager.py
+│   │   └── __init__.py
+│   ├── data
+│   │   ├── data_loader.py
+│   │   ├── data_processing.py
+│   │   └── __init__.py
+│   ├── evaluation
+│   │   ├── evaluation.py
+│   │   ├── __init__.py
+│   │   └── pattern_metrics.py
+│   ├── inference
+│   │   ├── inference.py
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── integration
+│   │   └── adaptive_controller.py
+│   ├── logging
+│   │   ├── __init__.py
+│   │   └── logging_setup.py
+│   ├── media
+│   │   └── images
+│   ├── models
+│   │   ├── attention_model.py
+│   │   ├── cnn_lstm_model.py
+│   │   └── simple_model.py
+│   ├── nexusdt
+│   │   ├── core.py
+│   │   ├── explainable.py
+│   │   ├── __init__.py
+│   │   └── nexus_dt_env.py
+│   ├── pipeline
+│   │   ├── __init__.py
+│   │   ├── integration.py
+│   │   └── pipeline.py
+│   ├── preprocessing
+│   │   ├── __init__.py
+│   │   └── preprocessing.py
+│   ├── reasoning
+│   │   ├── batch_prob_log_queries.py
+│   │   ├── __init__.py
+│   │   ├── integrate_prob_log.pl
+│   │   ├── knowledge_graph.py
+│   │   ├── load_config.pl
+│   │   ├── manage_prob_rules.pl
+│   │   ├── prob_query.py
+│   │   ├── prob_rules.pl
+│   │   ├── reasoning.py
+│   │   ├── reload_prob_log.pl
+│   │   ├── rule_learning.py
+│   │   ├── rules.pl
+│   │   ├── save_prob_log_results.py
+│   │   └── state_tracker.py
+│   ├── rl
+│   │   ├── __init__.py
+│   │   └── train_ppo.py
+│   ├── training
+│   │   ├── __init__.py
+│   │   └── trainer.py
+│   ├── utils
+│   │   ├── __init__.py
+│   │   └── model_utils.py
 └── requirements.txt
 ```
 
