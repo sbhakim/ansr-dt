@@ -81,8 +81,8 @@ The ANSR-DT system is modular, comprising the following key components:
 - Python 3.8 or higher
 - [Anaconda](https://www.anaconda.com/) (recommended for environment management)
 - Prolog (e.g., [SWI-Prolog](https://www.swi-prolog.org/))
-- ProbLog
-- 
+- [ProbLog](https://problog.readthedocs.io/en/latest/)
+
 ## 🚀 Getting Started
 
 ### 📝 Steps
