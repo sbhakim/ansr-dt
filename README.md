@@ -6,14 +6,15 @@
 ## 📚 Table of Contents
 
 - [Project Overview](#Project-Overview)
-- [Features](#features)
-- [Architecture](#architecture)
+- [Features](#Features)
+- [Architecture](#Architecture)
 - [Installation](#installation)
+- [Getting Started](Getting-Started)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [Project Structure](#Project-Structure)
+- [Contributing](#Contributing)
+- [License](#License)
+- [Contact](#Contact)
 
 ## 🎯 Project Overview
 
