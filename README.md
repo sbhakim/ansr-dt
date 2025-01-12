@@ -5,7 +5,7 @@
 
 ## 📚 Table of Contents
 
-- [Overview](#overview)
+- [Project Overview](#Project-Overview)
 - [Features](#features)
 - [Architecture](#architecture)
 - [Installation](#installation)
