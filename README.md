@@ -6,7 +6,7 @@
 ## 📚 Table of Contents
 
 
-- [Project Overview](#🎯-Project-Overview)
+- [Project Overview](#Project-Overview)
 - [Features](#Features)
 - [Architecture](#Architecture)
 - [Installation](#installation)
@@ -17,7 +17,7 @@
 - [License](#License)
 - [Contact](#Contact)
 
-## 🎯 Project Overview
+## Project Overview
 
 
 **ANSR-DT** (**A**daptive **N**euro-**S**ymbolic Learning and **R**easoning Framework for **D**igital **T**wins) (formerly NEXUS-DT) is an open-source framework designed to enable real-time learning, adaptive decision-making, and interpretable human-machine collaboration. It integrates:
