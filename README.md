@@ -1,9 +1,11 @@
 ## ANSR-DT
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mana121/ansr-dt/blob/main/LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-purple)](https://www.python.org/downloads/release/python-380/)
 
 ## 📚 Table of Contents
+
+- [Project Overview](#Project-Overview)
 
 - [Project Overview](#Project-Overview)
 - [Features](#Features)
