@@ -10,7 +10,7 @@
 - [Features](#Features)
 - [Architecture](#Architecture)
 - [Installation](#installation)
-- [Getting Started](Getting-Started)
+- [Getting Started](#Getting-Started)
 - [Usage](#usage)
 - [Project Structure](#Project-Structure)
 - [Contributing](#Contributing)
@@ -239,6 +239,6 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📫 Contact
+## Contact
 
 For any questions or inquiries, please contact Safayat at safayat.b.hakim@gmail.com.**
