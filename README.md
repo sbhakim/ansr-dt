@@ -7,7 +7,7 @@
 
 
 - [Project Overview](#Project-Overview)
-- [Features](#⚡-Features)
+- [Features](#Features)
 - [Architecture](#Architecture)
 - [Installation](#installation)
 - [Getting Started](Getting-Started)
@@ -29,7 +29,7 @@
 
 ANSR-DT combines neural networks, reinforcement learning, and symbolic reasoning to enhance decision accuracy, adaptability, and interpretability for digital twin applications.
 
-## ⚡ Features
+## Features
 
 - **Pattern Recognition**: Employs CNN-LSTM models with attention mechanisms to capture spatial and temporal patterns in sensor data.
 - **Adaptive Decision-Making**: Utilizes PPO (Proximal Policy Optimization) for continuous learning and dynamic system adaptation.
@@ -39,7 +39,7 @@ ANSR-DT combines neural networks, reinforcement learning, and symbolic reasoning
 - **Visualization Tools**: Provides utilities for data insights, rule activations, state transitions, and model performance trends.
 - **Open Source**: Fully documented implementation with examples for reproducibility and further research.
 
-## 🏗️ Architecture
+## Architecture
 
 The ANSR-DT framework consists of modular layers that facilitate anomaly detection and adaptive control. Below is the framework architecture:
 
@@ -76,7 +76,7 @@ The ANSR-DT system is modular, comprising the following key components:
 8.  **Integration and Execution**
     - Orchestrates the training, evaluation, reasoning, and visualization processes.
 
-## 🛠️ Installation
+## Installation
 
 ### 📋 Prerequisites
 
@@ -85,7 +85,7 @@ The ANSR-DT system is modular, comprising the following key components:
 - Prolog (e.g., [SWI-Prolog](https://www.swi-prolog.org/))
 - [ProbLog](https://problog.readthedocs.io/en/latest/)
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 📝 Steps
 
@@ -120,7 +120,7 @@ The ANSR-DT system is modular, comprising the following key components:
       ```
     - Edit `configs/config.yaml` to set paths and parameters according to your environment.
 
-## 🔧 Usage
+## Usage
 
 1.  **Train the CNN-LSTM Model**
     ```bash
@@ -145,7 +145,7 @@ The ANSR-DT system is modular, comprising the following key components:
 5.  **Visualize Results**
     - Generated visualizations are saved in the `results/visualization/` directory.
 
-## 📁 Project Structure
+## Project Structure
 
 ```plaintext
 .
@@ -224,18 +224,18 @@ The ANSR-DT system is modular, comprising the following key components:
 ```
 
 ## 🔗 External Links
-## 📑 References 
+## References 
 
 For more details and documentation on the tools and libraries used in this project, refer to the following resources:
 
 - [ProbLog 2.2 Documentation](https://problog.readthedocs.io/en/latest/)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit issues or pull requests.
 
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
