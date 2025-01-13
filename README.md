@@ -6,7 +6,7 @@
 ## 📚 Table of Contents
 
 
-- [Project Overview](#📚-Project-Overview)
+- [Project Overview](#🎯-Project-Overview)
 - [Features](#Features)
 - [Architecture](#Architecture)
 - [Installation](#installation)
