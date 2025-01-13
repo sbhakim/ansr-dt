@@ -7,7 +7,7 @@
 
 
 - [Project Overview](#Project-Overview)
-- [Features](#Features)
+- [Features](#⚡-Features)
 - [Architecture](#Architecture)
 - [Installation](#installation)
 - [Getting Started](Getting-Started)
