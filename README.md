@@ -2,6 +2,8 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mana121/ansr-dt/blob/main/LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-purple)](https://www.python.org/downloads/release/python-380/)
+[![ProbLog Version](https://img.shields.io/badge/ProbLog-2.2%2B-red)](https://problog.readthedocs.io/en/latest/)
+
 
 ## 📚 Table of Contents
 
