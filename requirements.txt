@@ -1,0 +1,12 @@
+tensorflow
+numpy
+pyswip
+scikit-learn
+pyyaml
+stable-baselines3
+gymnasium
+matplotlib
+joblib
+problog
+pandas
+networkx

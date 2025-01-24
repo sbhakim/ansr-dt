@@ -7,6 +7,9 @@ logs/
 # Exclude .txt files
 *.txt
 
+# Include requirements.txt
+!requirements.txt
+
 
 # Exclude specific Python file
 check_data.py
