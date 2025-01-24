@@ -224,9 +224,6 @@ The ANSR-DT system is modular, comprising the following key components:
 ```
 
 ## Citation
-
-If you use **ANSR-DT** in your research or work, please cite the following paper:
-
 ```bibtex
 @article{hakim2025ansr,
   title={ANSR-DT: An Adaptive Neuro-Symbolic Learning and Reasoning Framework for Digital Twins},
