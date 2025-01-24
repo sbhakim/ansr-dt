@@ -1,11 +1,11 @@
 {
   "current_state": {
-    "anomaly_score": 0.09482517093420029,
+    "anomaly_score": 0.3376101851463318,
     "anomaly_detected": false,
     "recommended_action": [
-      -0.007916321977972984,
-      0.04577257111668587,
-      0.0938301756978035
+      -0.03410450369119644,
+      -0.023132868111133575,
+      -0.1492203176021576
     ],
     "control_parameters": {
       "temperature_adjustment": -0.06549224853515626,
@@ -46,18 +46,18 @@
         0.0
       ]
     ],
-    "timestamp": "2025-01-07T06:54:16",
-    "confidence": 0.09482517093420029,
+    "timestamp": "2025-01-14T20:23:10",
+    "confidence": 0.3376101851463318,
     "history_length": 0
   },
   "state_history": [
     {
-      "anomaly_score": 0.09482517093420029,
+      "anomaly_score": 0.3376101851463318,
       "anomaly_detected": false,
       "recommended_action": [
-        -0.007916321977972984,
-        0.04577257111668587,
-        0.0938301756978035
+        -0.03410450369119644,
+        -0.023132868111133575,
+        -0.1492203176021576
       ],
       "control_parameters": {
         "temperature_adjustment": -0.06549224853515626,
@@ -98,14 +98,14 @@
           0.0
         ]
       ],
-      "timestamp": "2025-01-07T06:54:16",
-      "confidence": 0.09482517093420029,
+      "timestamp": "2025-01-14T20:23:10",
+      "confidence": 0.3376101851463318,
       "history_length": 0
     }
   ],
   "knowledge_graph_state": {
     "nodes": 5,
     "edges": 4,
-    "timestamp": "2025-01-07T06:54:19"
+    "timestamp": "2025-01-14T20:23:14"
   }
 }
