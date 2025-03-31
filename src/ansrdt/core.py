@@ -1,4 +1,4 @@
-# src/nexusdt/core.py
+# src/ansrdt/core.py
 
 import numpy as np
 import logging
@@ -13,9 +13,9 @@ import json
 import os
 
 
-class NEXUSDTCore:
+class ANSRDTCore:
     """
-    Core class for the NEXUS-DT system, handling inference, adaptation, and explanation.
+    Core class for the ANSR-DT system, handling inference, adaptation, and explanation.
     Integrates the CNN-LSTM anomaly detection model, PPO agent for control, and symbolic reasoning.
     """
 
@@ -23,7 +23,7 @@ class NEXUSDTCore:
                  cnn_lstm_model: Optional[tf.keras.Model] = None,
                  ppo_agent: Optional[PPO] = None):
         """
-        Initialize core NEXUS-DT components.
+        Initialize core ANSR-DT components.
 
         Parameters:
         - config_path (str): Path to the configuration file.
@@ -112,7 +112,7 @@ class NEXUSDTCore:
             PPO: Loaded PPO agent.
         """
         try:
-            ppo_path = os.path.join(self.results_dir, 'ppo_nexus_dt.zip')
+            ppo_path = os.path.join(self.results_dir, 'ppo_ansr_dt.zip')
             self.logger.info(f"Loading PPO agent from: {ppo_path}")
             if not os.path.exists(ppo_path):
                 raise FileNotFoundError(f"PPO model not found at {ppo_path}")

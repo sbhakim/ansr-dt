@@ -184,11 +184,11 @@ The ANSR-DT system is modular, comprising the following key components:
 │   │   ├── attention_model.py
 │   │   ├── cnn_lstm_model.py
 │   │   └── simple_model.py
-│   ├── nexusdt
+│   ├── ansrdt
 │   │   ├── core.py
 │   │   ├── explainable.py
 │   │   ├── __init__.py
-│   │   └── nexus_dt_env.py
+│   │   └── ansr_dt_env.py
 │   ├── pipeline
 │   │   ├── __init__.py
 │   │   ├── integration.py

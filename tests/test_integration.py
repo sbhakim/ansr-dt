@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-from src.nexusdt.explainable import ExplainableNEXUSDT
+from src.ansrdt.explainable import ExplainableANSRDT
 from src.logging.logging_setup import setup_logging
 import logging
 import os
@@ -20,7 +20,7 @@ class NEXUSDTIntegrationTest:
             max_bytes=5 * 1024 * 1024,
             backup_count=3
         )
-        self.nexusdt = ExplainableNEXUSDT(config_path, self.logger)
+        self.nexusdt = ExplainableANSRDT(config_path, self.logger)
         self.results = []
 
     def load_test_data(self, data_path: str) -> np.ndarray:

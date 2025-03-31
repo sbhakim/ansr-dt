@@ -16,7 +16,7 @@ from src.preprocessing.preprocessing import preprocess_sequences  # Ensure this 
 
 class InferencePipeline:
     """
-    Pipeline for running inference on new data using trained NEXUS-DT model.
+    Pipeline for running inference on new data using trained ANSR-DT model.
     """
 
     def __init__(self, config_path: str, logger: logging.Logger):
@@ -132,7 +132,7 @@ class InferencePipeline:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='NEXUS-DT Inference Module')
+    parser = argparse.ArgumentParser(description='ANSR-DT Inference Module')
     parser.add_argument('--data_file', type=str, required=True, help='Path to the new .npz data file')
     parser.add_argument('--config', type=str, default='configs/config.yaml', help='Path to config.yaml')
     parser.add_argument('--output', type=str, default='results/inference_results.json',

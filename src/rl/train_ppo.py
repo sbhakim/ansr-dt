@@ -3,7 +3,7 @@ import yaml
 import logging
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
-from src.nexusdt.nexus_dt_env import NexusDTEnv
+from src.ansrdt.ansr_dt_env import ANSRDTEnv
 
 
 def setup_logger(log_file: str = 'logs/ppo_training.log') -> logging.Logger:
@@ -34,7 +34,7 @@ def load_config(config_path: str) -> dict:
 
 def train_ppo_agent(config_path: str) -> bool:
     """
-    Train PPO agent for NEXUS-DT system.
+    Train PPO agent for ANSR-DT system.
 
     Args:
         config_path (str): Path to configuration file
@@ -55,7 +55,7 @@ def train_ppo_agent(config_path: str) -> bool:
         # Initialize environment with proper paths
         data_file = os.path.join(os.path.dirname(results_dir), config['paths']['data_file'])
 
-        env = DummyVecEnv([lambda: NexusDTEnv(
+        env = DummyVecEnv([lambda: ANSRDTEnv(
             data_file=data_file,
             window_size=config['model']['window_size'],
             config=config.get('ppo', {})
@@ -84,7 +84,7 @@ def train_ppo_agent(config_path: str) -> bool:
         model.learn(total_timesteps=total_timesteps)
 
         # Save the trained model
-        model_path = os.path.join(results_dir, 'ppo_nexus_dt.zip')
+        model_path = os.path.join(results_dir, 'ppo_ansr_dt.zip')
         model.save(model_path)
 
         if not os.path.exists(model_path):
@@ -101,7 +101,7 @@ def train_ppo_agent(config_path: str) -> bool:
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description='Train PPO Agent for NEXUS-DT')
+    parser = argparse.ArgumentParser(description='Train PPO Agent for ANSR-DT')
     parser.add_argument('--config', type=str, default='configs/config.yaml', help='Path to configuration file')
     args = parser.parse_args()
 

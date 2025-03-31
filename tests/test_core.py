@@ -3,18 +3,18 @@
 import unittest
 from unittest.mock import MagicMock, patch
 import numpy as np
-from src.nexusdt.core import NEXUSDTCore
+from src.ansrdt.core import ANSRDTCore
 
 class TestNEXUSDTCore(unittest.TestCase):
     def setUp(self):
         self.logger = MagicMock()
         self.config_path = '/path/to/config.yaml'
-        self.core = NEXUSDTCore(self.config_path, logger=self.logger)
+        self.core = ANSRDTCore(self.config_path, logger=self.logger)
 
-    @patch('src.nexusdt.core.load_config')
-    @patch('src.nexusdt.core.load_model')
-    @patch('src.nexusdt.core.PPO.load')
-    @patch('src.nexusdt.core.SymbolicReasoner')
+    @patch('src.ansrdt.core.load_config')
+    @patch('src.ansrdt.core.load_model')
+    @patch('src.ansrdt.core.PPO.load')
+    @patch('src.ansrdt.core.SymbolicReasoner')
     def test_initialization(self, mock_reasoner, mock_ppo_load, mock_load_model, mock_load_config):
         mock_load_config.return_value = {
             'model': {'window_size': 10},
@@ -31,7 +31,7 @@ class TestNEXUSDTCore(unittest.TestCase):
         mock_ppo_load.return_value = MagicMock()
         mock_reasoner.return_value = MagicMock()
 
-        core = NEXUSDTCore('/path/to/config.yaml', logger=self.logger)
+        core = ANSRDTCore('/path/to/config.yaml', logger=self.logger)
 
         mock_load_config.assert_called_once_with('/path/to/config.yaml')
         mock_load_model.assert_called_once_with('/absolute/path/to/results/best_model.keras', self.logger)

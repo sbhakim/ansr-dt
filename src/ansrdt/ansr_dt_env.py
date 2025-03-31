@@ -1,4 +1,4 @@
-# src/nexusdt/nexus_dt_env.py
+# src/ansrdt/ansr_dt_env.py
 
 import gymnasium as gym
 from gymnasium import spaces
@@ -8,14 +8,14 @@ import logging
 from typing import Optional, Dict, Tuple, Any
 
 
-class NexusDTEnv(gym.Env):
-    """Custom Environment for NEXUS-DT Framework integrating PPO."""
+class ANSRDTEnv(gym.Env):
+    """Custom Environment for ANSR-DT Framework integrating PPO."""
 
     metadata = {'render.modes': ['human']}
 
     def __init__(self, data_file: str, window_size: int = 10, config: Optional[Dict] = None):
         """Initialize environment."""
-        super(NexusDTEnv, self).__init__()
+        super(ANSRDTEnv, self).__init__()
 
         self.logger = logging.getLogger(__name__)
 

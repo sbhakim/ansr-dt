@@ -8,9 +8,9 @@ from datetime import datetime
 
 from src.logging.logging_setup import setup_logging
 from src.config.config_manager import load_config
-from src.pipeline.pipeline import NEXUSDTPipeline
+from src.pipeline.pipeline import ANSRDTPipeline
 from src.rl.train_ppo import train_ppo_agent
-from src.nexusdt.explainable import ExplainableNEXUSDT
+from src.ansrdt.explainable import ExplainableANSRDT
 from src.utils.model_utils import load_model_with_initialization
 from stable_baselines3 import PPO
 from src.visualization.neurosymbolic_visualizer import NeurosymbolicVisualizer
@@ -111,7 +111,7 @@ def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
 
 def main():
     """
-    Execute the NEXUS-DT pipeline with enhanced neurosymbolic components:
+    Execute the ANSR-DT pipeline with enhanced neurosymbolic components:
     1. Train/load CNN-LSTM for anomaly detection
     2. Train/load PPO for adaptive control
     3. Initialize neurosymbolic components
@@ -128,7 +128,7 @@ def main():
         log_file=os.path.join(project_root, 'logs', 'nexus_dt.log'),
         log_level=logging.INFO
     )
-    logger.info("Starting NEXUS-DT Pipeline")
+    logger.info("Starting ANSR-DT Pipeline")
 
     try:
         # Load and validate configuration
@@ -146,7 +146,7 @@ def main():
         # Initialize model paths
         model_paths = {
             'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
-            'ppo': os.path.join(config['paths']['results_dir'], 'ppo_nexus_dt.zip')
+            'ppo': os.path.join(config['paths']['results_dir'], 'ppo_ansr_dt.zip')
         }
 
         # Load or train CNN-LSTM model
@@ -159,7 +159,7 @@ def main():
             )
         else:
             logger.info("Training new CNN-LSTM model")
-            pipeline = NEXUSDTPipeline(config, config_path, logger)
+            pipeline = ANSRDTPipeline(config, config_path, logger)
             pipeline.run()
             cnn_lstm_model = load_model_with_initialization(
                 path=model_paths['cnn_lstm'],
@@ -184,9 +184,9 @@ def main():
                 raise FileNotFoundError(f"{name} model not found at {path}")
             logger.info(f"{name} model verified at {path}")
 
-        # Initialize NEXUS-DT system
-        logger.info("Initializing NEXUS-DT system")
-        nexusdt = ExplainableNEXUSDT(
+        # Initialize ANSR-DT system
+        logger.info("Initializing ANSR-DT system")
+        ansrdt = ExplainableANSRDT(
             config_path=config_path,
             logger=logger,
             cnn_lstm_model=cnn_lstm_model,
@@ -215,7 +215,7 @@ def main():
 
         # Run integrated inference
         logger.info("Running integrated inference")
-        result = nexusdt.adapt_and_explain(sensor_window)
+        result = ansrdt.adapt_and_explain(sensor_window)
 
         # Logging after running inference
         logger.info("Inference results:")
@@ -225,15 +225,15 @@ def main():
         # Generate visualizations with error handling
         try:
             # Standard visualizations
-            if hasattr(nexusdt.reasoner, 'get_rule_activations'):
+            if hasattr(ansrdt.reasoner, 'get_rule_activations'):
                 visualizers['neurosymbolic'].visualize_rule_activations(
-                    activations=nexusdt.reasoner.get_rule_activations(),
+                    activations=ansrdt.reasoner.get_rule_activations(),
                     save_path=os.path.join(figures_dir, 'neurosymbolic/rule_activations.png')
                 )
 
-            if hasattr(nexusdt.reasoner, 'state_tracker'):
+            if hasattr(ansrdt.reasoner, 'state_tracker'):
                 visualizers['neurosymbolic'].plot_state_transitions(
-                    transition_matrix=nexusdt.reasoner.state_tracker.get_transition_probabilities(),
+                    transition_matrix=ansrdt.reasoner.state_tracker.get_transition_probabilities(),
                     save_path=os.path.join(figures_dir, 'neurosymbolic/state_transitions.png')
                 )
 
@@ -241,8 +241,8 @@ def main():
             if config['knowledge_graph']['enabled']:
                 current_state = result.get('current_state', {})
                 insights = result.get('insights', [])
-                rules = [{'rule': rule, 'confidence': nexusdt.reasoner.rule_confidence.get(rule, 0.0)}
-                         for rule in nexusdt.reasoner.learned_rules]
+                rules = [{'rule': rule, 'confidence': ansrdt.reasoner.rule_confidence.get(rule, 0.0)}
+                         for rule in ansrdt.reasoner.learned_rules]
 
                 # Update knowledge graph
                 visualizers['knowledge_graph'].update_graph(
@@ -266,8 +266,8 @@ def main():
 
         # Prepare results
         neurosymbolic_results = {
-            'neural_rules': getattr(nexusdt.reasoner, 'learned_rules', []),
-            'rule_confidence': getattr(nexusdt.reasoner, 'rule_confidence', {}),
+            'neural_rules': getattr(ansrdt.reasoner, 'learned_rules', []),
+            'rule_confidence': getattr(ansrdt.reasoner, 'rule_confidence', {}),
             'symbolic_insights': result.get('insights', []),
             'neural_confidence': result.get('confidence', 0.0),
             'control_parameters': result.get('control_parameters', {}),
@@ -285,8 +285,8 @@ def main():
         # Save final state
         save_results(
             results={
-                'current_state': nexusdt.current_state,
-                'state_history': nexusdt.state_history[-100:],
+                'current_state': ansrdt.current_state,
+                'state_history': ansrdt.state_history[-100:],
                 'knowledge_graph_state': {
                     'nodes': len(visualizers['knowledge_graph'].graph.nodes),
                     'edges': len(visualizers['knowledge_graph'].graph.edges),

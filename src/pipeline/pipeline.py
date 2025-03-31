@@ -72,8 +72,8 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
         raise
 
 
-class NEXUSDTPipeline:
-    """NEXUS-DT Pipeline with Neurosymbolic Rule Learning."""
+class ANSRDTPipeline:
+    """ANSR-DT Pipeline with Neurosymbolic Rule Learning."""
 
     def __init__(self, config: dict, config_path: str, logger: logging.Logger):
         """Initialize pipeline."""

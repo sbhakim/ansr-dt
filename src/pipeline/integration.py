@@ -5,7 +5,7 @@ import json
 import logging
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
-from src.nexusdt.nexus_dt_env import NexusDTEnv  # Updated import
+from src.ansrdt.ansr_dt_env import ANSRDTEnv  # Updated import
 import yaml
 from src.reasoning.reasoning import SymbolicReasoner
 
@@ -27,7 +27,7 @@ class RL_Symbolic_Integration:
         project_root = os.path.dirname(config_dir)
 
         # Load PPO model
-        ppo_model_path = os.path.join(self.config['paths']['results_dir'], 'ppo_nexus_dt')
+        ppo_model_path = os.path.join(self.config['paths']['results_dir'], 'ppo_ansr_dt')
         if not os.path.exists(ppo_model_path + ".zip"):
             self.logger.error(f"PPO model not found at {ppo_model_path}. Please train the PPO agent first.")
             raise FileNotFoundError(f"PPO model not found at {ppo_model_path}.")
@@ -40,7 +40,7 @@ class RL_Symbolic_Integration:
         self.logger.info(f"Symbolic Reasoner initialized with rules from {rules_path}")
 
         # Initialize Vectorized Environment
-        self.env = DummyVecEnv([lambda: NexusDTEnv(
+        self.env = DummyVecEnv([lambda: ANSRDTEnv(
             data_file=self.config['paths']['data_file'],
             window_size=self.config['model']['window_size'],
             config=self.config.get('ppo', {})

@@ -1,4 +1,4 @@
-% src/reasoning/prob_rules.pl - Probabilistic Logic Programming Rules for NEXUS-DT
+% src/reasoning/prob_rules.pl - Probabilistic Logic Programming Rules for ANSR-DT
 
 % Probabilistic Facts
 0.8::high_temperature.

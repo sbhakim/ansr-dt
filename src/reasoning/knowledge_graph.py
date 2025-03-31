@@ -316,7 +316,7 @@ class KnowledgeGraphGenerator:
                                          edge_labels=edge_labels,
                                          font_size=6)
 
-            plt.title("NEXUS-DT Knowledge Graph", pad=20, size=16)
+            plt.title("ANSR-DT Knowledge Graph", pad=20, size=16)
             plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
             plt.axis('off')
             plt.tight_layout()
