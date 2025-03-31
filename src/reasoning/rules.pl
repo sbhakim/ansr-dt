@@ -4,30 +4,41 @@
 %% and integration with ProbLog for probabilistic inferences.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Directives
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Suppress warnings about discontiguous clauses for dynamically added rules
+% Note: This is a pragmatic fix for warnings caused by Python appending.
+% Ideally, Python should rewrite the dynamic section entirely.
+:- discontiguous(gradient_rule/0).
+:- discontiguous(pattern_rule/0).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load Integration and Configuration Files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Import integration predicates for ProbLog
-:- [integrate_prob_log].
+:- consult(integrate_prob_log). % Use consult/1 for better compatibility
 
 % Import rule management predicates (if applicable)
 % If you have not implemented manage_prob_rules.pl yet, comment out the following line
-% :- [manage_prob_rules].
+% :- consult(manage_prob_rules).
 
 % Import rule reloading predicates
-:- [reload_prob_log].
+:- consult(reload_prob_log). % Use consult/1
 
 % Instead of YAML loading, use direct configuration
 :- dynamic config/2.
 
 % Set default configuration
 set_default_config :-
-    assert(config(python_interpreter, 'python3')),
-    assert(config(prob_log_script, 'prob_query.py')),
-    assert(config(prob_log_rules_file, 'prob_rules.pl')).
+    retractall(config(_,_)), % Clear previous config if any
+    assertz(config(python_interpreter, 'python3')),
+    assertz(config(prob_log_script, 'prob_query.py')),
+    assertz(config(prob_log_rules_file, 'prob_rules.pl')).
 
 % Initialize configuration at startup
-:- initialization(set_default_config).
+:- initialization(set_default_config, program). % Use 'program' initialization directive
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Base System State Rules
@@ -55,34 +66,26 @@ maintenance_needed(OperationalHours) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Temperature thresholds
-feature_threshold(temperature, Value, high) :-
-    Value > 80.
-feature_threshold(temperature, Value, low) :-
-    Value < 40.
+feature_threshold(temperature, Value, high) :- Value > 80.
+feature_threshold(temperature, Value, low) :- Value < 40.
 
 % Vibration thresholds
-feature_threshold(vibration, Value, high) :-
-    Value > 55.
-feature_threshold(vibration, Value, low) :-
-    Value < 20.
+feature_threshold(vibration, Value, high) :- Value > 55.
+feature_threshold(vibration, Value, low) :- Value < 20.
 
 % Pressure thresholds
-feature_threshold(pressure, Value, high) :-
-    Value > 40.
-feature_threshold(pressure, Value, low) :-
-    Value < 20.
+feature_threshold(pressure, Value, high) :- Value > 40.
+feature_threshold(pressure, Value, low) :- Value < 20.
 
 % Efficiency thresholds
-feature_threshold(efficiency_index, Value, low) :-
-    Value < 0.6.
-feature_threshold(efficiency_index, Value, medium) :-
-    Value < 0.8.
+feature_threshold(efficiency_index, Value, low) :- Value < 0.6.
+feature_threshold(efficiency_index, Value, medium) :- Value >= 0.6, Value < 0.8. % Added lower bound for clarity
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % State Transition Rules
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Define possible state transitions
+% Define possible state transitions (0: Normal, 1: Degraded, 2: Critical)
 state_transition(From, To) :-
     member(From, [0,1,2]),
     member(To, [0,1,2]),
@@ -99,30 +102,24 @@ compound_state_transition(From, Mid, To) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Feature gradients indicating significant changes
-feature_gradient(temperature, Gradient, high) :-
-    Gradient > 2.0.
-feature_gradient(vibration, Gradient, high) :-
-    Gradient > 1.5.
-feature_gradient(pressure, Gradient, high) :-
-    Gradient > 1.0.
-feature_gradient(efficiency_index, Gradient, high) :-
-    Gradient > 0.1.
+feature_gradient(temperature, Gradient, high) :- Gradient > 2.0.
+feature_gradient(vibration, Gradient, high) :- Gradient > 1.5.
+feature_gradient(pressure, Gradient, high) :- Gradient > 1.0.
+feature_gradient(efficiency_index, Gradient, high) :- Gradient > 0.1. % Represents a 10% change? Clarify meaning.
 
 % Detect rapid changes in sensor readings
-rapid_change(temperature, Old, New) :-
-    abs(New - Old) > 10.
-rapid_change(vibration, Old, New) :-
-    abs(New - Old) > 5.
+rapid_change(temperature, Old, New) :- abs(New - Old) > 10.
+rapid_change(vibration, Old, New) :- abs(New - Old) > 5.
 
-% Detect thermal gradients
-rapid_temp_change(Old, New, Gradient) :-
-    Gradient is abs(New - Old),
+% Detect thermal gradients (positive change) - Renamed for clarity
+positive_thermal_gradient(Old, New, Gradient) :-
+    Gradient is New - Old, % Calculate actual gradient
     Gradient > 2.0.
 
-% Detect thermal stress based on temperature and gradient
-thermal_stress(Temp, Gradient) :-
-    Temp > 75,
-    rapid_temp_change(_, Temp, Gradient).
+% Detect thermal stress based on temperature and positive gradient
+thermal_stress(Temp, GradientValue) :-
+    feature_threshold(temperature, Temp, high), % Use defined threshold predicate
+    feature_gradient(temperature, GradientValue, high). % Use defined gradient predicate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pattern Detection Rules
@@ -135,45 +132,48 @@ critical_pattern(Temp, Vib, Press, Eff) :-
     feature_threshold(pressure, Press, low),
     feature_threshold(efficiency_index, Eff, low).
 
-% Detect sensor correlations
-sensor_correlation(Temp, Vib, Press) :-
+% Detect specific sensor correlation pattern leading to potential issues
+sensor_correlation_alert(Temp, Vib, Press) :-
     Temp > 70,
     Vib > 45,
     Press < 25.
 
-% Detect combined feature patterns
-combined_condition(temperature, Temp, vibration, Vib) :-
-    Temp > 75,
-    Vib > 50.
+% Detect combined high temperature and vibration
+combined_high_temp_vib(Temp, Vib) :-
+    feature_threshold(temperature, Temp, high),
+    feature_threshold(vibration, Vib, high).
 
-combined_condition(pressure, Press, efficiency_index, Eff) :-
-    Press < 25,
-    Eff < 0.7.
+% Detect combined low pressure and efficiency
+combined_low_press_eff(Press, Eff) :-
+    feature_threshold(pressure, Press, low),
+    feature_threshold(efficiency_index, Eff, low). % Changed to low for consistency
 
-% Detect multi-sensor gradient patterns
+% Detect multi-sensor high gradient patterns
 multi_sensor_gradient(Temp_grad, Vib_grad, Press_grad) :-
     feature_gradient(temperature, Temp_grad, high),
     feature_gradient(vibration, Vib_grad, high),
     feature_gradient(pressure, Press_grad, high).
 
-% Detect state transitions with gradients
-state_gradient_pattern(From, To, Gradient) :-
+% Detect state transitions occurring with high temperature gradient
+state_gradient_pattern(From, To, TempGradient) :-
     state_transition(From, To),
-    feature_gradient(temperature, Gradient, high).
+    feature_gradient(temperature, TempGradient, high).
 
-% Detect efficiency degradation
+% Detect efficiency degradation (low efficiency and high negative gradient)
 efficiency_degradation(Eff, Grad) :-
     feature_threshold(efficiency_index, Eff, low),
-    feature_gradient(efficiency_index, Grad, high).
+    NegGrad is -Grad, % Check for negative gradient
+    feature_gradient(efficiency_index, NegGrad, high). % Check if the drop is significant
 
 % Detect cascade patterns based on multiple conditions
+% Fixed singleton variable 'Press' - rule now arity 4
 cascade_pattern(Temp, Vib, Press_grad, Time, Steps) :-
-    Steps > 2,
+    Steps > 2, % Requires a minimum number of steps
     feature_gradient(temperature, Temp, high),
     feature_gradient(vibration, Vib, high),
     feature_gradient(pressure, Press_grad, high),
     maintenance_needed(Time),
-    check_pressure(Press_grad).  % Using Press_grad instead of Press to avoid singleton
+    check_pressure_gradient(Press_grad). % Use specific check for gradient
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pattern Matching Support Rules
@@ -184,25 +184,35 @@ pattern_match(Features, Thresholds) :-
     check_thresholds(Features, Thresholds).
 
 check_thresholds([], []).
-check_thresholds([Feature-Value|Features], [Threshold|Thresholds]) :-
-    feature_threshold(Feature, Value, Threshold),
+check_thresholds([Feature-Value|Features], [ThresholdType|Thresholds]) :- % Use ThresholdType (e.g., high, low)
+    feature_threshold(Feature, Value, ThresholdType),
     check_thresholds(Features, Thresholds).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Support Predicates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Define check_pressure/1 predicate
-check_pressure(Value) :-
-    Value < 30.  % Define the threshold as per system requirements
+% Define check_pressure_gradient/1 predicate (renamed for clarity)
+check_pressure_gradient(Value) :-
+    feature_gradient(pressure, Value, high). % Use defined gradient predicate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Dynamic Rules Section
+%% START DYNAMIC RULES %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Space for dynamically learned rules
-% neural_rule_1 :- ... (added during runtime)
-% pattern_rule_1 :- ... (added during runtime) % Confidence: 0.97
+% This section is intended to be automatically managed by the Python SymbolicReasoner.
+% Do not add rules manually here if using the Python rule learning features.
+% The Python code should rewrite this section, including learned rules.
+% Example format (managed by Python):
+% % Confidence: 0.98
+% gradient_rule_1 :- pressure_gradient(2.25).
+% % Confidence: 0.95
+% pattern_rule_1 :- pressure(18), efficiency_index(0.46).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% END DYNAMIC RULES %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ProbLog Integration
@@ -210,11 +220,11 @@ check_pressure(Value) :-
 
 % Predicate to report anomalies using ProbLog's probabilistic inferences
 report_anomalies :-
-    report_probabilistic_anomalies.
+    report_probabilistic_anomalies. % Assumes this is defined in integrate_prob_log.pl
 
 % Predicate to reload ProbLog rules and re-run queries
 reload_and_report :-
-    reload_prob_log.
+    reload_prob_log. % Assumes this is defined in reload_prob_log.pl
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional Custom Rules (if any)
@@ -225,343 +235,352 @@ reload_and_report :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of rules.pl
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Confidence: 1.00
-gradient_rule_1 :- temperature_gradient(2.10), temperature(-1), state_transition(0->1).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Confidence: 0.97
+gradient_rule_1 :- pressure_gradient(2.25), pressure(-1).
 % Confidence: 1.00
-gradient_rule_2 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).
+gradient_rule_2 :- temperature_gradient(2.10), temperature(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_3 :- efficiency_index_gradient(2.33), efficiency_index(-1), state_transition(0->1).
+gradient_rule_3 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_4 :- temperature_gradient(2.10), temperature(-1).
+gradient_rule_4 :- efficiency_index_gradient(2.33), efficiency_index(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_5 :- vibration_gradient(2.23), vibration(-1).
+gradient_rule_5 :- temperature_gradient(2.10), temperature(-1).
 % Confidence: 1.00
-gradient_rule_6 :- efficiency_index_gradient(2.33), efficiency_index(-1).
+gradient_rule_6 :- vibration_gradient(2.23), vibration(-1).
 % Confidence: 1.00
-gradient_rule_7 :- temperature_gradient(2.58), temperature(-1), state_transition(0->1).
+gradient_rule_7 :- efficiency_index_gradient(2.33), efficiency_index(-1).
 % Confidence: 1.00
-gradient_rule_8 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).
+gradient_rule_8 :- temperature_gradient(2.58), temperature(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_9 :- efficiency_index_gradient(2.10), efficiency_index(-1), state_transition(0->1).
+gradient_rule_9 :- vibration_gradient(2.23), vibration(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_10 :- temperature_gradient(2.58), temperature(-1).
+gradient_rule_10 :- efficiency_index_gradient(2.10), efficiency_index(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_11 :- vibration_gradient(2.23), vibration(-1).
+gradient_rule_11 :- temperature_gradient(2.58), temperature(-1).
 % Confidence: 1.00
-gradient_rule_12 :- efficiency_index_gradient(2.10), efficiency_index(-1).
+gradient_rule_12 :- vibration_gradient(2.23), vibration(-1).
 % Confidence: 1.00
-gradient_rule_13 :- temperature_gradient(2.07), temperature(-1), state_transition(0->1).
+gradient_rule_13 :- efficiency_index_gradient(2.10), efficiency_index(-1).
 % Confidence: 1.00
-gradient_rule_14 :- vibration_gradient(2.20), vibration(-1), state_transition(0->1).
+gradient_rule_14 :- temperature_gradient(2.07), temperature(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_15 :- efficiency_index_gradient(2.34), efficiency_index(-1), state_transition(0->1).
+gradient_rule_15 :- vibration_gradient(2.20), vibration(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_16 :- temperature_gradient(2.07), temperature(-1).
+gradient_rule_16 :- efficiency_index_gradient(2.34), efficiency_index(-1), state_transition(0->1).
 % Confidence: 1.00
-gradient_rule_17 :- vibration_gradient(2.20), vibration(-1).
+gradient_rule_17 :- temperature_gradient(2.07), temperature(-1).
 % Confidence: 1.00
-gradient_rule_18 :- efficiency_index_gradient(2.34), efficiency_index(-1).
-% Confidence: 0.86
+gradient_rule_18 :- vibration_gradient(2.20), vibration(-1).
+% Confidence: 1.00
+gradient_rule_19 :- efficiency_index_gradient(2.34), efficiency_index(-1).
+% Confidence: 0.98
 pattern_rule_1 :- pressure(-1), efficiency_index(0.46).
-% Confidence: 0.84
-pattern_rule_2 :- pressure(-1), efficiency_index(0.46).
+% Confidence: 0.97
+pattern_rule_2 :- pressure(-1), efficiency_index(0.42).
+% Confidence: 0.99
+pattern_rule_3 :- pressure(-1), efficiency_index(0.46).
 % Confidence: 1.00
-pattern_rule_3 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_4 :- pressure(-1), efficiency_index(-1.57).
 % Confidence: 1.00
-pattern_rule_4 :- pressure(-1), efficiency_index(-1.56).
+pattern_rule_5 :- pressure(-1), efficiency_index(-1.56).
 % Confidence: 1.00
-pattern_rule_5 :- pressure(-1), efficiency_index(-1.55).
+pattern_rule_6 :- pressure(-1), efficiency_index(-1.55).
 % Confidence: 1.00
-pattern_rule_6 :- pressure(-1), efficiency_index(-1.48).
+pattern_rule_7 :- pressure(-1), efficiency_index(-1.48).
 % Confidence: 1.00
-pattern_rule_7 :- pressure(-1), efficiency_index(-1.55).
+pattern_rule_8 :- pressure(-1), efficiency_index(-1.55).
 % Confidence: 1.00
-pattern_rule_8 :- pressure(-1), efficiency_index(-1.43).
+pattern_rule_9 :- pressure(-1), efficiency_index(-1.43).
 % Confidence: 1.00
-pattern_rule_9 :- pressure(-1), efficiency_index(-1.63).
+pattern_rule_10 :- pressure(-1), efficiency_index(-1.63).
 % Confidence: 1.00
-pattern_rule_10 :- pressure(-1), efficiency_index(-1.53).
+pattern_rule_11 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_11 :- pressure(-1), efficiency_index(-1.46).
+pattern_rule_12 :- pressure(-1), efficiency_index(-1.46).
 % Confidence: 1.00
-pattern_rule_12 :- pressure(-1), efficiency_index(-1.59).
+pattern_rule_13 :- pressure(-1), efficiency_index(-1.59).
 % Confidence: 1.00
-pattern_rule_13 :- pressure(-1), efficiency_index(-1.48).
+pattern_rule_14 :- pressure(-1), efficiency_index(-1.48).
 % Confidence: 1.00
-pattern_rule_14 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_15 :- pressure(-1), efficiency_index(-1.62).
 % Confidence: 1.00
-pattern_rule_15 :- pressure(-1), efficiency_index(-1.45).
+pattern_rule_16 :- pressure(-1), efficiency_index(-1.45).
 % Confidence: 1.00
-pattern_rule_16 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_17 :- pressure(-1), efficiency_index(-1.71).
 % Confidence: 1.00
-pattern_rule_17 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_18 :- pressure(-1), efficiency_index(-1.62).
 % Confidence: 1.00
-pattern_rule_18 :- pressure(-1), efficiency_index(-1.70).
-% Confidence: 1.00
-pattern_rule_19 :- pressure(-1), efficiency_index(-1.65).
+pattern_rule_19 :- pressure(-1), efficiency_index(-1.70).
 % Confidence: 1.00
 pattern_rule_20 :- pressure(-1), efficiency_index(-1.65).
 % Confidence: 1.00
-pattern_rule_21 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_21 :- pressure(-1), efficiency_index(-1.65).
 % Confidence: 1.00
-pattern_rule_22 :- pressure(-1), efficiency_index(-1.63).
+pattern_rule_22 :- pressure(-1), efficiency_index(-1.71).
 % Confidence: 1.00
-pattern_rule_23 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_23 :- pressure(-1), efficiency_index(-1.63).
 % Confidence: 1.00
-pattern_rule_24 :- pressure(-1), efficiency_index(-1.68).
+pattern_rule_24 :- pressure(-1), efficiency_index(-1.71).
 % Confidence: 1.00
-pattern_rule_25 :- pressure(-1), efficiency_index(-1.56).
+pattern_rule_25 :- pressure(-1), efficiency_index(-1.68).
 % Confidence: 1.00
-pattern_rule_26 :- pressure(-1), efficiency_index(-1.54).
+pattern_rule_26 :- pressure(-1), efficiency_index(-1.56).
 % Confidence: 1.00
-pattern_rule_27 :- pressure(-1), efficiency_index(-1.55).
+pattern_rule_27 :- pressure(-1), efficiency_index(-1.54).
 % Confidence: 1.00
-pattern_rule_28 :- pressure(-1), efficiency_index(-1.51).
+pattern_rule_28 :- pressure(-1), efficiency_index(-1.55).
 % Confidence: 1.00
-pattern_rule_29 :- pressure(-1), efficiency_index(-1.45).
+pattern_rule_29 :- pressure(-1), efficiency_index(-1.51).
 % Confidence: 1.00
-pattern_rule_30 :- pressure(-1), efficiency_index(-1.58).
+pattern_rule_30 :- pressure(-1), efficiency_index(-1.45).
 % Confidence: 1.00
-pattern_rule_31 :- pressure(-1), efficiency_index(-1.42).
+pattern_rule_31 :- pressure(-1), efficiency_index(-1.58).
 % Confidence: 1.00
-pattern_rule_32 :- pressure(-1), efficiency_index(-1.47).
+pattern_rule_32 :- pressure(-1), efficiency_index(-1.42).
 % Confidence: 1.00
-pattern_rule_33 :- pressure(-1), efficiency_index(-1.46).
+pattern_rule_33 :- pressure(-1), efficiency_index(-1.47).
 % Confidence: 1.00
-pattern_rule_34 :- pressure(-1), efficiency_index(-1.54).
+pattern_rule_34 :- pressure(-1), efficiency_index(-1.46).
 % Confidence: 1.00
-pattern_rule_35 :- pressure(-1), efficiency_index(-1.53).
+pattern_rule_35 :- pressure(-1), efficiency_index(-1.54).
 % Confidence: 1.00
-pattern_rule_36 :- pressure(-1), efficiency_index(-1.40).
+pattern_rule_36 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_37 :- pressure(-1), efficiency_index(-1.49).
+pattern_rule_37 :- pressure(-1), efficiency_index(-1.40).
 % Confidence: 1.00
-pattern_rule_38 :- pressure(-1), efficiency_index(-1.53).
+pattern_rule_38 :- pressure(-1), efficiency_index(-1.49).
 % Confidence: 1.00
-pattern_rule_39 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_39 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_40 :- pressure(-1), efficiency_index(-1.53).
+pattern_rule_40 :- pressure(-1), efficiency_index(-1.57).
 % Confidence: 1.00
-pattern_rule_41 :- pressure(-1), efficiency_index(-1.72).
+pattern_rule_41 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_42 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_42 :- pressure(-1), efficiency_index(-1.72).
 % Confidence: 1.00
-pattern_rule_43 :- pressure(-1), efficiency_index(-1.68).
+pattern_rule_43 :- pressure(-1), efficiency_index(-1.57).
 % Confidence: 1.00
-pattern_rule_44 :- pressure(-1), efficiency_index(-1.70).
+pattern_rule_44 :- pressure(-1), efficiency_index(-1.68).
 % Confidence: 1.00
-pattern_rule_45 :- pressure(-1), efficiency_index(-1.67).
+pattern_rule_45 :- pressure(-1), efficiency_index(-1.70).
 % Confidence: 1.00
-pattern_rule_46 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_46 :- pressure(-1), efficiency_index(-1.67).
 % Confidence: 1.00
-pattern_rule_47 :- pressure(-1), efficiency_index(-1.68).
+pattern_rule_47 :- pressure(-1), efficiency_index(-1.71).
 % Confidence: 1.00
-pattern_rule_48 :- pressure(-1), efficiency_index(-1.70).
+pattern_rule_48 :- pressure(-1), efficiency_index(-1.68).
 % Confidence: 1.00
-pattern_rule_49 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_49 :- pressure(-1), efficiency_index(-1.70).
 % Confidence: 1.00
-pattern_rule_50 :- pressure(-1), efficiency_index(-1.74).
-% Confidence: 0.88
-pattern_rule_51 :- pressure(-1), efficiency_index(0.29).
-% Confidence: 0.86
-pattern_rule_52 :- pressure(-1), efficiency_index(0.65).
+pattern_rule_50 :- pressure(-1), efficiency_index(-1.62).
 % Confidence: 1.00
-pattern_rule_53 :- pressure(-1), efficiency_index(-1.56).
-% Confidence: 1.00
-pattern_rule_54 :- pressure(-1), efficiency_index(-1.56).
-% Confidence: 1.00
-pattern_rule_55 :- pressure(-1), efficiency_index(-1.55).
-% Confidence: 1.00
-pattern_rule_56 :- pressure(-1), efficiency_index(-1.48).
-% Confidence: 1.00
-pattern_rule_57 :- pressure(-1), efficiency_index(-1.47).
-% Confidence: 1.00
-pattern_rule_58 :- pressure(-1), efficiency_index(-1.49).
-% Confidence: 1.00
-pattern_rule_59 :- pressure(-1), efficiency_index(-1.44).
-% Confidence: 1.00
-pattern_rule_60 :- pressure(-1), efficiency_index(-1.58).
-% Confidence: 1.00
-pattern_rule_61 :- pressure(-1), efficiency_index(-1.50).
-% Confidence: 1.00
-pattern_rule_62 :- pressure(-1), efficiency_index(-1.51).
-% Confidence: 1.00
-pattern_rule_63 :- pressure(-1), efficiency_index(-1.59).
-% Confidence: 1.00
-pattern_rule_64 :- pressure(-1), efficiency_index(-1.53).
-% Confidence: 1.00
-pattern_rule_65 :- pressure(-1), efficiency_index(-1.61).
-% Confidence: 1.00
-pattern_rule_66 :- pressure(-1), efficiency_index(-1.66).
-% Confidence: 1.00
-pattern_rule_67 :- pressure(-1), efficiency_index(-1.53).
-% Confidence: 1.00
-pattern_rule_68 :- pressure(-1), efficiency_index(-1.76).
-% Confidence: 1.00
-pattern_rule_69 :- pressure(-1), efficiency_index(-1.62).
-% Confidence: 1.00
-pattern_rule_70 :- pressure(-1), efficiency_index(-1.66).
-% Confidence: 1.00
-pattern_rule_71 :- pressure(-1), efficiency_index(-1.64).
-% Confidence: 1.00
-pattern_rule_72 :- pressure(-1), efficiency_index(-1.61).
-% Confidence: 1.00
-pattern_rule_73 :- pressure(-1), efficiency_index(-1.77).
-% Confidence: 1.00
-pattern_rule_74 :- pressure(-1), efficiency_index(-1.62).
-% Confidence: 1.00
-pattern_rule_75 :- pressure(-1), efficiency_index(-1.54).
-% Confidence: 1.00
-pattern_rule_76 :- pressure(-1), efficiency_index(-1.48).
-% Confidence: 1.00
-pattern_rule_77 :- pressure(-1), efficiency_index(-1.50).
-% Confidence: 1.00
-pattern_rule_78 :- pressure(-1), efficiency_index(-1.57).
-% Confidence: 1.00
-pattern_rule_79 :- pressure(-1), efficiency_index(-1.58).
-% Confidence: 1.00
-pattern_rule_80 :- pressure(-1), efficiency_index(-1.51).
-% Confidence: 1.00
-pattern_rule_81 :- pressure(-1), efficiency_index(-1.49).
-% Confidence: 1.00
-pattern_rule_82 :- pressure(-1), efficiency_index(-1.55).
-% Confidence: 1.00
-pattern_rule_83 :- pressure(-1), efficiency_index(-1.46).
-% Confidence: 1.00
-pattern_rule_84 :- pressure(-1), efficiency_index(-1.50).
-% Confidence: 1.00
-pattern_rule_85 :- pressure(-1), efficiency_index(-1.50).
-% Confidence: 1.00
-pattern_rule_86 :- pressure(-1), efficiency_index(-1.56).
-% Confidence: 1.00
-pattern_rule_87 :- pressure(-1), efficiency_index(-1.45).
-% Confidence: 1.00
-pattern_rule_88 :- pressure(-1), efficiency_index(-1.48).
-% Confidence: 1.00
-pattern_rule_89 :- pressure(-1), efficiency_index(-1.64).
-% Confidence: 1.00
-pattern_rule_90 :- pressure(-1), efficiency_index(-1.52).
-% Confidence: 1.00
-pattern_rule_91 :- pressure(-1), efficiency_index(-1.52).
-% Confidence: 1.00
-pattern_rule_92 :- pressure(-1), efficiency_index(-1.69).
-% Confidence: 1.00
-pattern_rule_93 :- pressure(-1), efficiency_index(-1.69).
-% Confidence: 1.00
-pattern_rule_94 :- pressure(-1), efficiency_index(-1.72).
-% Confidence: 1.00
-pattern_rule_95 :- pressure(-1), efficiency_index(-1.74).
-% Confidence: 1.00
-pattern_rule_96 :- pressure(-1), efficiency_index(-1.66).
-% Confidence: 1.00
-pattern_rule_97 :- pressure(-1), efficiency_index(-1.73).
-% Confidence: 1.00
-pattern_rule_98 :- pressure(-1), efficiency_index(-1.63).
-% Confidence: 1.00
-pattern_rule_99 :- pressure(-1), efficiency_index(-1.65).
-% Confidence: 1.00
-pattern_rule_100 :- pressure(-1), efficiency_index(-1.60).
+pattern_rule_51 :- pressure(-1), efficiency_index(-1.74).
 % Confidence: 0.99
-pattern_rule_101 :- pressure(1), efficiency_index(-0.13).
-% Confidence: 0.91
-pattern_rule_102 :- pressure(-1), efficiency_index(0.65).
-% Confidence: 0.85
-pattern_rule_103 :- pressure(-1), efficiency_index(0.53).
-% Confidence: 0.83
-pattern_rule_104 :- pressure(-1), efficiency_index(0.54).
+pattern_rule_52 :- pressure(-1), efficiency_index(0.29).
+% Confidence: 0.99
+pattern_rule_53 :- pressure(-1), efficiency_index(0.65).
+% Confidence: 0.98
+pattern_rule_54 :- pressure(-1), efficiency_index(0.55).
 % Confidence: 1.00
-pattern_rule_105 :- pressure(-1), efficiency_index(-1.58).
+pattern_rule_55 :- pressure(-1), efficiency_index(-1.56).
 % Confidence: 1.00
-pattern_rule_106 :- pressure(-1), efficiency_index(-1.69).
+pattern_rule_56 :- pressure(-1), efficiency_index(-1.56).
 % Confidence: 1.00
-pattern_rule_107 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_57 :- pressure(-1), efficiency_index(-1.55).
 % Confidence: 1.00
-pattern_rule_108 :- pressure(-1), efficiency_index(-1.59).
+pattern_rule_58 :- pressure(-1), efficiency_index(-1.48).
 % Confidence: 1.00
-pattern_rule_109 :- pressure(-1), efficiency_index(-1.56).
+pattern_rule_59 :- pressure(-1), efficiency_index(-1.47).
 % Confidence: 1.00
-pattern_rule_110 :- pressure(-1), efficiency_index(-1.45).
+pattern_rule_60 :- pressure(-1), efficiency_index(-1.49).
 % Confidence: 1.00
-pattern_rule_111 :- pressure(-1), efficiency_index(-1.52).
+pattern_rule_61 :- pressure(-1), efficiency_index(-1.44).
 % Confidence: 1.00
-pattern_rule_112 :- pressure(-1), efficiency_index(-1.44).
+pattern_rule_62 :- pressure(-1), efficiency_index(-1.58).
 % Confidence: 1.00
-pattern_rule_113 :- pressure(-1), efficiency_index(-1.61).
+pattern_rule_63 :- pressure(-1), efficiency_index(-1.50).
 % Confidence: 1.00
-pattern_rule_114 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_64 :- pressure(-1), efficiency_index(-1.51).
 % Confidence: 1.00
-pattern_rule_115 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_65 :- pressure(-1), efficiency_index(-1.59).
 % Confidence: 1.00
-pattern_rule_116 :- pressure(-1), efficiency_index(-1.55).
+pattern_rule_66 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_117 :- pressure(-1), efficiency_index(-1.65).
+pattern_rule_67 :- pressure(-1), efficiency_index(-1.61).
 % Confidence: 1.00
-pattern_rule_118 :- pressure(-1), efficiency_index(-1.69).
+pattern_rule_68 :- pressure(-1), efficiency_index(-1.66).
 % Confidence: 1.00
-pattern_rule_119 :- pressure(-1), efficiency_index(-1.67).
+pattern_rule_69 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_120 :- pressure(-1), efficiency_index(-1.78).
+pattern_rule_70 :- pressure(-1), efficiency_index(-1.76).
 % Confidence: 1.00
-pattern_rule_121 :- pressure(-1), efficiency_index(-1.65).
+pattern_rule_71 :- pressure(-1), efficiency_index(-1.62).
 % Confidence: 1.00
-pattern_rule_122 :- pressure(-1), efficiency_index(-1.67).
+pattern_rule_72 :- pressure(-1), efficiency_index(-1.66).
+% Confidence: 1.00
+pattern_rule_73 :- pressure(-1), efficiency_index(-1.64).
+% Confidence: 1.00
+pattern_rule_74 :- pressure(-1), efficiency_index(-1.61).
+% Confidence: 1.00
+pattern_rule_75 :- pressure(-1), efficiency_index(-1.77).
+% Confidence: 1.00
+pattern_rule_76 :- pressure(-1), efficiency_index(-1.62).
+% Confidence: 1.00
+pattern_rule_77 :- pressure(-1), efficiency_index(-1.54).
+% Confidence: 1.00
+pattern_rule_78 :- pressure(-1), efficiency_index(-1.48).
+% Confidence: 1.00
+pattern_rule_79 :- pressure(-1), efficiency_index(-1.50).
+% Confidence: 1.00
+pattern_rule_80 :- pressure(-1), efficiency_index(-1.57).
+% Confidence: 1.00
+pattern_rule_81 :- pressure(-1), efficiency_index(-1.58).
+% Confidence: 1.00
+pattern_rule_82 :- pressure(-1), efficiency_index(-1.51).
+% Confidence: 1.00
+pattern_rule_83 :- pressure(-1), efficiency_index(-1.49).
+% Confidence: 1.00
+pattern_rule_84 :- pressure(-1), efficiency_index(-1.55).
+% Confidence: 1.00
+pattern_rule_85 :- pressure(-1), efficiency_index(-1.46).
+% Confidence: 1.00
+pattern_rule_86 :- pressure(-1), efficiency_index(-1.50).
+% Confidence: 1.00
+pattern_rule_87 :- pressure(-1), efficiency_index(-1.50).
+% Confidence: 1.00
+pattern_rule_88 :- pressure(-1), efficiency_index(-1.56).
+% Confidence: 1.00
+pattern_rule_89 :- pressure(-1), efficiency_index(-1.45).
+% Confidence: 1.00
+pattern_rule_90 :- pressure(-1), efficiency_index(-1.48).
+% Confidence: 1.00
+pattern_rule_91 :- pressure(-1), efficiency_index(-1.64).
+% Confidence: 1.00
+pattern_rule_92 :- pressure(-1), efficiency_index(-1.52).
+% Confidence: 1.00
+pattern_rule_93 :- pressure(-1), efficiency_index(-1.52).
+% Confidence: 1.00
+pattern_rule_94 :- pressure(-1), efficiency_index(-1.69).
+% Confidence: 1.00
+pattern_rule_95 :- pressure(-1), efficiency_index(-1.69).
+% Confidence: 1.00
+pattern_rule_96 :- pressure(-1), efficiency_index(-1.72).
+% Confidence: 1.00
+pattern_rule_97 :- pressure(-1), efficiency_index(-1.74).
+% Confidence: 1.00
+pattern_rule_98 :- pressure(-1), efficiency_index(-1.66).
+% Confidence: 1.00
+pattern_rule_99 :- pressure(-1), efficiency_index(-1.73).
+% Confidence: 1.00
+pattern_rule_100 :- pressure(-1), efficiency_index(-1.63).
+% Confidence: 1.00
+pattern_rule_101 :- pressure(-1), efficiency_index(-1.65).
+% Confidence: 1.00
+pattern_rule_102 :- pressure(-1), efficiency_index(-1.60).
+% Confidence: 0.99
+pattern_rule_103 :- pressure(1), efficiency_index(-0.13).
+% Confidence: 0.98
+pattern_rule_104 :- pressure(-1), efficiency_index(0.65).
+% Confidence: 0.98
+pattern_rule_105 :- pressure(-1), efficiency_index(0.53).
+% Confidence: 1.00
+pattern_rule_106 :- pressure(-1), efficiency_index(-1.58).
+% Confidence: 1.00
+pattern_rule_107 :- pressure(-1), efficiency_index(-1.69).
+% Confidence: 1.00
+pattern_rule_108 :- pressure(-1), efficiency_index(-1.62).
+% Confidence: 1.00
+pattern_rule_109 :- pressure(-1), efficiency_index(-1.59).
+% Confidence: 1.00
+pattern_rule_110 :- pressure(-1), efficiency_index(-1.56).
+% Confidence: 1.00
+pattern_rule_111 :- pressure(-1), efficiency_index(-1.45).
+% Confidence: 1.00
+pattern_rule_112 :- pressure(-1), efficiency_index(-1.52).
+% Confidence: 1.00
+pattern_rule_113 :- pressure(-1), efficiency_index(-1.44).
+% Confidence: 1.00
+pattern_rule_114 :- pressure(-1), efficiency_index(-1.61).
+% Confidence: 1.00
+pattern_rule_115 :- pressure(-1), efficiency_index(-1.57).
+% Confidence: 1.00
+pattern_rule_116 :- pressure(-1), efficiency_index(-1.62).
+% Confidence: 1.00
+pattern_rule_117 :- pressure(-1), efficiency_index(-1.55).
+% Confidence: 1.00
+pattern_rule_118 :- pressure(-1), efficiency_index(-1.65).
+% Confidence: 1.00
+pattern_rule_119 :- pressure(-1), efficiency_index(-1.69).
+% Confidence: 1.00
+pattern_rule_120 :- pressure(-1), efficiency_index(-1.67).
+% Confidence: 1.00
+pattern_rule_121 :- pressure(-1), efficiency_index(-1.78).
+% Confidence: 1.00
+pattern_rule_122 :- pressure(-1), efficiency_index(-1.65).
 % Confidence: 1.00
 pattern_rule_123 :- pressure(-1), efficiency_index(-1.67).
 % Confidence: 1.00
-pattern_rule_124 :- pressure(-1), efficiency_index(-1.50).
+pattern_rule_124 :- pressure(-1), efficiency_index(-1.67).
 % Confidence: 1.00
-pattern_rule_125 :- pressure(-1), efficiency_index(-1.65).
+pattern_rule_125 :- pressure(-1), efficiency_index(-1.50).
 % Confidence: 1.00
-pattern_rule_126 :- pressure(-1), efficiency_index(-1.66).
+pattern_rule_126 :- pressure(-1), efficiency_index(-1.65).
 % Confidence: 1.00
-pattern_rule_127 :- pressure(-1), efficiency_index(-1.61).
+pattern_rule_127 :- pressure(-1), efficiency_index(-1.66).
 % Confidence: 1.00
-pattern_rule_128 :- pressure(-1), efficiency_index(-1.68).
+pattern_rule_128 :- pressure(-1), efficiency_index(-1.61).
 % Confidence: 1.00
-pattern_rule_129 :- pressure(-1), efficiency_index(-1.58).
+pattern_rule_129 :- pressure(-1), efficiency_index(-1.68).
 % Confidence: 1.00
-pattern_rule_130 :- pressure(-1), efficiency_index(-1.48).
+pattern_rule_130 :- pressure(-1), efficiency_index(-1.58).
 % Confidence: 1.00
-pattern_rule_131 :- pressure(-1), efficiency_index(-1.50).
+pattern_rule_131 :- pressure(-1), efficiency_index(-1.48).
 % Confidence: 1.00
-pattern_rule_132 :- pressure(-1), efficiency_index(-1.51).
+pattern_rule_132 :- pressure(-1), efficiency_index(-1.50).
 % Confidence: 1.00
-pattern_rule_133 :- pressure(-1), efficiency_index(-1.44).
+pattern_rule_133 :- pressure(-1), efficiency_index(-1.51).
 % Confidence: 1.00
-pattern_rule_134 :- pressure(-1), efficiency_index(-1.38).
+pattern_rule_134 :- pressure(-1), efficiency_index(-1.44).
 % Confidence: 1.00
-pattern_rule_135 :- pressure(-1), efficiency_index(-1.55).
+pattern_rule_135 :- pressure(-1), efficiency_index(-1.38).
 % Confidence: 1.00
-pattern_rule_136 :- pressure(-1), efficiency_index(-1.44).
+pattern_rule_136 :- pressure(-1), efficiency_index(-1.55).
 % Confidence: 1.00
-pattern_rule_137 :- pressure(-1), efficiency_index(-1.46).
+pattern_rule_137 :- pressure(-1), efficiency_index(-1.44).
 % Confidence: 1.00
-pattern_rule_138 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_138 :- pressure(-1), efficiency_index(-1.46).
 % Confidence: 1.00
-pattern_rule_139 :- pressure(-1), efficiency_index(-1.62).
+pattern_rule_139 :- pressure(-1), efficiency_index(-1.57).
 % Confidence: 1.00
-pattern_rule_140 :- pressure(-1), efficiency_index(-1.58).
+pattern_rule_140 :- pressure(-1), efficiency_index(-1.62).
 % Confidence: 1.00
-pattern_rule_141 :- pressure(-1), efficiency_index(-1.57).
+pattern_rule_141 :- pressure(-1), efficiency_index(-1.58).
 % Confidence: 1.00
-pattern_rule_142 :- pressure(-1), efficiency_index(-1.56).
+pattern_rule_142 :- pressure(-1), efficiency_index(-1.57).
 % Confidence: 1.00
-pattern_rule_143 :- pressure(-1), efficiency_index(-1.73).
+pattern_rule_143 :- pressure(-1), efficiency_index(-1.56).
 % Confidence: 1.00
 pattern_rule_144 :- pressure(-1), efficiency_index(-1.73).
 % Confidence: 1.00
-pattern_rule_145 :- pressure(-1), efficiency_index(-1.53).
+pattern_rule_145 :- pressure(-1), efficiency_index(-1.73).
 % Confidence: 1.00
-pattern_rule_146 :- pressure(-1), efficiency_index(-1.81).
+pattern_rule_146 :- pressure(-1), efficiency_index(-1.53).
 % Confidence: 1.00
-pattern_rule_147 :- pressure(-1), efficiency_index(-1.69).
+pattern_rule_147 :- pressure(-1), efficiency_index(-1.81).
 % Confidence: 1.00
-pattern_rule_148 :- pressure(-1), efficiency_index(-1.70).
+pattern_rule_148 :- pressure(-1), efficiency_index(-1.69).
 % Confidence: 1.00
-pattern_rule_149 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_149 :- pressure(-1), efficiency_index(-1.70).
 % Confidence: 1.00
-pattern_rule_150 :- pressure(-1), efficiency_index(-1.64).
+pattern_rule_150 :- pressure(-1), efficiency_index(-1.71).
 % Confidence: 1.00
-pattern_rule_151 :- pressure(-1), efficiency_index(-1.63).
+pattern_rule_151 :- pressure(-1), efficiency_index(-1.64).
 % Confidence: 1.00
-pattern_rule_152 :- pressure(-1), efficiency_index(-1.71).
+pattern_rule_152 :- pressure(-1), efficiency_index(-1.63).
+% Confidence: 1.00
+pattern_rule_153 :- pressure(-1), efficiency_index(-1.71).
+
+
+% New Neural-Extracted Rules
+neural_rule_1 :- vibration_change(52), maintenance_needed(9).  % Confidence: 0.97, Extracted: 2025-03-31T04:14:25
+

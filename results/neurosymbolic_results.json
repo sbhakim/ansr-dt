@@ -1,9 +1,13 @@
 {
-  "neural_rules": [],
-  "rule_confidence": {},
+  "neural_rules": [
+    "neural_rule_1 :- vibration_change(52), maintenance_needed(9)."
+  ],
+  "rule_confidence": {
+    "neural_rule_1 :- vibration_change(52), maintenance_needed(9).": 0.972629189491272
+  },
   "symbolic_insights": [],
-  "neural_confidence": 0.3376101851463318,
+  "neural_confidence": 0.972629189491272,
   "control_parameters": {},
   "state_transitions": [],
-  "timestamp": "2025-01-14T20:23:14"
+  "timestamp": "2025-03-31T04:14:28"
 }

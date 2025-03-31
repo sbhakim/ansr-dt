@@ -1,7 +1,7 @@
 # configs/plot_config.yaml
 
 font:
-  family: "Times New Roman"
+  family: "DejaVu Sans"
   size: 10  # IEEE typically uses 10pt font
 
 figure:

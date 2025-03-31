@@ -1,38 +1,38 @@
 {
   "metrics": {
-    "classification_report": "              precision    recall  f1-score   support\n\n           0       0.99      1.00      1.00       343\n           1       1.00      0.98      0.99       156\n\n    accuracy                           0.99       499\n   macro avg       1.00      0.99      0.99       499\nweighted avg       0.99      0.99      0.99       499\n",
+    "classification_report": "              precision    recall  f1-score   support\n\n           0       1.00      1.00      1.00       343\n           1       0.99      0.99      0.99       156\n\n    accuracy                           1.00       499\n   macro avg       1.00      1.00      1.00       499\nweighted avg       1.00      1.00      1.00       499\n",
     "confusion_matrix": [
       [
-        343,
-        0
+        342,
+        1
       ],
       [
-        3,
-        153
+        1,
+        155
       ]
     ],
-    "roc_auc": 0.999962622411602,
-    "avg_precision": 0.9999188575137941,
-    "pr_auc": 0.9999185990982329
+    "roc_auc": 0.999925244823204,
+    "avg_precision": 0.9998364096335794,
+    "pr_auc": 0.9998358843908284
   },
   "plot_paths": {
-    "confusion_matrix": "/media/safayat/02588129-5cea-4448-8129-bc3dfc996f4a/ansr-dt/results/visualization/visualization/confusion_matrix.png",
-    "roc_curve": "/media/safayat/02588129-5cea-4448-8129-bc3dfc996f4a/ansr-dt/results/visualization/visualization/roc_curve.png",
-    "precision_recall": "/media/safayat/02588129-5cea-4448-8129-bc3dfc996f4a/ansr-dt/results/visualization/visualization/precision_recall_curve.png",
-    "feature_importance": "/media/safayat/02588129-5cea-4448-8129-bc3dfc996f4a/ansr-dt/results/visualization/visualization/model_visualization/feature_importance.png"
+    "confusion_matrix": "/media/safayat/second_ssd/ANSR-DT/ansr-dt/results/visualization/visualization/confusion_matrix.png",
+    "roc_curve": "/media/safayat/second_ssd/ANSR-DT/ansr-dt/results/visualization/visualization/roc_curve.png",
+    "precision_recall": "/media/safayat/second_ssd/ANSR-DT/ansr-dt/results/visualization/visualization/precision_recall_curve.png",
+    "feature_importance": "/media/safayat/second_ssd/ANSR-DT/ansr-dt/results/visualization/visualization/model_visualization/feature_importance.png"
   },
   "feature_importance": {
-    "temperature": 0.04814549535512924,
-    "vibration": 0.01811263896524906,
-    "pressure": 0.15305499732494354,
-    "operational_hours": 0.06825162470340729,
-    "efficiency_index": 0.05955996364355087,
-    "system_state": 0.08105912804603577,
-    "performance_score": 0.05295335128903389
+    "temperature": 0.006854045204818249,
+    "vibration": 0.003523334162309766,
+    "pressure": 0.016462795436382294,
+    "operational_hours": 0.009020528756082058,
+    "efficiency_index": 0.008780082687735558,
+    "system_state": 0.003973966930061579,
+    "performance_score": 0.010601972229778767
   },
   "symbolic_insights": {
     "total_insights": 499,
-    "insights_path": "/media/safayat/02588129-5cea-4448-8129-bc3dfc996f4a/ansr-dt/results/visualization/metrics/symbolic_insights.json"
+    "insights_path": "/media/safayat/second_ssd/ANSR-DT/ansr-dt/results/visualization/metrics/symbolic_insights.json"
   },
   "pattern_metrics": {
     "rule_accuracy": 0.0,
@@ -59,7 +59,7 @@
         "performance": 0.6741586751723382,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 1,
@@ -80,7 +80,7 @@
         "performance": 0.531883244482514,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 2,
@@ -101,7 +101,7 @@
         "performance": 0.5779959686688224,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 3,
@@ -122,7 +122,7 @@
         "performance": 0.5998226186121691,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 4,
@@ -142,7 +142,7 @@
         "performance": 0.7357330499276971,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 5,
@@ -162,7 +162,7 @@
         "performance": 0.6599541814026252,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 6,
@@ -182,7 +182,7 @@
         "performance": 0.8210093323386402,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 7,
@@ -202,7 +202,7 @@
         "performance": 0.6661394469335359,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 8,
@@ -222,7 +222,7 @@
         "performance": 0.7582241608431757,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 9,
@@ -243,7 +243,7 @@
         "performance": 0.5510554543544818,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 10,
@@ -263,7 +263,7 @@
         "performance": 0.7552649171256574,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 11,
@@ -283,7 +283,7 @@
         "performance": 0.6655077548083268,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 12,
@@ -303,7 +303,7 @@
         "performance": 0.7058911906385833,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 13,
@@ -323,7 +323,7 @@
         "performance": 0.7179158000941818,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 14,
@@ -343,7 +343,7 @@
         "performance": 0.7405915187745524,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 15,
@@ -364,7 +364,7 @@
         "performance": 0.5611140408679438,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 16,
@@ -384,7 +384,7 @@
         "performance": 0.7382178624467289,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 17,
@@ -405,7 +405,7 @@
         "performance": 0.615698715626396,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 18,
@@ -426,7 +426,7 @@
         "performance": 0.5941146553753842,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 19,
@@ -447,7 +447,7 @@
         "performance": 0.47393465205346363,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 20,
@@ -468,7 +468,7 @@
         "performance": 0.6074352286487611,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 21,
@@ -489,7 +489,7 @@
         "performance": 0.5716253519875862,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 22,
@@ -510,7 +510,7 @@
         "performance": 0.528607935924472,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 23,
@@ -530,7 +530,7 @@
         "performance": 0.6248376732690791,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 24,
@@ -551,7 +551,7 @@
         "performance": 0.59401879113299,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 25,
@@ -571,7 +571,7 @@
         "performance": 0.6243534187479108,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 26,
@@ -592,7 +592,7 @@
         "performance": 0.594109358943394,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 27,
@@ -612,7 +612,7 @@
         "performance": 0.64459348250055,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 28,
@@ -632,7 +632,7 @@
         "performance": 0.7725320002163566,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 29,
@@ -652,7 +652,7 @@
         "performance": 0.7337485558760446,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 30,
@@ -672,7 +672,7 @@
         "performance": 0.6732095197777433,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 31,
@@ -692,7 +692,7 @@
         "performance": 0.6265198860328678,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 32,
@@ -712,7 +712,7 @@
         "performance": 0.74485257396102,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 33,
@@ -732,7 +732,7 @@
         "performance": 0.7687516909323826,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 34,
@@ -752,7 +752,7 @@
         "performance": 0.7196920898232454,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 35,
@@ -772,7 +772,7 @@
         "performance": 0.6815860415934573,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 36,
@@ -793,7 +793,7 @@
         "performance": 0.5522189510560904,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 37,
@@ -813,7 +813,7 @@
         "performance": 0.6987088417848402,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 38,
@@ -833,7 +833,7 @@
         "performance": 0.6833306906927504,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 39,
@@ -853,7 +853,7 @@
         "performance": 0.6621146428761864,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 40,
@@ -874,7 +874,7 @@
         "performance": 0.539694283875795,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 41,
@@ -894,7 +894,7 @@
         "performance": 0.7040498957051471,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 42,
@@ -914,7 +914,7 @@
         "performance": 0.6540025947669214,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 43,
@@ -934,7 +934,7 @@
         "performance": 0.6730046980569698,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 44,
@@ -954,7 +954,7 @@
         "performance": 0.6523925748618005,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 45,
@@ -974,7 +974,7 @@
         "performance": 0.7100846341471894,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 46,
@@ -995,7 +995,7 @@
         "performance": 0.6084082841022838,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 47,
@@ -1016,7 +1016,7 @@
         "performance": 0.5596301035892305,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 48,
@@ -1037,7 +1037,7 @@
         "performance": 0.5104114934331836,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 49,
@@ -1057,7 +1057,7 @@
         "performance": 0.6704191851231636,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 50,
@@ -1077,7 +1077,7 @@
         "performance": 0.744000802718656,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 51,
@@ -1097,7 +1097,7 @@
         "performance": 0.6987317381417985,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 52,
@@ -1117,7 +1117,7 @@
         "performance": 0.789888927614606,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 53,
@@ -1137,7 +1137,7 @@
         "performance": 0.667122959446368,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 54,
@@ -1157,7 +1157,7 @@
         "performance": 0.7268273565959076,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 55,
@@ -1177,7 +1177,7 @@
         "performance": 0.6960889982374792,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 56,
@@ -1197,7 +1197,7 @@
         "performance": 0.6521389512253475,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 57,
@@ -1217,7 +1217,7 @@
         "performance": 0.6923299528662631,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 58,
@@ -1237,7 +1237,7 @@
         "performance": 0.6408950790332596,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 59,
@@ -1257,7 +1257,7 @@
         "performance": 0.7434015759717544,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 60,
@@ -1278,7 +1278,7 @@
         "performance": 0.617470905196525,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 61,
@@ -1298,7 +1298,7 @@
         "performance": 0.736500814850511,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 62,
@@ -1318,7 +1318,7 @@
         "performance": 0.7795218101205389,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 63,
@@ -1338,7 +1338,7 @@
         "performance": 0.6748205699137744,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 64,
@@ -1359,7 +1359,7 @@
         "performance": 0.5262962785430595,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 65,
@@ -1379,7 +1379,7 @@
         "performance": 0.6546194007914162,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 66,
@@ -1399,7 +1399,7 @@
         "performance": 0.7136541114740548,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 67,
@@ -1420,7 +1420,7 @@
         "performance": 0.4909761927288798,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 68,
@@ -1441,7 +1441,7 @@
         "performance": 0.595087487180208,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 69,
@@ -1462,7 +1462,7 @@
         "performance": 0.612213494548754,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 70,
@@ -1483,7 +1483,7 @@
         "performance": 0.5864721484089405,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 71,
@@ -1504,7 +1504,7 @@
         "performance": 0.4769517705824881,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 72,
@@ -1524,7 +1524,7 @@
         "performance": 0.6799529491035117,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 73,
@@ -1545,7 +1545,7 @@
         "performance": 0.5991152300147649,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 74,
@@ -1565,7 +1565,7 @@
         "performance": 0.7502364511616401,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 75,
@@ -1586,7 +1586,7 @@
         "performance": 0.5297087161999757,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 76,
@@ -1606,7 +1606,7 @@
         "performance": 0.6492876297744383,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 77,
@@ -1626,7 +1626,7 @@
         "performance": 0.6338973086907094,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 78,
@@ -1647,7 +1647,7 @@
         "performance": 0.5635310512183523,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 79,
@@ -1667,7 +1667,7 @@
         "performance": 0.7362380684164956,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 80,
@@ -1687,7 +1687,7 @@
         "performance": 0.754070982111761,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 81,
@@ -1708,7 +1708,7 @@
         "performance": 0.5052168046211726,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 82,
@@ -1728,7 +1728,7 @@
         "performance": 0.7048542158420293,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 83,
@@ -1748,7 +1748,7 @@
         "performance": 0.7018215325179661,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 84,
@@ -1768,7 +1768,7 @@
         "performance": 0.7773588798991138,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 85,
@@ -1789,7 +1789,7 @@
         "performance": 0.6032173312011434,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 86,
@@ -1810,7 +1810,7 @@
         "performance": 0.5669383794390451,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 87,
@@ -1830,7 +1830,7 @@
         "performance": 0.7423184346725916,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 88,
@@ -1850,7 +1850,7 @@
         "performance": 0.6481211029604249,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 89,
@@ -1870,7 +1870,7 @@
         "performance": 0.7141836068230139,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 90,
@@ -1890,7 +1890,7 @@
         "performance": 0.6577883013968998,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 91,
@@ -1911,7 +1911,7 @@
         "performance": 0.4719125911386637,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 92,
@@ -1931,7 +1931,7 @@
         "performance": 0.6473595462231901,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 93,
@@ -1951,7 +1951,7 @@
         "performance": 0.7260719669966128,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 94,
@@ -1972,7 +1972,7 @@
         "performance": 0.5315279277935054,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 95,
@@ -1992,7 +1992,7 @@
         "performance": 0.6768563448874837,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 96,
@@ -2012,7 +2012,7 @@
         "performance": 0.6224227376062922,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 97,
@@ -2032,7 +2032,7 @@
         "performance": 0.7117874932720286,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 98,
@@ -2052,7 +2052,7 @@
         "performance": 0.7680259277311671,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 99,
@@ -2072,7 +2072,7 @@
         "performance": 0.6366816232017729,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 100,
@@ -2092,7 +2092,7 @@
         "performance": 0.7434790669366714,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 101,
@@ -2112,7 +2112,7 @@
         "performance": 0.7623222101350545,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 102,
@@ -2132,7 +2132,7 @@
         "performance": 0.7055145786256253,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 103,
@@ -2152,7 +2152,7 @@
         "performance": 0.7834737603501274,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 104,
@@ -2172,7 +2172,7 @@
         "performance": 0.7689098464015492,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 105,
@@ -2192,7 +2192,7 @@
         "performance": 0.6635552520814405,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 106,
@@ -2212,7 +2212,7 @@
         "performance": 0.6500005954395279,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 107,
@@ -2232,7 +2232,7 @@
         "performance": 0.7673098497221315,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 108,
@@ -2253,7 +2253,7 @@
         "performance": 0.5506748422844864,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 109,
@@ -2273,7 +2273,7 @@
         "performance": 0.7477470074498134,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 110,
@@ -2293,7 +2293,7 @@
         "performance": 0.7089914941097359,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 111,
@@ -2314,7 +2314,7 @@
         "performance": -1.5869960996003158,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 112,
@@ -2335,7 +2335,7 @@
         "performance": -1.5833359135244387,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 113,
@@ -2356,7 +2356,7 @@
         "performance": -1.576122715428681,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 114,
@@ -2377,7 +2377,7 @@
         "performance": -1.5402627033656662,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 115,
@@ -2398,7 +2398,7 @@
         "performance": -1.5805436509714703,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 116,
@@ -2419,7 +2419,7 @@
         "performance": -1.5163450206637075,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 117,
@@ -2440,7 +2440,7 @@
         "performance": -1.6180301411595803,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 118,
@@ -2461,7 +2461,7 @@
         "performance": -1.5659406912015756,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 119,
@@ -2482,7 +2482,7 @@
         "performance": -1.5318386418602694,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 120,
@@ -2503,7 +2503,7 @@
         "performance": -1.5999184136770246,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 121,
@@ -2524,7 +2524,7 @@
         "performance": -1.5394228202462175,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 122,
@@ -2545,7 +2545,7 @@
         "performance": -1.6145305552884892,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 123,
@@ -2566,7 +2566,7 @@
         "performance": -1.528265656309483,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 124,
@@ -2587,7 +2587,7 @@
         "performance": -1.6635268240664078,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 125,
@@ -2608,7 +2608,7 @@
         "performance": -1.615519758607551,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 126,
@@ -2629,7 +2629,7 @@
         "performance": -1.657549545865088,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 127,
@@ -2650,7 +2650,7 @@
         "performance": -1.6290687558898878,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 128,
@@ -2671,7 +2671,7 @@
         "performance": -1.6283454133730788,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 129,
@@ -2692,7 +2692,7 @@
         "performance": -1.6597687938687988,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 130,
@@ -2713,7 +2713,7 @@
         "performance": -1.622400089442665,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 131,
@@ -2734,7 +2734,7 @@
         "performance": -1.6624723366142895,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 132,
@@ -2755,7 +2755,7 @@
         "performance": -1.644108321531434,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 133,
@@ -2776,7 +2776,7 @@
         "performance": -1.5831636795909272,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 134,
@@ -2797,7 +2797,7 @@
         "performance": -1.5752711813787117,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 135,
@@ -2818,7 +2818,7 @@
         "performance": -1.576552805615511,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 136,
@@ -2839,7 +2839,7 @@
         "performance": -1.559865481939776,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 137,
@@ -2860,7 +2860,7 @@
         "performance": -1.528223489096332,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 138,
@@ -2881,7 +2881,7 @@
         "performance": -1.5931858827231138,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 139,
@@ -2902,7 +2902,7 @@
         "performance": -1.5088980455824441,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 140,
@@ -2923,7 +2923,7 @@
         "performance": -1.5346216828322192,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 141,
@@ -2944,7 +2944,7 @@
         "performance": -1.5331991899629718,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 142,
@@ -2965,7 +2965,7 @@
         "performance": -1.5737836474006692,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 143,
@@ -2986,7 +2986,7 @@
         "performance": -1.5678644091415785,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 144,
@@ -3007,7 +3007,7 @@
         "performance": -1.5007397855135387,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 145,
@@ -3028,7 +3028,7 @@
         "performance": -1.5492755723806493,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 146,
@@ -3049,7 +3049,7 @@
         "performance": -1.566903601209595,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 147,
@@ -3070,7 +3070,7 @@
         "performance": -1.5890751407432395,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 148,
@@ -3091,7 +3091,7 @@
         "performance": -1.5661454677661468,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 149,
@@ -3112,7 +3112,7 @@
         "performance": -1.6663074657005348,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 150,
@@ -3133,7 +3133,7 @@
         "performance": -1.5886720459778125,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 151,
@@ -3154,7 +3154,7 @@
         "performance": -1.6438360426299743,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 152,
@@ -3175,7 +3175,7 @@
         "performance": -1.6549743165443864,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 153,
@@ -3196,7 +3196,7 @@
         "performance": -1.6402535671769878,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 154,
@@ -3217,7 +3217,7 @@
         "performance": -1.660253038977204,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 155,
@@ -3238,7 +3238,7 @@
         "performance": -1.6482056398432459,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 156,
@@ -3259,7 +3259,7 @@
         "performance": -1.6571486501558859,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 157,
@@ -3280,7 +3280,7 @@
         "performance": -1.6146463231597288,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 158,
@@ -3301,7 +3301,7 @@
         "performance": -1.6798271193604568,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 159,
@@ -3321,7 +3321,7 @@
         "performance": 0.6876508429801651,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 160,
@@ -3342,7 +3342,7 @@
         "performance": 0.6088954173320277,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 161,
@@ -3362,7 +3362,7 @@
         "performance": 0.7042286434661278,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 162,
@@ -3383,7 +3383,7 @@
         "performance": 0.49326678587543504,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 163,
@@ -3403,7 +3403,7 @@
         "performance": 0.6569656823972857,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 164,
@@ -3423,7 +3423,7 @@
         "performance": 0.6671548527486568,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 165,
@@ -3444,7 +3444,7 @@
         "performance": 0.46670955122971536,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 166,
@@ -3465,7 +3465,7 @@
         "performance": 0.32583546439097183,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 167,
@@ -3486,7 +3486,7 @@
         "performance": 0.6203011538542481,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 168,
@@ -3507,7 +3507,7 @@
         "performance": 0.40282662915771206,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 169,
@@ -3528,7 +3528,7 @@
         "performance": 0.5822103679690285,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 170,
@@ -3548,7 +3548,7 @@
         "performance": 0.6387492269494667,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 171,
@@ -3568,7 +3568,7 @@
         "performance": 0.7692956158667893,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 172,
@@ -3589,7 +3589,7 @@
         "performance": 0.6003695217945443,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 173,
@@ -3609,7 +3609,7 @@
         "performance": 0.7337300063463477,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 174,
@@ -3629,7 +3629,7 @@
         "performance": 0.73486345835779,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 175,
@@ -3650,7 +3650,7 @@
         "performance": 0.5745456167225843,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 176,
@@ -3670,7 +3670,7 @@
         "performance": 0.7080810167716984,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 177,
@@ -3690,7 +3690,7 @@
         "performance": 0.6477335727824318,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 178,
@@ -3711,7 +3711,7 @@
         "performance": 0.4604677224919867,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 179,
@@ -3732,7 +3732,7 @@
         "performance": 0.5438661973151813,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 180,
@@ -3752,7 +3752,7 @@
         "performance": 0.6484729421733159,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 181,
@@ -3772,7 +3772,7 @@
         "performance": 0.6580896373954926,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 182,
@@ -3793,7 +3793,7 @@
         "performance": 0.5963120254631529,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 183,
@@ -3813,7 +3813,7 @@
         "performance": 0.6477561696630556,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 184,
@@ -3833,7 +3833,7 @@
         "performance": 0.7131973918521483,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 185,
@@ -3854,7 +3854,7 @@
         "performance": 0.5487535579333509,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 186,
@@ -3874,7 +3874,7 @@
         "performance": 0.660806772410435,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 187,
@@ -3894,7 +3894,7 @@
         "performance": 0.6999260030079509,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 188,
@@ -3915,7 +3915,7 @@
         "performance": 0.4952067128427999,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 189,
@@ -3935,7 +3935,7 @@
         "performance": 0.7003173783019595,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 190,
@@ -3956,7 +3956,7 @@
         "performance": 0.43048726760902767,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 191,
@@ -3976,7 +3976,7 @@
         "performance": 0.6864195956463349,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 192,
@@ -3996,7 +3996,7 @@
         "performance": 0.7568927066555811,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 193,
@@ -4017,7 +4017,7 @@
         "performance": 0.5391909141002701,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 194,
@@ -4037,7 +4037,7 @@
         "performance": 0.7072320899237831,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 195,
@@ -4057,7 +4057,7 @@
         "performance": 0.7402299680278166,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 196,
@@ -4077,7 +4077,7 @@
         "performance": 0.7937089973238426,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 197,
@@ -4097,7 +4097,7 @@
         "performance": 0.6607809320955155,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 198,
@@ -4117,7 +4117,7 @@
         "performance": 0.6463546761913024,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 199,
@@ -4138,7 +4138,7 @@
         "performance": 0.5085519811963365,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 200,
@@ -4158,7 +4158,7 @@
         "performance": 0.7290859144295269,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 201,
@@ -4178,7 +4178,7 @@
         "performance": 0.6270275902696315,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 202,
@@ -4198,7 +4198,7 @@
         "performance": 0.6482801520137096,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 203,
@@ -4219,7 +4219,7 @@
         "performance": 0.5911210877304367,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 204,
@@ -4239,7 +4239,7 @@
         "performance": 0.7527935230523797,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 205,
@@ -4259,7 +4259,7 @@
         "performance": 0.6936038833820536,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 206,
@@ -4280,7 +4280,7 @@
         "performance": 0.6188414281067677,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 207,
@@ -4300,7 +4300,7 @@
         "performance": 0.7119025195205178,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 208,
@@ -4320,7 +4320,7 @@
         "performance": 0.6859144156678056,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 209,
@@ -4340,7 +4340,7 @@
         "performance": 0.6846107019112414,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 210,
@@ -4361,7 +4361,7 @@
         "performance": 0.6163755108657091,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 211,
@@ -4382,7 +4382,7 @@
         "performance": 0.5102001996258072,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 212,
@@ -4403,7 +4403,7 @@
         "performance": 0.4903584381505335,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 213,
@@ -4424,7 +4424,7 @@
         "performance": 0.527921683807263,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 214,
@@ -4444,7 +4444,7 @@
         "performance": 0.6227707788717501,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 215,
@@ -4465,7 +4465,7 @@
         "performance": 0.5476448093384914,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 216,
@@ -4486,7 +4486,7 @@
         "performance": 0.5107657401311592,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 217,
@@ -4506,7 +4506,7 @@
         "performance": 0.6656575697541955,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 218,
@@ -4527,7 +4527,7 @@
         "performance": 0.5673187526951798,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 219,
@@ -4548,7 +4548,7 @@
         "performance": 0.6123552073564,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 220,
@@ -4568,7 +4568,7 @@
         "performance": 0.7124773494365545,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 221,
@@ -4588,7 +4588,7 @@
         "performance": 0.6479082049057501,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 222,
@@ -4608,7 +4608,7 @@
         "performance": 0.6577602994720131,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 223,
@@ -4628,7 +4628,7 @@
         "performance": 0.6850908123521331,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 224,
@@ -4648,7 +4648,7 @@
         "performance": 0.7336182909743586,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 225,
@@ -4668,7 +4668,7 @@
         "performance": 0.6463499157771817,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 226,
@@ -4688,7 +4688,7 @@
         "performance": 0.6304862524961964,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 227,
@@ -4709,7 +4709,7 @@
         "performance": 0.5838569078120576,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 228,
@@ -4729,7 +4729,7 @@
         "performance": 0.7702690779934428,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 229,
@@ -4749,7 +4749,7 @@
         "performance": 0.708833414313324,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 230,
@@ -4769,7 +4769,7 @@
         "performance": 0.7622111531550526,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 231,
@@ -4790,7 +4790,7 @@
         "performance": 0.6187578189193673,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 232,
@@ -4810,7 +4810,7 @@
         "performance": 0.7494639039573491,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 233,
@@ -4830,7 +4830,7 @@
         "performance": 0.6706458196469771,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 234,
@@ -4851,7 +4851,7 @@
         "performance": 0.519099011631395,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 235,
@@ -4871,7 +4871,7 @@
         "performance": 0.6412728522719887,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 236,
@@ -4891,7 +4891,7 @@
         "performance": 0.6248016994434922,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 237,
@@ -4911,7 +4911,7 @@
         "performance": 0.63287565956531,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 238,
@@ -4932,7 +4932,7 @@
         "performance": 0.3925732426656494,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 239,
@@ -4952,7 +4952,7 @@
         "performance": 0.6578306094749352,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 240,
@@ -4973,7 +4973,7 @@
         "performance": 0.5282744620377747,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 241,
@@ -4994,7 +4994,7 @@
         "performance": 0.5496949404570428,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 242,
@@ -5014,7 +5014,7 @@
         "performance": 0.7478214760965268,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 243,
@@ -5034,7 +5034,7 @@
         "performance": 0.6952688733159648,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 244,
@@ -5054,7 +5054,7 @@
         "performance": 0.7550700325649505,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 245,
@@ -5075,7 +5075,7 @@
         "performance": 0.46948165140625314,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 246,
@@ -5095,7 +5095,7 @@
         "performance": 0.8152561502057739,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 247,
@@ -5115,7 +5115,7 @@
         "performance": 0.6427372864233298,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 248,
@@ -5135,7 +5135,7 @@
         "performance": 0.7677492459704085,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 249,
@@ -5156,7 +5156,7 @@
         "performance": 0.60869188821105,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 250,
@@ -5176,7 +5176,7 @@
         "performance": 0.7443129342635957,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 251,
@@ -5196,7 +5196,7 @@
         "performance": 0.7020208582122962,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 252,
@@ -5216,7 +5216,7 @@
         "performance": 0.6920353761662604,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 253,
@@ -5236,7 +5236,7 @@
         "performance": 0.6849770843716921,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 254,
@@ -5257,7 +5257,7 @@
         "performance": 0.6118740356539957,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 255,
@@ -5277,7 +5277,7 @@
         "performance": 0.6567771153331322,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 256,
@@ -5297,7 +5297,7 @@
         "performance": 0.7986855816360564,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 257,
@@ -5317,7 +5317,7 @@
         "performance": 0.6672280307068995,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 258,
@@ -5338,7 +5338,7 @@
         "performance": 0.5529227686724572,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 259,
@@ -5359,7 +5359,7 @@
         "performance": 0.5261234226190937,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 260,
@@ -5380,7 +5380,7 @@
         "performance": 0.5005609472287863,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 261,
@@ -5401,7 +5401,7 @@
         "performance": 0.5258051996527543,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 262,
@@ -5422,7 +5422,7 @@
         "performance": 0.593517788831795,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 263,
@@ -5443,7 +5443,7 @@
         "performance": 0.6166820647972259,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 264,
@@ -5463,7 +5463,7 @@
         "performance": 0.758831196943201,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 265,
@@ -5483,7 +5483,7 @@
         "performance": 0.701807552310453,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 266,
@@ -5503,7 +5503,7 @@
         "performance": 0.6479429002056123,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 267,
@@ -5523,7 +5523,7 @@
         "performance": 0.6693235678830661,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 268,
@@ -5543,7 +5543,7 @@
         "performance": 0.6499222360956478,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 269,
@@ -5563,7 +5563,7 @@
         "performance": 0.792808308296183,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 270,
@@ -5583,7 +5583,7 @@
         "performance": 0.6900729491566701,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 271,
@@ -5604,7 +5604,7 @@
         "performance": 0.6192676270485103,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 272,
@@ -5624,7 +5624,7 @@
         "performance": 0.6573026151634623,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 273,
@@ -5645,7 +5645,7 @@
         "performance": 0.5960066869934151,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 274,
@@ -5665,7 +5665,7 @@
         "performance": 0.7114401717704202,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 275,
@@ -5685,7 +5685,7 @@
         "performance": 0.7077384024000883,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 276,
@@ -5705,7 +5705,7 @@
         "performance": 0.7711504453332517,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 277,
@@ -5725,7 +5725,7 @@
         "performance": 0.7298683733212022,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 278,
@@ -5746,7 +5746,7 @@
         "performance": 0.5901285088092272,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 279,
@@ -5767,7 +5767,7 @@
         "performance": -1.582747700052064,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 280,
@@ -5788,7 +5788,7 @@
         "performance": -1.5828454686078004,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 281,
@@ -5809,7 +5809,7 @@
         "performance": -1.5798730643169652,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 282,
@@ -5830,7 +5830,7 @@
         "performance": -1.5426492193546855,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 283,
@@ -5851,7 +5851,7 @@
         "performance": -1.5376657264497813,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 284,
@@ -5872,7 +5872,7 @@
         "performance": -1.546003824510694,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 285,
@@ -5893,7 +5893,7 @@
         "performance": -1.5226076336078935,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 286,
@@ -5914,7 +5914,7 @@
         "performance": -1.59292790487887,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 287,
@@ -5935,7 +5935,7 @@
         "performance": -1.5549703093253655,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 288,
@@ -5956,7 +5956,7 @@
         "performance": -1.5592768657043943,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 289,
@@ -5977,7 +5977,7 @@
         "performance": -1.6015306864774665,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 290,
@@ -5998,7 +5998,7 @@
         "performance": -1.5677333052688456,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 291,
@@ -6019,7 +6019,7 @@
         "performance": -1.6118284518624493,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 292,
@@ -6040,7 +6040,7 @@
         "performance": -1.6364977950452873,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 293,
@@ -6061,7 +6061,7 @@
         "performance": -1.5691347351008917,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 294,
@@ -6082,7 +6082,7 @@
         "performance": -1.6901022366220217,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 295,
@@ -6103,7 +6103,7 @@
         "performance": -1.6156636406269107,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 296,
@@ -6124,7 +6124,7 @@
         "performance": -1.6360456582128833,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 297,
@@ -6145,7 +6145,7 @@
         "performance": -1.6248358446997722,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 298,
@@ -6166,7 +6166,7 @@
         "performance": -1.6083045160738705,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 299,
@@ -6187,7 +6187,7 @@
         "performance": -1.6909280549952403,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 300,
@@ -6208,7 +6208,7 @@
         "performance": -1.6125483491495465,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 301,
@@ -6229,7 +6229,7 @@
         "performance": -1.574379301545259,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 302,
@@ -6250,7 +6250,7 @@
         "performance": -1.5403190690691309,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 303,
@@ -6271,7 +6271,7 @@
         "performance": -1.554752847918609,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 304,
@@ -6292,7 +6292,7 @@
         "performance": -1.5875510324962983,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 305,
@@ -6313,7 +6313,7 @@
         "performance": -1.5915827568768859,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 306,
@@ -6334,7 +6334,7 @@
         "performance": -1.558368368078061,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 307,
@@ -6355,7 +6355,7 @@
         "performance": -1.549643784493911,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 308,
@@ -6376,7 +6376,7 @@
         "performance": -1.5789185991191463,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 309,
@@ -6397,7 +6397,7 @@
         "performance": -1.5319113171326424,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 310,
@@ -6418,7 +6418,7 @@
         "performance": -1.5540699759313956,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 311,
@@ -6439,7 +6439,7 @@
         "performance": -1.5535508119389891,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 312,
@@ -6460,7 +6460,7 @@
         "performance": -1.5827357875130261,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 313,
@@ -6481,7 +6481,7 @@
         "performance": -1.5248797660268867,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 314,
@@ -6502,7 +6502,7 @@
         "performance": -1.542125847795442,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 315,
@@ -6523,7 +6523,7 @@
         "performance": -1.627516753768895,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 316,
@@ -6544,7 +6544,7 @@
         "performance": -1.5605988928595422,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 317,
@@ -6565,7 +6565,7 @@
         "performance": -1.5627265101536683,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 318,
@@ -6586,7 +6586,7 @@
         "performance": -1.6522945085400669,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 319,
@@ -6607,7 +6607,7 @@
         "performance": -1.649530569393134,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 320,
@@ -6628,7 +6628,7 @@
         "performance": -1.665008879473458,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 321,
@@ -6649,7 +6649,7 @@
         "performance": -1.6764748717023241,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 322,
@@ -6670,7 +6670,7 @@
         "performance": -1.635390045016919,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 323,
@@ -6691,7 +6691,7 @@
         "performance": -1.6718630346311036,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 324,
@@ -6712,7 +6712,7 @@
         "performance": -1.6212723823608468,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 325,
@@ -6733,7 +6733,7 @@
         "performance": -1.6293081422819382,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 326,
@@ -6754,7 +6754,7 @@
         "performance": -1.604722000753527,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 327,
@@ -6774,7 +6774,7 @@
         "performance": 0.7833334292236666,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 328,
@@ -6795,7 +6795,7 @@
         "performance": 0.5617422344989067,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 329,
@@ -6815,7 +6815,7 @@
         "performance": 0.6922852713019731,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 330,
@@ -6836,7 +6836,7 @@
         "performance": 0.5528699226366751,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 331,
@@ -6856,7 +6856,7 @@
         "performance": 0.6593322972916137,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 332,
@@ -6876,7 +6876,7 @@
         "performance": 0.6393294821721491,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 333,
@@ -6897,7 +6897,7 @@
         "performance": 0.55749669663213,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 334,
@@ -6918,7 +6918,7 @@
         "performance": 0.4327291212956502,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 335,
@@ -6938,7 +6938,7 @@
         "performance": 0.6383667099870689,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 336,
@@ -6958,7 +6958,7 @@
         "performance": 0.6507811968405837,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 337,
@@ -6978,7 +6978,7 @@
         "performance": 0.6598890442209204,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 338,
@@ -6998,7 +6998,7 @@
         "performance": 0.6320592959302562,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 339,
@@ -7018,7 +7018,7 @@
         "performance": 0.6890516843515093,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 340,
@@ -7039,7 +7039,7 @@
         "performance": 0.5906210477929176,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 341,
@@ -7059,7 +7059,7 @@
         "performance": 0.7529567041733323,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 342,
@@ -7079,7 +7079,7 @@
         "performance": 0.6855965461688097,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 343,
@@ -7099,7 +7099,7 @@
         "performance": 0.7061830763826208,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 344,
@@ -7120,7 +7120,7 @@
         "performance": 0.510526763592706,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 345,
@@ -7141,7 +7141,7 @@
         "performance": 0.5384187288407476,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 346,
@@ -7161,7 +7161,7 @@
         "performance": 0.7668005250418473,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 347,
@@ -7181,7 +7181,7 @@
         "performance": 0.713521580412837,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 348,
@@ -7202,7 +7202,7 @@
         "performance": 0.6157604511685538,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 349,
@@ -7223,7 +7223,7 @@
         "performance": 0.6108816180812655,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 350,
@@ -7243,7 +7243,7 @@
         "performance": 0.6385027685503607,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 351,
@@ -7263,7 +7263,7 @@
         "performance": 0.722250048632819,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 352,
@@ -7283,7 +7283,7 @@
         "performance": 0.7008486667266662,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 353,
@@ -7303,7 +7303,7 @@
         "performance": 0.7454093225240928,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 354,
@@ -7324,7 +7324,7 @@
         "performance": 0.5943461831291439,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 355,
@@ -7344,7 +7344,7 @@
         "performance": 0.6827643449976598,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 356,
@@ -7365,7 +7365,7 @@
         "performance": 0.5620394165997731,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 357,
@@ -7385,7 +7385,7 @@
         "performance": 0.6729451554244581,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 358,
@@ -7406,7 +7406,7 @@
         "performance": -0.1901025986986838,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 359,
@@ -7426,7 +7426,7 @@
         "performance": 0.7370211007660304,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 360,
@@ -7447,7 +7447,7 @@
         "performance": 0.47242677658281873,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 361,
@@ -7467,7 +7467,7 @@
         "performance": 0.6374326459427299,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 362,
@@ -7487,7 +7487,7 @@
         "performance": 0.7660910873893164,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 363,
@@ -7508,7 +7508,7 @@
         "performance": 0.5986536433146802,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 364,
@@ -7528,7 +7528,7 @@
         "performance": 0.7272093180953245,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 365,
@@ -7548,7 +7548,7 @@
         "performance": 0.7271870108800573,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 366,
@@ -7568,7 +7568,7 @@
         "performance": 0.7141903995994698,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 367,
@@ -7588,7 +7588,7 @@
         "performance": 0.7245522962217074,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 368,
@@ -7608,7 +7608,7 @@
         "performance": 0.6454103730113361,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 369,
@@ -7628,7 +7628,7 @@
         "performance": 0.7440366977841969,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 370,
@@ -7648,7 +7648,7 @@
         "performance": 0.7419815675667638,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 371,
@@ -7668,7 +7668,7 @@
         "performance": 0.6689675890535489,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 372,
@@ -7688,7 +7688,7 @@
         "performance": 0.726607157206692,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 373,
@@ -7708,7 +7708,7 @@
         "performance": 0.73952231676571,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 374,
@@ -7729,7 +7729,7 @@
         "performance": 0.5819353062602265,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 375,
@@ -7749,7 +7749,7 @@
         "performance": 0.6867489220384202,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 376,
@@ -7769,7 +7769,7 @@
         "performance": 0.778121822911199,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 377,
@@ -7789,7 +7789,7 @@
         "performance": 0.6240697450640939,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 378,
@@ -7809,7 +7809,7 @@
         "performance": 0.6655776185094181,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 379,
@@ -7830,7 +7830,7 @@
         "performance": 0.5307982956267276,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 380,
@@ -7850,7 +7850,7 @@
         "performance": 0.6335204166744419,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 381,
@@ -7870,7 +7870,7 @@
         "performance": 0.656144587386758,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 382,
@@ -7891,7 +7891,7 @@
         "performance": 0.5592111700306115,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 383,
@@ -7912,7 +7912,7 @@
         "performance": 0.36020339235911725,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 384,
@@ -7933,7 +7933,7 @@
         "performance": 0.4655457350893949,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 385,
@@ -7953,7 +7953,7 @@
         "performance": 0.6393737610867158,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 386,
@@ -7973,7 +7973,7 @@
         "performance": 0.7327093536440474,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 387,
@@ -7993,7 +7993,7 @@
         "performance": 0.7495575092845532,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 388,
@@ -8013,7 +8013,7 @@
         "performance": 0.6540160242994556,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 389,
@@ -8033,7 +8033,7 @@
         "performance": 0.6707029423084406,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 390,
@@ -8053,7 +8053,7 @@
         "performance": 0.6968903218661749,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 391,
@@ -8073,7 +8073,7 @@
         "performance": 0.71264412888863,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 392,
@@ -8093,7 +8093,7 @@
         "performance": 0.6350109084526271,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 393,
@@ -8113,7 +8113,7 @@
         "performance": 0.6600748135396145,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 394,
@@ -8134,7 +8134,7 @@
         "performance": 0.4650383181200758,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 395,
@@ -8154,7 +8154,7 @@
         "performance": 0.6930904193298321,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 396,
@@ -8175,7 +8175,7 @@
         "performance": 0.5963957609391685,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 397,
@@ -8196,7 +8196,7 @@
         "performance": 0.56366438251921,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 398,
@@ -8216,7 +8216,7 @@
         "performance": 0.7511322925756317,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 399,
@@ -8236,7 +8236,7 @@
         "performance": 0.750730489838016,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 400,
@@ -8256,7 +8256,7 @@
         "performance": 0.6702421700623077,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 401,
@@ -8277,7 +8277,7 @@
         "performance": 0.5944431556301978,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 402,
@@ -8297,7 +8297,7 @@
         "performance": 0.7356602135235375,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 403,
@@ -8317,7 +8317,7 @@
         "performance": 0.7941644479193531,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 404,
@@ -8337,7 +8337,7 @@
         "performance": 0.7544734234408728,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 405,
@@ -8358,7 +8358,7 @@
         "performance": 0.48560347675865617,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 406,
@@ -8379,7 +8379,7 @@
         "performance": 0.39937750012591244,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 407,
@@ -8400,7 +8400,7 @@
         "performance": 0.6201421880287172,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 408,
@@ -8420,7 +8420,7 @@
         "performance": 0.6675667132221976,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 409,
@@ -8440,7 +8440,7 @@
         "performance": 0.7739784488652084,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 410,
@@ -8460,7 +8460,7 @@
         "performance": 0.7348355590325505,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 411,
@@ -8480,7 +8480,7 @@
         "performance": 0.786108963056395,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 412,
@@ -8500,7 +8500,7 @@
         "performance": 0.6878743555772276,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 413,
@@ -8520,7 +8520,7 @@
         "performance": 0.7118306415873015,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 414,
@@ -8541,7 +8541,7 @@
         "performance": 0.5829150387649689,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 415,
@@ -8561,7 +8561,7 @@
         "performance": 0.8172714731525037,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 416,
@@ -8581,7 +8581,7 @@
         "performance": 0.64567763039779,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 417,
@@ -8601,7 +8601,7 @@
         "performance": 0.6754934558960305,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 418,
@@ -8621,7 +8621,7 @@
         "performance": 0.734433436599024,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 419,
@@ -8641,7 +8641,7 @@
         "performance": 0.6228512595002953,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 420,
@@ -8662,7 +8662,7 @@
         "performance": 0.6017735481827332,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 421,
@@ -8683,7 +8683,7 @@
         "performance": 0.591721180591131,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 422,
@@ -8703,7 +8703,7 @@
         "performance": 0.7129101433188794,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 423,
@@ -8723,7 +8723,7 @@
         "performance": 0.7652997486309112,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 424,
@@ -8743,7 +8743,7 @@
         "performance": 0.7625304436834609,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 425,
@@ -8763,7 +8763,7 @@
         "performance": 0.6437500702543039,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 426,
@@ -8784,7 +8784,7 @@
         "performance": 0.4997580776564489,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 427,
@@ -8804,7 +8804,7 @@
         "performance": 0.7163443733543254,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 428,
@@ -8825,7 +8825,7 @@
         "performance": 0.6096615646296666,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 429,
@@ -8846,7 +8846,7 @@
         "performance": 0.5683249609451125,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 430,
@@ -8867,7 +8867,7 @@
         "performance": 0.5240075904460415,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 431,
@@ -8888,7 +8888,7 @@
         "performance": 0.5912840525037049,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 432,
@@ -8908,7 +8908,7 @@
         "performance": 0.6502558159511347,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 433,
@@ -8929,7 +8929,7 @@
         "performance": 0.5440985839272182,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 434,
@@ -8949,7 +8949,7 @@
         "performance": 0.6460984028898467,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 435,
@@ -8969,7 +8969,7 @@
         "performance": 0.6268626139719815,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 436,
@@ -8989,7 +8989,7 @@
         "performance": 0.7261718140016682,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 437,
@@ -9009,7 +9009,7 @@
         "performance": 0.7608432903403491,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 438,
@@ -9029,7 +9029,7 @@
         "performance": 0.7703755278897236,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 439,
@@ -9050,7 +9050,7 @@
         "performance": 0.555198637844115,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 440,
@@ -9071,7 +9071,7 @@
         "performance": 0.5774511369142007,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 441,
@@ -9091,7 +9091,7 @@
         "performance": 0.7131507190531235,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 442,
@@ -9112,7 +9112,7 @@
         "performance": 0.524822102306578,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 443,
@@ -9132,7 +9132,7 @@
         "performance": 0.62535819160706,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 444,
@@ -9152,7 +9152,7 @@
         "performance": 0.7421426805193362,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 445,
@@ -9172,7 +9172,7 @@
         "performance": 0.7777642356589695,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 446,
@@ -9192,7 +9192,7 @@
         "performance": 0.7059382346230866,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 447,
@@ -9213,7 +9213,7 @@
         "performance": -1.5957405793977706,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 448,
@@ -9234,7 +9234,7 @@
         "performance": -1.6502194310091725,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 449,
@@ -9255,7 +9255,7 @@
         "performance": -1.616296161667744,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 450,
@@ -9276,7 +9276,7 @@
         "performance": -1.6006117492242036,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 451,
@@ -9297,7 +9297,7 @@
         "performance": -1.5828003366013244,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 452,
@@ -9318,7 +9318,7 @@
         "performance": -1.5244930364104916,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 453,
@@ -9339,7 +9339,7 @@
         "performance": -1.5609549951084267,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 454,
@@ -9360,7 +9360,7 @@
         "performance": -1.5225721570147925,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 455,
@@ -9381,7 +9381,7 @@
         "performance": -1.6094146542380516,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 456,
@@ -9402,7 +9402,7 @@
         "performance": -1.5869835383907334,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 457,
@@ -9423,7 +9423,7 @@
         "performance": -1.6133879416063241,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 458,
@@ -9444,7 +9444,7 @@
         "performance": -1.5804186800738194,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 459,
@@ -9465,7 +9465,7 @@
         "performance": -1.6324268721434487,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 460,
@@ -9486,7 +9486,7 @@
         "performance": -1.6523100013285896,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 461,
@@ -9507,7 +9507,7 @@
         "performance": -1.643369693276427,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 462,
@@ -9528,7 +9528,7 @@
         "performance": -1.6957554128915198,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 463,
@@ -9549,7 +9549,7 @@
         "performance": -1.6308882676367846,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 464,
@@ -9570,7 +9570,7 @@
         "performance": -1.6433930596365687,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 465,
@@ -9591,7 +9591,7 @@
         "performance": -1.6415351028677934,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 466,
@@ -9612,7 +9612,7 @@
         "performance": -1.553250602155772,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 467,
@@ -9633,7 +9633,7 @@
         "performance": -1.6307873746993777,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 468,
@@ -9654,7 +9654,7 @@
         "performance": -1.634120234683557,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 469,
@@ -9675,7 +9675,7 @@
         "performance": -1.6080873327585603,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 470,
@@ -9696,7 +9696,7 @@
         "performance": -1.6446699573385688,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 471,
@@ -9717,7 +9717,7 @@
         "performance": -1.5959126073614902,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 472,
@@ -9738,7 +9738,7 @@
         "performance": -1.5420589308844515,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 473,
@@ -9759,7 +9759,7 @@
         "performance": -1.550453118752597,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 474,
@@ -9780,7 +9780,7 @@
         "performance": -1.5586675760985207,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 475,
@@ -9801,7 +9801,7 @@
         "performance": -1.522278585939479,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 476,
@@ -9822,7 +9822,7 @@
         "performance": -1.4923635567233038,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 477,
@@ -9843,7 +9843,7 @@
         "performance": -1.575952812672861,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 478,
@@ -9864,7 +9864,7 @@
         "performance": -1.5188640706467529,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 479,
@@ -9885,7 +9885,7 @@
         "performance": -1.53105894676853,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 480,
@@ -9906,7 +9906,7 @@
         "performance": -1.5910424783146218,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 481,
@@ -9927,7 +9927,7 @@
         "performance": -1.6138027442719514,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 482,
@@ -9948,7 +9948,7 @@
         "performance": -1.594161477970693,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 483,
@@ -9969,7 +9969,7 @@
         "performance": -1.586326430258921,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 484,
@@ -9990,7 +9990,7 @@
         "performance": -1.5846984720860997,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 485,
@@ -10011,7 +10011,7 @@
         "performance": -1.6695692505286477,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 486,
@@ -10032,7 +10032,7 @@
         "performance": -1.6717602893756742,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 487,
@@ -10053,7 +10053,7 @@
         "performance": -1.570281099313238,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 488,
@@ -10074,7 +10074,7 @@
         "performance": -1.7156345048708803,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 489,
@@ -10095,7 +10095,7 @@
         "performance": -1.6507666577218014,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 490,
@@ -10116,7 +10116,7 @@
         "performance": -1.6563256668176978,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 491,
@@ -10137,7 +10137,7 @@
         "performance": -1.6631578900216877,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 492,
@@ -10158,7 +10158,7 @@
         "performance": -1.626936150684347,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 493,
@@ -10179,7 +10179,7 @@
         "performance": -1.6195473009026569,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 494,
@@ -10200,7 +10200,7 @@
         "performance": -1.6620595142492325,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 495,
@@ -10220,7 +10220,7 @@
         "performance": 0.6281132847381763,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 496,
@@ -10241,7 +10241,7 @@
         "performance": 0.6090813553373111,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 497,
@@ -10262,7 +10262,7 @@
         "performance": 0.0879269348188612,
         "thermal_gradient": 0.0,
         "active_rules": 2,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       },
       {
         "timestep": 498,
@@ -10282,10 +10282,10 @@
         "performance": 0.6895167552864715,
         "thermal_gradient": 0.0,
         "active_rules": 1,
-        "timestamp": "2025-01-14T20:22:33"
+        "timestamp": "2025-03-31T04:13:47"
       }
     ]
   },
-  "timestamp": "2025-01-14T20:22:33",
+  "timestamp": "2025-03-31T04:13:47",
   "success": true
 }
