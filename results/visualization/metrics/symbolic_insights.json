@@ -1702,7 +1702,23 @@
     "timestep": 111,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5541141363819337,
@@ -1718,7 +1734,20 @@
     "timestep": 112,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5599066251997493,
@@ -1734,7 +1763,21 @@
     "timestep": 113,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5420902744152691,
@@ -1750,7 +1793,16 @@
     "timestep": 114,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.479561875231899,
@@ -1766,7 +1818,20 @@
     "timestep": 115,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4897521809755652,
@@ -1782,7 +1847,14 @@
     "timestep": 116,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_31 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4492040991930515,
@@ -1798,7 +1870,18 @@
     "timestep": 117,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6303910132242547,
@@ -1814,7 +1897,22 @@
     "timestep": 118,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.553640059867547,
@@ -1830,7 +1928,16 @@
     "timestep": 119,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4719325499923903,
@@ -1846,7 +1953,16 @@
     "timestep": 120,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5879179741281146,
@@ -1862,7 +1978,16 @@
     "timestep": 121,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5232846813120675,
@@ -1878,7 +2003,16 @@
     "timestep": 122,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6062259832354335,
@@ -1894,7 +2028,17 @@
     "timestep": 123,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4723155799168186,
@@ -1910,7 +2054,19 @@
     "timestep": 124,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6939094935657149,
@@ -1926,7 +2082,18 @@
     "timestep": 125,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6134041401978696,
@@ -1942,7 +2109,21 @@
     "timestep": 126,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6705377760554716,
@@ -1958,7 +2139,19 @@
     "timestep": 127,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6027026784436689,
@@ -1974,7 +2167,19 @@
     "timestep": 128,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6002005673265343,
@@ -1990,7 +2195,21 @@
     "timestep": 129,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6314857758843466,
@@ -2006,7 +2225,21 @@
     "timestep": 130,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6029732357126028,
@@ -2022,7 +2255,19 @@
     "timestep": 131,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6650156990648843,
@@ -2038,7 +2283,17 @@
     "timestep": 132,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6061208102635318,
@@ -2054,7 +2309,20 @@
     "timestep": 133,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.525892651752589,
@@ -2070,7 +2338,21 @@
     "timestep": 134,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6023361498873623,
@@ -2086,7 +2368,21 @@
     "timestep": 135,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.504884218928436,
@@ -2102,7 +2398,25 @@
     "timestep": 136,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5485015649676173,
@@ -2118,7 +2432,17 @@
     "timestep": 137,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4667255360216984,
@@ -2134,7 +2458,22 @@
     "timestep": 138,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5805881455678406,
@@ -2150,7 +2489,9 @@
     "timestep": 139,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_31 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_36 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4322580310354862,
@@ -2166,7 +2507,16 @@
     "timestep": 140,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.511429365357514,
@@ -2182,7 +2532,16 @@
     "timestep": 141,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4989443314913478,
@@ -2198,7 +2557,21 @@
     "timestep": 142,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.560222282160774,
@@ -2214,7 +2587,22 @@
     "timestep": 143,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5537832682630643,
@@ -2230,7 +2618,9 @@
     "timestep": 144,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_31 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_36 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.421633155845035,
@@ -2246,7 +2636,20 @@
     "timestep": 145,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5099695134436923,
@@ -2262,7 +2665,22 @@
     "timestep": 146,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.509558595038695,
@@ -2278,7 +2696,22 @@
     "timestep": 147,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5736340208778705,
@@ -2294,7 +2727,22 @@
     "timestep": 148,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5047722867749471,
@@ -2310,7 +2758,19 @@
     "timestep": 149,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6623392871480906,
@@ -2326,7 +2786,23 @@
     "timestep": 150,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5175323008922021,
@@ -2342,7 +2818,17 @@
     "timestep": 151,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6912340490159954,
@@ -2358,7 +2844,21 @@
     "timestep": 152,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6999401947426094,
@@ -2374,7 +2874,18 @@
     "timestep": 153,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.608217567770298,
@@ -2390,7 +2901,21 @@
     "timestep": 154,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6280289312495786,
@@ -2406,7 +2931,17 @@
     "timestep": 155,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.615963243520302,
@@ -2422,7 +2957,21 @@
     "timestep": 156,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6733212006143325,
@@ -2438,7 +2987,16 @@
     "timestep": 157,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5875731129172268,
@@ -2454,7 +3012,12 @@
     "timestep": 158,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_50 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_69 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_96 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6868320728904438,
@@ -4315,7 +4878,20 @@
     "timestep": 279,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5469188964858256,
@@ -4331,7 +4907,20 @@
     "timestep": 280,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.497512645545127,
@@ -4347,7 +4936,20 @@
     "timestep": 281,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5882296400420834,
@@ -4363,7 +4965,18 @@
     "timestep": 282,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4500619014104748,
@@ -4379,7 +4992,16 @@
     "timestep": 283,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4885423233792985,
@@ -4395,7 +5017,18 @@
     "timestep": 284,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.498387404406302,
@@ -4411,7 +5044,16 @@
     "timestep": 285,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4448396269147945,
@@ -4427,7 +5069,22 @@
     "timestep": 286,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.570434627993255,
@@ -4443,7 +5100,20 @@
     "timestep": 287,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4868199472318733,
@@ -4459,7 +5129,25 @@
     "timestep": 288,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4850808881118938,
@@ -4475,7 +5163,16 @@
     "timestep": 289,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5823735749711907,
@@ -4491,7 +5188,22 @@
     "timestep": 290,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5462801621557012,
@@ -4507,7 +5219,16 @@
     "timestep": 291,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6004206874540823,
@@ -4523,7 +5244,18 @@
     "timestep": 292,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6285519874374175,
@@ -4539,7 +5271,22 @@
     "timestep": 293,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5142869046041436,
@@ -4555,7 +5302,10 @@
     "timestep": 294,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_121 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_69 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_74 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.70481928344705,
@@ -4571,7 +5321,18 @@
     "timestep": 295,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5962990232998429,
@@ -4587,7 +5348,18 @@
     "timestep": 296,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6269110628879708,
@@ -4603,7 +5375,21 @@
     "timestep": 297,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5881867432304484,
@@ -4619,7 +5405,16 @@
     "timestep": 298,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.607571232140085,
@@ -4635,7 +5430,10 @@
     "timestep": 299,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_121 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_69 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_74 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.736698860768965,
@@ -4651,7 +5449,16 @@
     "timestep": 300,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5924751372097425,
@@ -4667,7 +5474,21 @@
     "timestep": 301,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5674755674143972,
@@ -4683,7 +5504,16 @@
     "timestep": 302,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5042613520198294,
@@ -4699,7 +5529,20 @@
     "timestep": 303,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5029417511757934,
@@ -4715,7 +5558,23 @@
     "timestep": 304,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5475834661293015,
@@ -4731,7 +5590,22 @@
     "timestep": 305,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5209140080984214,
@@ -4747,7 +5621,25 @@
     "timestep": 306,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5454218243744127,
@@ -4763,7 +5655,20 @@
     "timestep": 307,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5074069378721617,
@@ -4779,7 +5684,20 @@
     "timestep": 308,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5189046256429892,
@@ -4795,7 +5713,16 @@
     "timestep": 309,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4631560283698735,
@@ -4811,7 +5738,20 @@
     "timestep": 310,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4976261391811287,
@@ -4827,7 +5767,20 @@
     "timestep": 311,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4954743367323415,
@@ -4843,7 +5796,20 @@
     "timestep": 312,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5170514680655491,
@@ -4859,7 +5825,16 @@
     "timestep": 313,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.457592683146658,
@@ -4875,7 +5850,18 @@
     "timestep": 314,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5108556767384782,
@@ -4891,7 +5877,19 @@
     "timestep": 315,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6330591958215688,
@@ -4907,7 +5905,25 @@
     "timestep": 316,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.588874217429929,
@@ -4923,7 +5939,25 @@
     "timestep": 317,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5038247974218966,
@@ -4939,7 +5973,21 @@
     "timestep": 318,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6651357074003434,
@@ -4955,7 +6003,17 @@
     "timestep": 319,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6225496240201016,
@@ -4971,7 +6029,19 @@
     "timestep": 320,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6725606851186163,
@@ -4987,7 +6057,13 @@
     "timestep": 321,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_50 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_96 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.7084903916808367,
@@ -5003,7 +6079,18 @@
     "timestep": 322,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6448913659639988,
@@ -5019,7 +6106,18 @@
     "timestep": 323,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_50 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_96 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6911027441926922,
@@ -5035,7 +6133,21 @@
     "timestep": 324,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5821619724372886,
@@ -5051,7 +6163,19 @@
     "timestep": 325,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.611320392914656,
@@ -5067,7 +6191,16 @@
     "timestep": 326,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5656914595721252,
@@ -6921,7 +8054,20 @@
     "timestep": 447,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5822128189000906,
@@ -6937,7 +8083,17 @@
     "timestep": 448,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6972054640519831,
@@ -6953,7 +8109,18 @@
     "timestep": 449,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6180683711122157,
@@ -6969,7 +8136,16 @@
     "timestep": 450,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5338541122653127,
@@ -6985,7 +8161,20 @@
     "timestep": 451,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5025465798777187,
@@ -7001,7 +8190,16 @@
     "timestep": 452,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4538446730922308,
@@ -7017,7 +8215,25 @@
     "timestep": 453,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5098009913131374,
@@ -7033,7 +8249,16 @@
     "timestep": 454,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4804582908281338,
@@ -7049,7 +8274,16 @@
     "timestep": 455,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.595751430704412,
@@ -7065,7 +8299,23 @@
     "timestep": 456,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5881791694530767,
@@ -7081,7 +8331,16 @@
     "timestep": 457,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6256522142814507,
@@ -7097,7 +8356,20 @@
     "timestep": 458,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5255443095124448,
@@ -7113,7 +8385,18 @@
     "timestep": 459,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6663244692077601,
@@ -7129,7 +8412,21 @@
     "timestep": 460,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6628496047412358,
@@ -7145,7 +8442,17 @@
     "timestep": 461,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6276420158191185,
@@ -7161,7 +8468,10 @@
     "timestep": 462,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_121 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_69 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_74 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6980671532077602,
@@ -7177,7 +8487,18 @@
     "timestep": 463,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.583120645225578,
@@ -7193,7 +8514,17 @@
     "timestep": 464,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6105656508261608,
@@ -7209,7 +8540,17 @@
     "timestep": 465,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6740327413654732,
@@ -7225,7 +8566,20 @@
     "timestep": 466,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5311967468999912,
@@ -7241,7 +8595,18 @@
     "timestep": 467,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6198580987721114,
@@ -7257,7 +8622,18 @@
     "timestep": 468,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6384133935731786,
@@ -7273,7 +8649,16 @@
     "timestep": 469,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.592588862350796,
@@ -7289,7 +8674,17 @@
     "timestep": 470,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6221643596311086,
@@ -7305,7 +8700,20 @@
     "timestep": 471,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.560660018899574,
@@ -7321,7 +8729,18 @@
     "timestep": 472,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5094884901057732,
@@ -7337,7 +8756,20 @@
     "timestep": 473,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_131 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_37 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_77 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_82 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_89 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4736496272442907,
@@ -7353,7 +8785,25 @@
     "timestep": 474,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_125 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_132 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_133 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_63 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_78 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_81 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_85 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_86 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4750677769835452,
@@ -7369,7 +8819,16 @@
     "timestep": 475,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.436686097275355,
@@ -7385,7 +8844,9 @@
     "timestep": 476,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_135 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_36 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4093554573775715,
@@ -7401,7 +8862,21 @@
     "timestep": 477,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5424663821238958,
@@ -7417,7 +8892,14 @@
     "timestep": 478,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_31 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.4797211613952115,
@@ -7433,7 +8915,17 @@
     "timestep": 479,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_113 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_134 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_137 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_138 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_15 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_32 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_33 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_60 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_84 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_88 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.432822810369522,
@@ -7449,7 +8941,22 @@
     "timestep": 480,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5602247462293672,
@@ -7465,7 +8972,16 @@
     "timestep": 481,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6059824039216568,
@@ -7481,7 +8997,20 @@
     "timestep": 482,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_12 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_64 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5588798865158056,
@@ -7497,7 +9026,23 @@
     "timestep": 483,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5771068048111885,
@@ -7513,7 +9058,23 @@
     "timestep": 484,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_115 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_130 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_139 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_141 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_142 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_143 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_30 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_39 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_42 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_61 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_79 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_80 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_87 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5649867227646097,
@@ -7529,7 +9090,18 @@
     "timestep": 485,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_50 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_96 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.678339540746139,
@@ -7545,7 +9117,18 @@
     "timestep": 486,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_50 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_96 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.7342943126201256,
@@ -7561,7 +9144,22 @@
     "timestep": 487,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_10 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_112 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_117 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_136 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_146 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_34 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_35 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_38 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_40 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_65 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_68 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_76 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_83 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_91 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_92 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5447299024872807,
@@ -7577,7 +9175,8 @@
     "timestep": 488,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_147 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.7436712124879135,
@@ -7593,7 +9192,17 @@
     "timestep": 489,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_120 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.5887285580891621,
@@ -7609,7 +9218,21 @@
     "timestep": 490,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_119 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_129 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_148 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_43 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_93 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_94 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.639507965698608,
@@ -7625,7 +9248,19 @@
     "timestep": 491,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6939456806951567,
@@ -7641,7 +9276,19 @@
     "timestep": 492,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_118 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_122 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_126 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_127 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_19 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_20 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_67 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_71 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6312257569697488,
@@ -7657,7 +9304,18 @@
     "timestep": 493,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_116 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_128 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_14 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_140 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_151 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_17 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_66 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_70 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_9 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_90 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_99 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.599080307953915,
@@ -7673,7 +9331,19 @@
     "timestep": 494,
     "insights": [
       "System Stress (Base Rule)",
-      "Critical State (Base Rule)"
+      "Critical State (Base Rule)",
+      "Learned Rule Activated: neural_rule_144 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_145 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_149 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_150 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_153 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_16 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_18 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_21 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_41 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_44 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_46 (Conf: 1.00)",
+      "Learned Rule Activated: neural_rule_95 (Conf: 1.00)"
     ],
     "readings": {
       "temperature": -1.6779602797553006,

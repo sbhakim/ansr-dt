@@ -1,22 +1,37 @@
 # main.py
 import json
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" # Force CPU usage
 import logging
 import numpy as np
 from datetime import datetime
+from typing import Dict, Any, List # Added List for type hinting
 
+# Import necessary components directly
 from src.logging.logging_setup import setup_logging
 from src.config.config_manager import load_config
-from src.pipeline.pipeline import ANSRDTPipeline
+from src.pipeline.pipeline import ANSRDTPipeline # Import pipeline for training
 from src.rl.train_ppo import train_ppo_agent
 from src.ansrdt.explainable import ExplainableANSRDT
 from src.utils.model_utils import load_model_with_initialization
 from stable_baselines3 import PPO
 from src.visualization.neurosymbolic_visualizer import NeurosymbolicVisualizer
-from src.integration.adaptive_controller import AdaptiveController
+# AdaptiveController is integrated within ANSRDTCore/ExplainableANSRDT
 from src.reasoning.knowledge_graph import KnowledgeGraphGenerator
-
+# --- CHANGE: Import NumpyEncoder directly or define it here ---
+from src.pipeline.pipeline import NumpyEncoder # Import from where it's defined
+# Or define it here if preferred:
+# class NumpyEncoder(json.JSONEncoder):
+#     """Custom JSON Encoder that converts NumPy data types to native Python types."""
+#     def default(self, obj):
+#         if isinstance(obj, np.integer):
+#             return int(obj)
+#         elif isinstance(obj, np.floating):
+#             return float(obj)
+#         elif isinstance(obj, np.ndarray):
+#             return obj.tolist()
+#         return super(NumpyEncoder, self).default(obj)
+# --- END CHANGE ---
 
 def setup_project_structure(project_root: str):
     """Create necessary project directories."""
@@ -31,33 +46,46 @@ def setup_project_structure(project_root: str):
         'results/visualization/neurosymbolic',
         'results/visualization/metrics',
         'results/visualization/pattern_analysis',
-        'results/knowledge_graphs'  # Added for knowledge graphs
+        'results/knowledge_graphs',
+        'results/knowledge_graphs/visualizations', # Ensure subdirs exist
+        'results/knowledge_graphs/data'            # Ensure subdirs exist
     ]
 
     for dir_path in required_dirs:
+        # Use exist_ok=True to avoid errors if directories already exist
         os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
 
 
-def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int) -> np.ndarray:
-    """Prepare sensor window with correct shape for models."""
+def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int, feature_names: list) -> np.ndarray:
+    """Prepare a single sensor window with the correct shape and features for inference."""
     try:
-        features = [
-            data['temperature'][:window_size],
-            data['vibration'][:window_size],
-            data['pressure'][:window_size],
-            data['operational_hours'][:window_size],
-            data['efficiency_index'][:window_size],
-            data['system_state'][:window_size],
-            data['performance_score'][:window_size]
-        ]
-        return np.stack(features, axis=1)
+        # Check if required features are present
+        missing_features = [f for f in feature_names if f not in data.files]
+        if missing_features:
+             raise KeyError(f"Missing required features in data: {', '.join(missing_features)}")
+
+        # Ensure enough data points for the window size
+        if len(data[feature_names[0]]) < window_size:
+             raise ValueError(f"Not enough data points ({len(data[feature_names[0]])}) for window size {window_size}")
+
+        # Extract the first window_size steps for each required feature
+        features = [data[key][:window_size] for key in feature_names]
+
+        # Stack features along the last axis -> shape (window_size, n_features)
+        sensor_window = np.stack(features, axis=1)
+
+        # Return the window as float32, ANSRDTCore will handle batch dimension
+        return sensor_window.astype(np.float32)
+
     except KeyError as e:
-        raise KeyError(f"Missing required feature in data: {str(e)}")
+        raise KeyError(f"Error preparing sensor window: Missing feature - {str(e)}")
+    except ValueError as e:
+         raise ValueError(f"Error preparing sensor window: {str(e)}")
     except Exception as e:
-        raise RuntimeError(f"Error preparing sensor window: {str(e)}")
+        raise RuntimeError(f"Unexpected error preparing sensor window: {str(e)}")
 
 
-def initialize_visualizers(logger: logging.Logger, figures_dir: str, config: dict):
+def initialize_visualizers(logger: logging.Logger, figures_dir: str, config: dict) -> Dict[str, Any]:
     """Initialize visualization components."""
     try:
         os.makedirs(figures_dir, exist_ok=True)
@@ -74,15 +102,18 @@ def initialize_visualizers(logger: logging.Logger, figures_dir: str, config: dic
 
 
 def save_results(results: dict, path: str, logger: logging.Logger):
-    """Save results to JSON file."""
+    """Save results to JSON file, ensuring NumPy types are handled."""
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, 'w') as f:
-            json.dump(results, f, indent=2)
+            # --- CHANGE: Use the imported/defined NumpyEncoder ---
+            json.dump(results, f, indent=2, cls=NumpyEncoder)
+            # --- END CHANGE ---
         logger.info(f"Results saved to {path}")
     except Exception as e:
-        logger.error(f"Failed to save results: {e}")
-        raise
+        logger.error(f"Failed to save results to {path}: {e}")
+        # Avoid raising to allow pipeline completion, but log error
+        # raise # Optionally re-raise if saving is critical
 
 
 def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
@@ -91,44 +122,51 @@ def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
                                logger: logging.Logger):
     """Save knowledge graph state and visualization."""
     try:
-        # Save visualization
-        graph_path = os.path.join(output_dir, f'knowledge_graph_{timestamp}.png')
-        graph_generator.visualize(graph_path)
+        # Ensure specific subdirectories exist
+        kg_viz_dir = os.path.join(output_dir, 'visualizations')
+        kg_data_dir = os.path.join(output_dir, 'data')
+        os.makedirs(kg_viz_dir, exist_ok=True)
+        os.makedirs(kg_data_dir, exist_ok=True)
 
-        # Save graph state
-        state_path = os.path.join(output_dir, f'graph_state_{timestamp}.json')
-        graph_state = {
-            'nodes': len(graph_generator.graph.nodes),
-            'edges': len(graph_generator.graph.edges),
-            'timestamp': timestamp
-        }
-        save_results(graph_state, state_path, logger)
+        # Save visualization
+        graph_path = os.path.join(kg_viz_dir, f'knowledge_graph_{timestamp}.png')
+        graph_generator.visualize(graph_path) # This function now handles its own errors
+
+        # Export full graph data
+        export_path = os.path.join(kg_data_dir, f'knowledge_graph_export_{timestamp}.json')
+        graph_generator.export_graph(export_path) # This function now handles its own errors
+
+        # Log success separately for clarity
+        logger.info(f"Knowledge graph visualization attempted. Path: {graph_path}")
+        logger.info(f"Knowledge graph data export attempted. Path: {export_path}")
 
     except Exception as e:
-        logger.error(f"Failed to save knowledge graph state: {e}")
-        raise
+        # Log error but don't stop the main script
+        logger.error(f"Failed to save knowledge graph state/visualization: {e}", exc_info=True)
 
 
 def main():
     """
-    Execute the ANSR-DT pipeline with enhanced neurosymbolic components:
-    1. Train/load CNN-LSTM for anomaly detection
-    2. Train/load PPO for adaptive control
-    3. Initialize neurosymbolic components
-    4. Run integrated system with visualization and knowledge graph generation
+    Execute the ANSR-DT pipeline:
+    1. Setup logging and structure.
+    2. Load configuration.
+    3. Train or load CNN-LSTM and PPO models.
+    4. Initialize ANSR-DT core system.
+    5. Prepare sample input data.
+    6. Run integrated inference and explanation.
+    7. Generate visualizations and save results.
     """
-    # Determine project root directory
     project_root = os.path.dirname(os.path.abspath(__file__))
-
-    # Setup project directory structure
     setup_project_structure(project_root)
+    log_file_path = os.path.join(project_root, 'logs', 'ansr_dt_main.log')
+    logger = setup_logging(log_file=log_file_path, log_level=logging.INFO)
+    logger.info(f"--- Starting ANSR-DT Pipeline Run ({datetime.now()}) ---")
+    logger.info(f"Project Root: {project_root}")
 
-    # Initialize logging
-    logger = setup_logging(
-        log_file=os.path.join(project_root, 'logs', 'nexus_dt.log'),
-        log_level=logging.INFO
-    )
-    logger.info("Starting ANSR-DT Pipeline")
+    cnn_lstm_model = None
+    ppo_agent = None
+    ansrdt = None
+    visualizers = None
 
     try:
         # Load and validate configuration
@@ -136,123 +174,214 @@ def main():
         config = load_config(config_path)
         logger.info(f"Configuration loaded from {config_path}")
 
-        # Update paths to absolute
-        config['paths']['results_dir'] = os.path.join(project_root, 'results')
-        config['paths']['data_file'] = os.path.join(project_root, config['paths']['data_file'])
-        config['paths']['plot_config_path'] = os.path.join(project_root, config['paths']['plot_config_path'])
-        config['paths']['reasoning_rules_path'] = os.path.join(project_root, config['paths']['reasoning_rules_path'])
-        config['paths']['knowledge_graphs_dir'] = os.path.join(project_root, 'results', 'knowledge_graphs')
+        # --- Resolve and Validate Paths ---
+        paths_to_resolve = {
+            'results_dir': 'results',
+            'data_file': config['paths']['data_file'],
+            'plot_config_path': config['paths']['plot_config_path'],
+            'reasoning_rules_path': config['paths']['reasoning_rules_path'],
+            'knowledge_graphs_dir': 'results/knowledge_graphs'
+        }
+        resolved_paths = {}
+        for key, rel_path in paths_to_resolve.items():
+             abs_path = os.path.normpath(os.path.join(project_root, rel_path)) # Normalize path
+             resolved_paths[key] = abs_path
+             logger.info(f"Resolved path '{key}': {abs_path}")
+             if key.endswith('_file') or key.endswith('_path'):
+                  if not os.path.exists(abs_path):
+                       logger.error(f"Required file/path '{key}' not found at: {abs_path}")
+                       raise FileNotFoundError(f"File not found: {abs_path}")
+             elif key.endswith('_dir'):
+                 os.makedirs(abs_path, exist_ok=True)
+        config['paths'] = resolved_paths # Use resolved paths
+        # --- End Path Resolution ---
 
-        # Initialize model paths
+        # Model paths using resolved results_dir
         model_paths = {
             'cnn_lstm': os.path.join(config['paths']['results_dir'], 'best_model.keras'),
             'ppo': os.path.join(config['paths']['results_dir'], 'ppo_ansr_dt.zip')
         }
 
-        # Load or train CNN-LSTM model
+        # --- Train/Load CNN-LSTM Model ---
+        input_shape_tuple = tuple(config['model']['input_shape']) # Get shape from config
         if os.path.exists(model_paths['cnn_lstm']):
-            logger.info("Loading existing CNN-LSTM model")
-            cnn_lstm_model = load_model_with_initialization(
-                path=model_paths['cnn_lstm'],
-                logger=logger,
-                input_shape=tuple(config['model']['input_shape'])
-            )
-        else:
-            logger.info("Training new CNN-LSTM model")
-            pipeline = ANSRDTPipeline(config, config_path, logger)
-            pipeline.run()
-            cnn_lstm_model = load_model_with_initialization(
-                path=model_paths['cnn_lstm'],
-                logger=logger,
-                input_shape=tuple(config['model']['input_shape'])
-            )
+            logger.info(f"Loading existing CNN-LSTM model from {model_paths['cnn_lstm']}")
+            try:
+                cnn_lstm_model = load_model_with_initialization(
+                    path=model_paths['cnn_lstm'],
+                    logger=logger,
+                    input_shape=input_shape_tuple # Pass shape for build check
+                )
+                logger.info("Existing CNN-LSTM model loaded and initialized.")
+            except Exception as load_err:
+                 logger.error(f"Failed to load existing CNN-LSTM model: {load_err}. Attempting retraining.", exc_info=True)
+                 cnn_lstm_model = None
 
-        # Load or train PPO agent
+        if cnn_lstm_model is None:
+            logger.info("Training new CNN-LSTM model...")
+            pipeline = ANSRDTPipeline(config, config_path, logger)
+            pipeline.run() # Assumes this trains and saves the model correctly
+            logger.info(f"Loading newly trained CNN-LSTM model from {model_paths['cnn_lstm']}")
+            cnn_lstm_model = load_model_with_initialization(
+                path=model_paths['cnn_lstm'],
+                logger=logger,
+                input_shape=input_shape_tuple
+            )
+            if cnn_lstm_model is None:
+                 raise RuntimeError("Failed to load CNN-LSTM model even after training.")
+
+        # --- Train/Load PPO Agent ---
         if os.path.exists(model_paths['ppo']):
-            logger.info("Loading existing PPO agent")
-            ppo_agent = PPO.load(model_paths['ppo'])
-        else:
-            logger.info("Training new PPO agent")
+            logger.info(f"Loading existing PPO agent from {model_paths['ppo']}")
+            try:
+                ppo_agent = PPO.load(model_paths['ppo'])
+                logger.info("Existing PPO agent loaded.")
+            except Exception as load_err:
+                 logger.error(f"Failed to load existing PPO agent: {load_err}. Attempting retraining.", exc_info=True)
+                 ppo_agent = None
+
+        if ppo_agent is None:
+            logger.info("Training new PPO agent...")
             ppo_success = train_ppo_agent(config_path)
             if not ppo_success:
                 raise RuntimeError("PPO training failed")
+            logger.info(f"Loading newly trained PPO agent from {model_paths['ppo']}")
             ppo_agent = PPO.load(model_paths['ppo'])
+            if ppo_agent is None:
+                 raise RuntimeError("Failed to load PPO agent even after training.")
 
-        # Verify models
-        for name, path in model_paths.items():
-            if not os.path.exists(path):
-                raise FileNotFoundError(f"{name} model not found at {path}")
-            logger.info(f"{name} model verified at {path}")
+        # Final model verification
+        if cnn_lstm_model is None or ppo_agent is None:
+             raise RuntimeError("Critical model (CNN-LSTM or PPO) failed to load or train.")
+        logger.info("CNN-LSTM and PPO models are ready.")
 
-        # Initialize ANSR-DT system
-        logger.info("Initializing ANSR-DT system")
+        # --- Initialize ANSR-DT System ---
+        logger.info("Initializing ANSR-DT core system...")
         ansrdt = ExplainableANSRDT(
             config_path=config_path,
             logger=logger,
-            cnn_lstm_model=cnn_lstm_model,
+            cnn_lstm_model=cnn_lstm_model, # Pass the loaded and potentially built model
             ppo_agent=ppo_agent
         )
+        logger.info("ANSR-DT system initialized.")
 
-        # Load test data
+        # --- Prepare Sample Input Window ---
+        logger.info(f"Loading sample data from {config['paths']['data_file']}...")
         test_data = np.load(config['paths']['data_file'])
+        feature_names = config['model'].get('feature_names')
+        if not feature_names:
+             raise ValueError("feature_names not found in model configuration.")
         sensor_window = prepare_sensor_window(
             data=test_data,
-            window_size=config['model']['window_size']
+            window_size=config['model']['window_size'],
+            feature_names=feature_names
         )
+        logger.info(f"Prepared sample sensor window shape: {sensor_window.shape}")
 
-        # Logging after loading test data
-        logger.info(f"Loaded test data shape: {sensor_window.shape}")
-
-        # Initialize visualizers and knowledge graph
+        # Initialize visualizers
         figures_dir = os.path.join(config['paths']['results_dir'], 'visualization')
         visualizers = initialize_visualizers(logger, figures_dir, config)
+        knowledge_graph_enabled = config.get('knowledge_graph', {}).get('enabled', False)
 
-        # Logging before running inference
-        logger.info("Input data validation:")
+        # Log input data details before inference
+        logger.info("Input data validation for inference:")
         logger.info(f"- Shape: {sensor_window.shape}")
-        logger.info(f"- Range: [{np.min(sensor_window)}, {np.max(sensor_window)}]")
-        logger.info(f"- Contains NaN: {np.isnan(sensor_window).any()}")
+        logger.info(f"- Data Type: {sensor_window.dtype}")
+        logger.info(f"- Range: [{np.min(sensor_window):.4f}, {np.max(sensor_window):.4f}]") # Added formatting
+        logger.info(f"- Contains NaN/Inf: {np.isnan(sensor_window).any() or np.isinf(sensor_window).any()}")
 
-        # Run integrated inference
-        logger.info("Running integrated inference")
+        # --- Run Integrated Inference & Explanation ---
+        logger.info("Running integrated inference and explanation on the sample window...")
+        # The sensor_window should have shape (window_size, features)
         result = ansrdt.adapt_and_explain(sensor_window)
+        logger.info("Integrated inference step completed.")
 
-        # Logging after running inference
-        logger.info("Inference results:")
-        logger.info(f"- Result type: {type(result)}")
-        logger.info(f"- Result keys: {result.keys() if isinstance(result, dict) else 'Not a dictionary'}")
+        # Log detailed inference results
+        logger.info("Inference results overview:")
+        if isinstance(result, dict):
+            logger.info(f"- Timestamp: {result.get('timestamp', 'N/A')}")
+            logger.info(f"- Anomaly Confidence: {result.get('confidence', 'N/A'):.3f}")
+            logger.info(f"- Recommended Action: {result.get('action', 'None')}") # Show None if no action
+            logger.info(f"- Explanation: {result.get('explanation', 'N/A')}")
+            logger.info(f"- Symbolic Insights: {result.get('insights', [])}")
+        else:
+             logger.warning(f"- Result is not a dictionary, type: {type(result)}")
 
-        # Generate visualizations with error handling
+        # --- Generate Visualizations ---
+        logger.info("Generating visualizations...")
         try:
-            # Standard visualizations
-            if hasattr(ansrdt.reasoner, 'get_rule_activations'):
-                visualizers['neurosymbolic'].visualize_rule_activations(
-                    activations=ansrdt.reasoner.get_rule_activations(),
-                    save_path=os.path.join(figures_dir, 'neurosymbolic/rule_activations.png')
-                )
+            # Rule Activation Visualization
+            # --- Correction 3: Pass correctly structured data ---
+            if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'get_rule_activations'):
+                activation_history = ansrdt.reasoner.get_rule_activations()
+                if activation_history:
+                    all_activations_for_viz = []
+                    for record in activation_history:
+                        for activation_detail in record.get('activated_rules_detailed', []):
+                             if 'confidence' in activation_detail: # Check key exists
+                                 # Add timestep if visualizer needs it (optional)
+                                 # activation_detail['timestep'] = record.get('timestep')
+                                 all_activations_for_viz.append(activation_detail)
+                             else:
+                                 logger.warning(f"Skipping activation detail in viz due to missing 'confidence': {activation_detail}")
 
-            if hasattr(ansrdt.reasoner, 'state_tracker'):
-                visualizers['neurosymbolic'].plot_state_transitions(
-                    transition_matrix=ansrdt.reasoner.state_tracker.get_transition_probabilities(),
-                    save_path=os.path.join(figures_dir, 'neurosymbolic/state_transitions.png')
-                )
+                    if all_activations_for_viz:
+                        save_path_activations = os.path.join(figures_dir, 'neurosymbolic/rule_activations.png')
+                        visualizers['neurosymbolic'].visualize_rule_activations(
+                            activations=all_activations_for_viz,
+                            save_path=save_path_activations
+                        )
+                    else:
+                        logger.info("No valid rule activations with confidence found in history to visualize.")
+                else:
+                     logger.info("Rule activation history is empty.")
+            else:
+                logger.warning("Could not access reasoner or rule activations for visualization.")
 
-            # Knowledge graph generation and update
-            if config['knowledge_graph']['enabled']:
-                current_state = result.get('current_state', {})
-                insights = result.get('insights', [])
-                rules = [{'rule': rule, 'confidence': ansrdt.reasoner.rule_confidence.get(rule, 0.0)}
-                         for rule in ansrdt.reasoner.learned_rules]
+            # State Transition Visualization
+            if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'state_tracker'):
+                transition_probs = ansrdt.reasoner.state_tracker.get_transition_probabilities()
+                if transition_probs is not None and transition_probs.size > 0:
+                    save_path_transitions = os.path.join(figures_dir, 'neurosymbolic/state_transitions.png')
+                    visualizers['neurosymbolic'].plot_state_transitions(
+                        transition_matrix=transition_probs,
+                        save_path=save_path_transitions
+                    )
+                else:
+                     logger.info("No state transition data available from state tracker.")
+            else:
+                 logger.warning("Could not access state tracker or transition probabilities for visualization.")
 
-                # Update knowledge graph
+            # Knowledge Graph Visualization
+            if knowledge_graph_enabled:
+                logger.info("Updating and visualizing knowledge graph...")
+                # Safely extract data from the 'result' dict, providing defaults
+                current_state_data = result.get('current_state', {}) if isinstance(result, dict) else {}
+                # Make sure current_state_data is usable by KG
+                if not isinstance(current_state_data, dict): current_state_data = {}
+
+                insights_data = result.get('insights', []) if isinstance(result, dict) else []
+                # Extract learned rules *from the reasoner instance*
+                rules_data = []
+                if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'learned_rules'):
+                     rules_data = [{'rule': r, 'confidence': m.get('confidence', 0.0)}
+                                   for r, m in ansrdt.reasoner.learned_rules.items()]
+
+                # Construct anomaly info based on inference result
+                anomaly_detected = result.get('anomaly_detected', False) if isinstance(result, dict) else False
+                anomaly_confidence = result.get('confidence', 0.0) if isinstance(result, dict) else 0.0
+                anomaly_data = {
+                     'severity': 1 if anomaly_detected else 0, # Simple severity based on detection
+                     'confidence': anomaly_confidence
+                }
+
                 visualizers['knowledge_graph'].update_graph(
-                    current_state=current_state,
-                    insights=insights,
-                    rules=rules,
-                    anomalies=result.get('anomaly_status', {})
+                    current_state=current_state_data, # Pass the extracted dict
+                    insights=insights_data,
+                    rules=rules_data,
+                    anomalies=anomaly_data
                 )
 
-                # Save knowledge graph state
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 save_knowledge_graph_state(
                     graph_generator=visualizers['knowledge_graph'],
@@ -260,63 +389,78 @@ def main():
                     timestamp=timestamp,
                     logger=logger
                 )
+            else:
+                 logger.info("Knowledge graph generation is disabled in config.")
 
         except Exception as viz_error:
-            logger.warning(f"Visualization error: {viz_error}")
+            logger.error(f"Visualization failed: {viz_error}", exc_info=True) # Log full traceback
 
-        # Prepare results
-        neurosymbolic_results = {
-            'neural_rules': getattr(ansrdt.reasoner, 'learned_rules', []),
-            'rule_confidence': getattr(ansrdt.reasoner, 'rule_confidence', {}),
-            'symbolic_insights': result.get('insights', []),
-            'neural_confidence': result.get('confidence', 0.0),
-            'control_parameters': result.get('control_parameters', {}),
-            'state_transitions': result.get('state_transitions', []),
-            'timestamp': str(np.datetime64('now'))
+        # --- Save Results ---
+        logger.info("Saving final results and state...")
+        # Safely access reasoner attributes
+        learned_rules_dict = {}
+        rule_activation_history = []
+        if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner:
+            learned_rules_dict = {r: m for r, m in ansrdt.reasoner.learned_rules.items()} if hasattr(ansrdt.reasoner, 'learned_rules') else {}
+            rule_activation_history = ansrdt.reasoner.get_rule_activations() if hasattr(ansrdt.reasoner, 'get_rule_activations') else []
+
+        final_results_data = {
+            'inference_result': result if isinstance(result, dict) else {'error': 'Result not a dictionary', 'raw': result},
+            'learned_rules': learned_rules_dict,
+            'rule_activations_history': rule_activation_history,
+            'state_history_summary': ansrdt.state_history[-100:],
+            'knowledge_graph_stats': visualizers['knowledge_graph'].get_graph_statistics() if knowledge_graph_enabled else None,
+            'run_timestamp': str(datetime.now().isoformat())
         }
 
-        # Save results
         save_results(
-            results=neurosymbolic_results,
-            path=os.path.join(config['paths']['results_dir'], 'neurosymbolic_results.json'),
+            results=final_results_data,
+            path=os.path.join(config['paths']['results_dir'], 'final_run_results.json'),
             logger=logger
         )
 
-        # Save final state
-        save_results(
-            results={
-                'current_state': ansrdt.current_state,
-                'state_history': ansrdt.state_history[-100:],
-                'knowledge_graph_state': {
-                    'nodes': len(visualizers['knowledge_graph'].graph.nodes),
-                    'edges': len(visualizers['knowledge_graph'].graph.edges),
-                    'timestamp': str(np.datetime64('now'))
-                }
-            },
-            path=os.path.join(config['paths']['results_dir'], 'final_state.json'),
-            logger=logger
-        )
+        # --- Log Summary ---
+        logger.info("\n--- ANSR-DT Run Summary ---")
+        # Use the data saved in final_results_data for summary
+        learned_rules_count = len(final_results_data['learned_rules'])
+        insights_count = len(final_results_data['inference_result'].get('insights', [])) if isinstance(final_results_data['inference_result'], dict) else 0
+        kg_nodes = final_results_data.get('knowledge_graph_stats', {}).get('total_nodes', 'N/A') if final_results_data.get('knowledge_graph_stats') else 'Disabled'
+        kg_edges = final_results_data.get('knowledge_graph_stats', {}).get('total_edges', 'N/A') if final_results_data.get('knowledge_graph_stats') else 'Disabled'
+        final_confidence = final_results_data['inference_result'].get('confidence', 0.0) if isinstance(final_results_data['inference_result'], dict) else 0.0
+        final_explanation = final_results_data['inference_result'].get('explanation', 'N/A') if isinstance(final_results_data['inference_result'], dict) else 'N/A'
 
-        # Log summary
-        logger.info("\nNeurosymbolic Analysis Summary:")
-        logger.info(f"- Neural Rules Extracted: {len(neurosymbolic_results['neural_rules'])}")
-        logger.info(f"- Symbolic Insights Generated: {len(neurosymbolic_results['symbolic_insights'])}")
-        logger.info(f"- Neural Confidence: {neurosymbolic_results['neural_confidence']:.2%}")
-        logger.info(f"- Control Parameters Applied: {len(neurosymbolic_results['control_parameters'])}")
-        logger.info(f"- Knowledge Graph Nodes: {len(visualizers['knowledge_graph'].graph.nodes)}")
-        logger.info(f"- Knowledge Graph Edges: {len(visualizers['knowledge_graph'].graph.edges)}")
-        logger.info(f"Final Explanation: {result.get('explanation', '')}\n")
+        logger.info(f"- Learned Rules in Reasoner: {learned_rules_count}")
+        logger.info(f"- Symbolic Insights Generated (this step): {insights_count}")
+        logger.info(f"- Final Neural Confidence: {final_confidence:.2%}")
+        logger.info(f"- Knowledge Graph Nodes: {kg_nodes}")
+        logger.info(f"- Knowledge Graph Edges: {kg_edges}")
+        logger.info(f"- Final Explanation Provided: {final_explanation}\n")
 
-        logger.info("Pipeline completed successfully")
+        logger.info("--- ANSR-DT Pipeline Completed Successfully ---")
         return True
 
     except KeyboardInterrupt:
-        logger.info("Pipeline interrupted by user")
+        logger.info("--- Pipeline Interrupted by User ---")
         return False
-    except Exception as e:
-        logger.exception(f"Pipeline failed: {str(e)}")
-        raise
+    except FileNotFoundError as e:
+         logger.error(f"Pipeline Failed: Required file not found - {e}", exc_info=True)
+         return False
+    except KeyError as e:
+         logger.error(f"Pipeline Failed: Missing configuration key or data feature - {e}", exc_info=True)
+         return False
+    except ValueError as e:
+         logger.error(f"Pipeline Failed: Invalid value or data shape - {e}", exc_info=True)
+         return False
+    except RuntimeError as e:
+         logger.error(f"Pipeline Failed: Runtime error during execution - {e}", exc_info=True)
+         return False
+    except Exception as e: # Catch-all for any other unexpected errors
+        logger.exception(f"--- Pipeline Failed Unexpectedly: {str(e)} ---") # Use logger.exception to include traceback
+        return False
 
 
 if __name__ == '__main__':
-    main()
+    run_successful = main()
+    exit_code = 0 if run_successful else 1
+    logging.info(f"--- ANSR-DT Run Finished with Exit Code {exit_code} ({datetime.now()}) ---")
+    exit(exit_code)

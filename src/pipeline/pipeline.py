@@ -4,6 +4,7 @@ import json
 import logging
 import os
 from typing import Tuple, Dict, Any, List
+from datetime import datetime # Import datetime
 
 import numpy as np
 import tensorflow as tf
@@ -19,9 +20,9 @@ from src.utils.model_utils import save_model, save_scaler
 from src.visualization.plotting import load_plot_config, plot_metrics
 from src.reasoning.reasoning import SymbolicReasoner
 
-# Custom JSON Encoder to handle NumPy data types
+# Custom JSON Encoder to handle NumPy data types and datetime
 class NumpyEncoder(json.JSONEncoder):
-    """Custom JSON Encoder that converts NumPy data types to native Python types."""
+    """Custom JSON Encoder that converts NumPy data types and datetime to native Python types."""
     def default(self, obj):
         if isinstance(obj, np.integer):
             return int(obj)
@@ -29,11 +30,14 @@ class NumpyEncoder(json.JSONEncoder):
             return float(obj)
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
+        # Handle datetime objects if they appear in learned_rules metadata
+        elif isinstance(obj, datetime):
+             return obj.isoformat()
         return super(NumpyEncoder, self).default(obj)
 
 
 def validate_config(config: dict, logger: logging.Logger, project_root: str, config_dir: str):
-    """Validates configuration and paths."""
+    """Validates configuration and paths, ensuring absolute paths are stored."""
     try:
         required_keys = ['model', 'training', 'paths']
         for key in required_keys:
@@ -41,31 +45,37 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
                 logger.error(f"Missing required configuration key: {key}")
                 raise KeyError(f"Missing required configuration key: {key}")
 
-        # Define required paths with their base directories
-        required_paths = {
+        # Define required paths with their base directories for resolution
+        required_paths_info = {
             'data_file': {'relative_to': project_root, 'default': 'data/synthetic_sensor_data_with_anomalies.npz'},
             'results_dir': {'relative_to': project_root, 'default': 'results'},
             'plot_config_path': {'relative_to': config_dir, 'default': 'plot_config.yaml'},
             'reasoning_rules_path': {'relative_to': project_root, 'default': 'src/reasoning/rules.pl'}
         }
 
-        for key, path_info in required_paths.items():
-            path = config['paths'].get(key, path_info['default'])
+        # Resolve paths and store absolute paths back into the config
+        for key, path_info in required_paths_info.items():
+            # Use path from config if specified, otherwise use default
+            relative_path = config['paths'].get(key, path_info['default'])
             base_dir = path_info['relative_to']
-            full_path = os.path.join(base_dir, path)
+            # Resolve to absolute path
+            full_path = os.path.normpath(os.path.join(base_dir, relative_path))
 
+            # Store the absolute path back into the config dictionary
+            config['paths'][key] = full_path
+            logger.debug(f"Validated and resolved path for '{key}': {full_path}")
+
+            # Check existence for files, ensure directories exist
             if key.endswith('_dir'):
                 os.makedirs(full_path, exist_ok=True)
                 logger.info(f"Directory '{key}' ensured at: {full_path}")
-            else:
+            else: # Assume it's a file path
                 if not os.path.exists(full_path):
-                    logger.error(f"Required file '{key}' not found at: {full_path}")
+                    logger.error(f"Required file '{key}' not found at resolved path: {full_path}")
                     raise FileNotFoundError(f"Required file '{key}' not found at: {full_path}")
                 logger.info(f"File '{key}' found at: {full_path}")
 
-            config['paths'][key] = full_path
-
-        logger.info("Configuration validation passed.")
+        logger.info("Configuration paths validated and resolved.")
 
     except Exception as e:
         logger.exception(f"Configuration validation failed: {e}")
@@ -73,49 +83,48 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
 
 
 class ANSRDTPipeline:
-    """ANSR-DT Pipeline with Neurosymbolic Rule Learning."""
+    """ANSR-DT Pipeline focused on CNN-LSTM training and evaluation,
+       delegating rule extraction/update to SymbolicReasoner."""
+
+    # Make NumpyEncoder accessible as a class attribute if needed elsewhere
+    NumpyEncoder = NumpyEncoder
 
     def __init__(self, config: dict, config_path: str, logger: logging.Logger):
         """Initialize pipeline."""
         self.config = config
         self.logger = logger
-        self.config_dir = os.path.dirname(os.path.abspath(config_path))
+        # --- CHANGE 1: Store config_path ---
+        self.config_path = os.path.abspath(config_path) # Store absolute path
+        # --- End CHANGE 1 ---
+        self.config_dir = os.path.dirname(self.config_path)
         self.project_root = os.path.dirname(self.config_dir)
 
-        # Initialize components
+        # --- Validate config and resolve paths immediately ---
+        validate_config(self.config, self.logger, self.project_root, self.config_dir)
+        # Now self.config['paths'] contains absolute paths
+
+        # Initialize components using absolute paths from validated config
         self.data_loader = DataLoader(
             self.config['paths']['data_file'],
             window_size=self.config['model']['window_size']
         )
 
-        # Add model state tracking
+        # Model state tracking
         self.model = None
         self.model_built = False
 
-        # Add rule extraction configuration
-        self.rule_extraction_config = {
-            'confidence_threshold': 0.7,
-            'importance_threshold': 0.5,
-            'min_support': 3  # Minimum sequences to form a rule
-        }
-
-        # Define feature names for rule extraction
-        self.feature_names = [
-            'temperature', 'vibration', 'pressure', 'operational_hours',
-            'efficiency_index', 'system_state', 'performance_score'
-        ]
-
-        # Configure logging for rule extraction
-        self.logger.info(f"Initialized with {len(self.feature_names)} features for rule extraction")
-        self.logger.info(f"Rule extraction thresholds: {self.rule_extraction_config}")
+        # Define feature names from config
+        self.feature_names = self.config['model'].get('feature_names', [])
+        if not self.feature_names:
+             self.logger.error("feature_names missing in model configuration.")
+             raise ValueError("feature_names missing in model configuration.")
+        self.logger.info(f"Pipeline initialized with {len(self.feature_names)} features: {self.feature_names}")
 
         # Initialize SymbolicReasoner as None; will initialize after model is trained
         self.reasoner = None
 
-        # Initialize rule activations list
-        self.rule_activations: List[Dict[str, Any]] = []
 
-    def extract_neural_rules(
+    def extract_and_update_neural_rules(
             self,
             model: tf.keras.Model,
             input_data: np.ndarray,
@@ -123,197 +132,72 @@ class ANSRDTPipeline:
             threshold: float = 0.8
     ) -> None:
         """
-        Extract rules from neural model predictions with enhanced pattern detection.
+        Delegates rule extraction and updating to the SymbolicReasoner.
 
         Args:
-            model: Trained neural network model
-            input_data: Input sequences
-            y_pred: Model predictions
-            threshold: Confidence threshold for rule extraction
+            model: Trained neural network model (should be built).
+            input_data: Input sequences used for extraction (e.g., X_test_scaled).
+            y_pred: Model prediction scores for the input sequences.
+            threshold: Confidence threshold for considering sequences for rule extraction.
         """
+        if self.reasoner is None:
+            self.logger.error("Symbolic Reasoner not initialized. Cannot extract/update rules.")
+            return
+        if not model.built:
+             self.logger.error("Model is not built. Cannot extract rules.")
+             return
+
         try:
-            # Find anomalous and normal sequences
-            anomalous_idx = np.where(y_pred > threshold)[0]
-            normal_idx = np.where(y_pred < 0.2)[0]
-
-            self.logger.info(f"Found {len(anomalous_idx)} anomalous sequences based on threshold {threshold}")
-
-            if len(anomalous_idx) == 0:
-                self.logger.info("No anomalous sequences found. No rules extracted.")
-                return
-
-            # Get sequences
-            anomalous_sequences = input_data[anomalous_idx]
-            normal_sequences = input_data[normal_idx]
-
-            # Calculate gradients for all features
-            gradients = {
-                'temperature': np.gradient(input_data[:, :, 0], axis=1),
-                'vibration': np.gradient(input_data[:, :, 1], axis=1),
-                'pressure': np.gradient(input_data[:, :, 2], axis=1),
-                'efficiency_index': np.gradient(input_data[:, :, 4], axis=1)
-            }
-
-            gradient_rules = []
-            pattern_rules = []
-
-            # Process each anomalous sequence
-            for idx in anomalous_idx:
-                sequence = input_data[idx]
-                current_values = sequence[-1]  # Last timestep
-                previous_values = sequence[-2] if sequence.shape[0] > 1 else current_values  # Previous timestep
-
-                # Update feature_values dictionary
-                feature_values = {
-                    'temperature': float(current_values[0]),
-                    'vibration': float(current_values[1]),
-                    'pressure': float(current_values[2]),
-                    'operational_hours': float(current_values[3]),
-                    'efficiency_index': float(current_values[4]),
-                    'system_state': float(current_values[5]),
-                    'performance_score': float(current_values[6])
-                }
-
-                # Check for gradient-based patterns
-                feature_patterns = []
-                for feature, gradient in gradients.items():
-                    max_grad = np.max(np.abs(gradient[idx]))
-                    if max_grad > 2.0:  # Significant change threshold
-                        feature_patterns.append({
-                            'feature': feature,
-                            'gradient': float(max_grad),
-                            'value': feature_values[feature]
-                        })
-
-                # Generate gradient rules
-                if feature_patterns:
-                    for pattern in feature_patterns:
-                        rule_conditions = []
-
-                        # Add gradient condition
-                        rule_conditions.append(
-                            f"{pattern['feature']}_gradient({pattern['gradient']:.2f})"
-                        )
-
-                        # Add value condition
-                        rule_conditions.append(
-                            f"{pattern['feature']}({int(pattern['value'])})"
-                        )
-
-                        # Add state transition if applicable
-                        if abs(current_values[5] - previous_values[5]) > 0:
-                            rule_conditions.append(
-                                f"state_transition({int(previous_values[5])}->{int(current_values[5])})"
-                            )
-
-                        # Create rule
-                        rule_name = f"gradient_rule_{len(gradient_rules) + 1}"
-                        rule_body = ", ".join(rule_conditions) + "."
-                        rule = f"{rule_name} :- {rule_body}"
-                        confidence = float(y_pred[idx])
-
-                        gradient_rules.append({
-                            'rule': rule,
-                            'confidence': confidence,
-                            'patterns': feature_patterns,
-                            'timestep': idx
-                        })
-
-                # Check for combined feature patterns
-                if feature_values['temperature'] > 75 and feature_values['vibration'] > 50:
-                    pattern_rules.append({
-                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
-                                 f"temperature({int(feature_values['temperature'])}), "
-                                 f"vibration({int(feature_values['vibration'])})."),
-                        'confidence': float(y_pred[idx]),
-                        'type': 'temp_vib_correlation',
-                        'timestep': idx
-                    })
-
-                if feature_values['pressure'] < 25 and feature_values['efficiency_index'] < 0.7:
-                    pattern_rules.append({
-                        'rule': (f"pattern_rule_{len(pattern_rules) + 1} :- "
-                                 f"pressure({int(feature_values['pressure'])}), "
-                                 f"efficiency_index({feature_values['efficiency_index']:.2f})."),
-                        'confidence': float(y_pred[idx]),
-                        'type': 'press_eff_correlation',
-                        'timestep': idx
-                    })
-
-            # Extract additional patterns using sequence analysis via SymbolicReasoner
-            temporal_patterns = self.reasoner.analyze_neural_patterns(
-                anomalous_sequences=anomalous_sequences,
-                normal_sequences=normal_sequences,
-                feature_names=self.feature_names
+            self.logger.info("Delegating rule extraction to SymbolicReasoner...")
+            potential_new_rules = self.reasoner.extract_rules_from_neural_model(
+                input_data=input_data,
+                feature_names=self.feature_names,
+                threshold=threshold,
+                model=model
             )
 
-            # Combine all rules
-            all_rules = []
-
-            # Add gradient rules
-            for rule in gradient_rules:
-                if rule['confidence'] >= threshold:
-                    all_rules.append((rule['rule'], rule['confidence']))
-
-            # Add pattern rules
-            for rule in pattern_rules:
-                if rule['confidence'] >= threshold:
-                    all_rules.append((rule['rule'], rule['confidence']))
-
-            # Add temporal patterns
-            for pattern in temporal_patterns:
-                if pattern.get('confidence', 0) >= threshold:
-                    all_rules.append((pattern['rule'], pattern['confidence']))
-
-            # Update symbolic knowledge base
-            if all_rules:
-                self.update_rules(all_rules)
-
-                # Log statistics
-                stats = self.get_rule_statistics()
-                self.logger.info(f"Neural rule extraction stats: {stats}")
-
-                # Save extracted rules summary
-                rules_summary = {
-                    'gradient_rules': gradient_rules,
-                    'pattern_rules': pattern_rules,
-                    'temporal_patterns': temporal_patterns,
-                    'statistics': stats,
-                    'total_rules': len(all_rules),
-                    'timestamp': str(np.datetime64('now'))
-                }
-
-                # Save summary
-                summary_path = os.path.join(
-                    self.config['paths']['results_dir'],
-                    'neurosymbolic_rules.json'
+            if potential_new_rules:
+                self.logger.info(f"Passing {len(potential_new_rules)} potential rules to reasoner for update.")
+                # Use configurations for update parameters
+                reasoning_config = self.config.get('symbolic_reasoning', {})
+                self.reasoner.update_rules(
+                    potential_new_rules,
+                    min_confidence=reasoning_config.get('min_confidence', 0.7),
+                    max_learned_rules=reasoning_config.get('max_rules', 100),
+                    pruning_strategy=reasoning_config.get('pruning_strategy', 'confidence')
                 )
 
-                # Serialize rules_summary with custom encoder
+                # Save summary based on reasoner's current state
+                stats = self.reasoner.get_rule_statistics()
+                self.logger.info(f"Rule update process completed. Current reasoner stats: {stats}")
+
+                rules_summary = {
+                    'reasoner_statistics': stats,
+                    'learned_rules_in_reasoner': self.reasoner.learned_rules,
+                    'timestamp': str(datetime.now().isoformat())
+                }
+                summary_path = os.path.join(
+                    self.config['paths']['results_dir'],
+                    'neurosymbolic_rules_summary_pipeline.json'
+                )
+                # Use the class attribute NumpyEncoder for saving
                 with open(summary_path, 'w') as f:
-                    json.dump(rules_summary, f, indent=2, cls=NumpyEncoder)
+                    json.dump(rules_summary, f, indent=2, cls=ANSRDTPipeline.NumpyEncoder)
+                self.logger.info(f"Neurosymbolic rules summary (from pipeline) saved to {summary_path}")
+            else:
+                self.logger.info("No potential rules extracted by reasoner in this step.")
 
-                self.logger.info(f"Neurosymbolic rules saved to {summary_path}")
-
-                # Track rule activations
-                self.rule_activations.extend([{
-                    'rule': rule[0],
-                    'confidence': rule[1],
-                    'timestep': len(self.rule_activations),
-                    'type': 'neural_derived'
-                } for rule in all_rules])
-
+        except AttributeError as ae:
+             self.logger.error(f"Attribute error during rule extraction/update: {ae}. Is reasoner correctly initialized?", exc_info=True)
         except Exception as e:
-            self.logger.error(f"Error in neural rule extraction: {e}")
-            raise
+            self.logger.error(f"Error during neural rule extraction/update delegation: {e}", exc_info=True)
+
 
     def run(self):
-        """Execute complete pipeline with neurosymbolic learning."""
+        """Execute complete pipeline for CNN-LSTM training and evaluation."""
         try:
-            self.logger.info("Starting pipeline execution.")
-
-            # 1. Validate Configuration
-            validate_config(self.config, self.logger, self.project_root, self.config_dir)
+            self.logger.info("Starting ANSR-DT Training Pipeline execution.")
+            # Config validation and path resolution now happens in __init__
 
             # 2. Load and process data
             X, y = self.data_loader.load_data()
@@ -336,32 +220,40 @@ class ANSRDTPipeline:
             y_val_binary = map_labels(y_val, self.logger)
             y_test_binary = map_labels(y_test, self.logger)
 
-            # 6. Preprocess sequences
+            # 6. Preprocess sequences (Fit on Train, Transform Train/Val/Test)
             scaler, X_train_scaled = preprocess_sequences(X_train)
             X_val_scaled = scaler.transform(X_val.reshape(-1, X_val.shape[-1])).reshape(X_val.shape)
             X_test_scaled = scaler.transform(X_test.reshape(-1, X_test.shape[-1])).reshape(X_test.shape)
+            self.logger.info("Sequence scaling completed.")
 
             # Save scaler
             scaler_path = os.path.join(self.config['paths']['results_dir'], 'scaler.pkl')
             save_scaler(scaler, scaler_path, self.logger)
 
             # 7. Create model
+            model_input_shape = X_train_scaled.shape[1:]
+            self.logger.info(f"Creating model with input shape: {model_input_shape}")
             if self.config['model'].get('architecture', 'cnn_lstm') == 'cnn_lstm':
                 self.model = create_cnn_lstm_model(
-                    input_shape=X_train_scaled.shape[1:],
+                    input_shape=model_input_shape,
                     learning_rate=self.config['training']['learning_rate']
                 )
             else:
                 raise ValueError(f"Unsupported architecture: {self.config['model'].get('architecture')}")
 
-            self.logger.info("Model created.")
+            self.logger.info("Model architecture created.")
+            self.model.summary(print_fn=self.logger.info)
 
-            # Build model with dummy data
-            dummy_shape = (1, self.config['model']['window_size'], len(self.feature_names))
-            dummy_input = np.zeros(dummy_shape)
-            _ = self.model(dummy_input, training=False)
+            # Build model explicitly before training
+            try:
+                 self.model.build(input_shape=(None,) + model_input_shape)
+                 self.model_built = True
+                 self.logger.info("Model built successfully.")
+            except Exception as build_error:
+                 self.logger.error(f"Failed to explicitly build model: {build_error}", exc_info=True)
+                 # Decide whether to proceed or raise error if build fails
 
-            # Train model
+            # 8. Train model
             history, trained_model = train_model(
                 model=self.model,
                 X_train=X_train_scaled,
@@ -373,109 +265,83 @@ class ANSRDTPipeline:
                 logger=self.logger
             )
             self.logger.info("Model training completed.")
+            self.model = trained_model # Ensure self.model refers to the trained instance
+            self.model_built = self.model.built
 
-            # Initialize Symbolic Reasoner with the trained model
-            rules_path = self.config['paths'].get('reasoning_rules_path')
-            if not os.path.isabs(rules_path):
-                rules_path = os.path.join(self.project_root, rules_path)
-
-            input_shape = (
-                self.config['model']['window_size'],
-                len(self.feature_names)
-            )
+            # 9. Initialize Symbolic Reasoner AFTER model training
+            rules_path = self.config['paths']['reasoning_rules_path'] # Absolute path
+            reasoner_input_shape = model_input_shape
 
             self.reasoner = SymbolicReasoner(
                 rules_path=rules_path,
-                input_shape=input_shape,
-                model=trained_model,  # Pass the trained model directly
+                input_shape=reasoner_input_shape,
+                model=self.model, # Pass the trained model
                 logger=self.logger
             )
-            self.logger.info("Symbolic Reasoner initialized.")
+            self.logger.info("Symbolic Reasoner initialized after model training.")
 
-            # 8. Plot metrics
+            # 10. Plot training metrics
             figures_dir = os.path.join(self.config['paths']['results_dir'], 'visualization')
             os.makedirs(figures_dir, exist_ok=True)
 
             plot_config = load_plot_config(self.config['paths']['plot_config_path'])
             plot_metrics(history, figures_dir, plot_config)
 
-            # 9. Evaluate model and extract rules
-            y_test_pred = trained_model.predict(X_test_scaled).ravel()
-            y_test_pred_classes = (y_test_pred > 0.5).astype(int)
+            # 11. Evaluate model on Test Set & Extract/Update Rules
+            self.logger.info("Predicting on test set...")
+            y_test_pred_scores = self.model.predict(X_test_scaled).ravel()
+            y_test_pred_classes = (y_test_pred_scores > 0.5).astype(int)
 
-            # Prepare sensor data for evaluation
-            sensor_data_test = np.column_stack([
-                X_test_scaled[:, -1, 0:7]  # Last timestep of each sequence
-            ])
-
-            # Extract rules from neural model
-            self.logger.info("Extracting rules from neural model...")
-            self.extract_neural_rules(
-                model=trained_model,
+            # Extract rules using the test set predictions
+            self.logger.info("Extracting and updating rules based on test set predictions...")
+            extraction_threshold = self.config.get('symbolic_reasoning', {}).get('extraction_threshold', 0.8)
+            self.extract_and_update_neural_rules(
+                model=self.model,
                 input_data=X_test_scaled,
-                y_pred=y_test_pred,
-                threshold=0.8
+                y_pred=y_test_pred_scores,
+                threshold=extraction_threshold
             )
 
-            # Evaluate with both neural and symbolic components
+            # Prepare sensor data for evaluation context (last timestep, scaled)
+            sensor_data_test_last_step = X_test_scaled[:, -1, :]
+
+            # Evaluate performance on the test set
+            self.logger.info("Evaluating model performance on test set...")
             evaluate_model(
                 y_true=y_test_binary,
                 y_pred=y_test_pred_classes,
-                y_scores=y_test_pred,
+                y_scores=y_test_pred_scores,
                 figures_dir=figures_dir,
                 plot_config_path=self.config['paths']['plot_config_path'],
-                config_path=self.config_dir,
-                sensor_data=sensor_data_test,
-                model=trained_model
+                # --- CHANGE 2: Pass the stored absolute config path ---
+                config_path=self.config_path,
+                # --- End CHANGE 2 ---
+                sensor_data=sensor_data_test_last_step,
+                model=self.model
             )
 
-            # 10. Save final model
-            best_model_path = os.path.join(self.config['paths']['results_dir'], 'best_model.keras')
-            save_model(trained_model, best_model_path, self.logger)
+            # 12. Save final trained model
+            final_model_path = os.path.join(self.config['paths']['results_dir'], 'final_pipeline_model.keras')
+            save_model(self.model, final_model_path, self.logger)
 
-            self.logger.info("Pipeline completed successfully.")
+            self.logger.info("ANSR-DT Training Pipeline completed successfully.")
 
         except Exception as e:
-            self.logger.exception(f"Pipeline error: {e}")
-            raise
+            self.logger.exception(f"ANSR-DT Training Pipeline failed: {e}")
+            raise # Re-raise to signal failure
 
-    def update_rules(self, rules: List[Tuple[str, float]]):
-        """
-        Update the Prolog rules file with new rules.
-
-        Args:
-            rules: List of tuples containing rule strings and their confidence scores.
-        """
-        try:
-            rules_file_path = self.config['paths']['reasoning_rules_path']
-            with open(rules_file_path, 'a') as f:
-                for rule, confidence in rules:
-                    # Optionally, you can append confidence as a comment or integrate it into the rule
-                    f.write(f"% Confidence: {confidence:.2f}\n")
-                    f.write(f"{rule}\n")
-            self.logger.info(f"Added {len(rules)} new rules to {rules_file_path}")
-        except Exception as e:
-            self.logger.error(f"Failed to update rules: {e}")
-            raise
 
     def get_rule_statistics(self) -> Dict[str, Any]:
         """
-        Get statistics about the extracted rules.
-
-        Returns:
-            Dictionary containing rule statistics.
+        Get statistics about the rules managed by the reasoner.
+        Delegates to the reasoner instance.
         """
-        try:
-            total_rules = len(self.rule_activations)
-            high_confidence = len([r for r in self.rule_activations if r['confidence'] >= 0.8])
-            low_confidence = total_rules - high_confidence
-
-            stats = {
-                'total_rules': total_rules,
-                'high_confidence': high_confidence,
-                'low_confidence': low_confidence
-            }
-            return stats
-        except Exception as e:
-            self.logger.error(f"Failed to get rule statistics: {e}")
+        if self.reasoner and hasattr(self.reasoner, 'get_rule_statistics'):
+            try:
+                return self.reasoner.get_rule_statistics()
+            except Exception as e:
+                 self.logger.error(f"Failed to get rule statistics from reasoner: {e}")
+                 return {}
+        else:
+            self.logger.warning("Reasoner not initialized, cannot get rule statistics.")
             return {}

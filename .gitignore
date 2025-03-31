@@ -1,5 +1,6 @@
 # Exclude logs directory
 logs/
+results/
 
 # Exclude .sh files
 *.sh

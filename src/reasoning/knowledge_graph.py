@@ -1,398 +1,561 @@
 # src/reasoning/knowledge_graph.py
+import json
 
 import networkx as nx
 import matplotlib.pyplot as plt
-from typing import Dict, List, Any
+# --- CHANGE: Import missing types ---
+from typing import Dict, List, Any, Tuple
+# --- END CHANGE ---
 import logging
 from datetime import datetime
 import os
 import numpy as np
+import math # Import math for isnan check
 
+from src.pipeline.pipeline import NumpyEncoder
+
+# --- Default values moved here for clarity ---
+DEFAULT_MAX_NODES = 500
+DEFAULT_MAX_HISTORY = 1000
 
 class KnowledgeGraphGenerator:
-    def __init__(self, logger=None, max_history=1000):
+    def __init__(self, logger=None, max_nodes=DEFAULT_MAX_NODES, max_history=DEFAULT_MAX_HISTORY):
         self.logger = logger or logging.getLogger(__name__)
         self.graph = nx.DiGraph()
+        self.max_nodes = max_nodes
         self.max_history = max_history
-        # Update color definitions - remove # prefix
+
         self.node_types = {
             'sensor': 'lightblue',
             'state': 'lightgreen',
             'rule': 'lightpink',
             'anomaly': 'salmon',
             'insight': 'lightyellow',
-            'metrics': 'lightgray'  # Add metrics node type
+            'metrics': 'lightgray'
         }
-        self.node_counter = {
-            'sensor': 0,
-            'state': 0,
-            'rule': 0,
-            'anomaly': 0,
-            'insight': 0
-        }
-        self.sensor_history = {}  # Store historical sensor data for trend calculation
-        self.sensor_correlations = {}  # Store sensor correlations
-        self.performance_history = {}  # Store performance metrics history
+        # Use a single counter for unique node IDs
+        self.global_node_counter = 0
+
+        self.sensor_history = {}
+        self.sensor_correlations = {}
+        self.performance_history = {}
+        # Adjust layout parameter based on actual max_nodes used
         self.layout_params = {
-            'k': 2,
+            'k': 0.8 / math.sqrt(self.max_nodes) if self.max_nodes > 0 else 0.1, # Adjusted k heuristic
             'iterations': 100,
-            'seed': 42  # For reproducibility
+            'seed': 42
         }
+        self.logger.info(f"KnowledgeGraphGenerator initialized with max_nodes={self.max_nodes}, max_history={self.max_history}")
+
+    def _get_unique_node_id(self, prefix: str) -> str:
+        """Generates a unique node ID."""
+        self.global_node_counter += 1
+        return f"{prefix}_{self.global_node_counter}"
 
     def _calculate_trend(self, sensor: str, value: float) -> str:
         """Calculate the trend of a sensor value based on its history."""
+        if not isinstance(value, (int, float)) or math.isnan(value):
+            self.logger.warning(f"Invalid value '{value}' for sensor '{sensor}' trend calculation. Skipping.")
+            return " N/A"
+
         if sensor not in self.sensor_history:
             self.sensor_history[sensor] = []
-        self.sensor_history[sensor].append(value)
-        if len(self.sensor_history[sensor]) >= 2:
-            trend = np.sign(self.sensor_history[sensor][-1] - self.sensor_history[sensor][-2])
-            if trend == 1:
-                return "↑"
-            elif trend == -1:
-                return "↓"
-            else:
-                return "→"
-        else:
-            return "→"
 
-    def _get_state_info(self, current_state: Dict[str, Any]) -> str:
-        """Extract additional information about the current state."""
-        # Placeholder - replace with actual logic to extract relevant state information
-        info = ""
-        if current_state.get('system_state', 0) == 1:
-            info = "Degraded performance detected."
-        elif current_state.get('system_state', 0) == 2:
-            info = "Critical condition!"
-        return info
+        self.sensor_history[sensor].append(value)
+        # Limit history size
+        if len(self.sensor_history[sensor]) > self.max_history:
+             self.sensor_history[sensor].pop(0)
+
+        if len(self.sensor_history[sensor]) >= 2:
+            last_val = self.sensor_history[sensor][-1]
+            prev_val = self.sensor_history[sensor][-2]
+            try:
+                # Check for NaN before comparison
+                if math.isnan(last_val) or math.isnan(prev_val):
+                     return " N/A"
+                trend_sign = np.sign(last_val - prev_val)
+                if trend_sign > 0: return "↑"
+                elif trend_sign < 0: return "↓"
+                else: return "→"
+            except TypeError:
+                 self.logger.warning(f"Could not compare values for trend: {last_val}, {prev_val}")
+                 return " N/A"
+        else:
+            return "→" # Initial state
+
+    def _get_state_info(self, current_state_dict: Dict[str, Any]) -> Tuple[int, str]:
+        """Extract state value (int) and description string."""
+        state_value = 0 # Default to Normal (0)
+        state_description = "Normal"
+        try:
+             raw_state = current_state_dict.get('system_state')
+             if raw_state is not None:
+                  state_value = int(float(raw_state)) # Handle potential float input
+                  if state_value == 1:
+                      state_description = "Degraded"
+                  elif state_value == 2:
+                      state_description = "Critical"
+                  elif state_value == 0:
+                      state_description = "Normal"
+                  else:
+                      state_description = f"Unknown ({state_value})"
+                      state_value = 0 # Map unknown back to Normal for safety
+             else:
+                 self.logger.warning("system_state key missing in current_state_dict. Defaulting to Normal.")
+
+        except (ValueError, TypeError) as e:
+             self.logger.warning(f"Invalid system_state value '{current_state_dict.get('system_state')}': {e}. Defaulting to Normal.")
+             state_value = 0
+             state_description = "Normal (Invalid Input)"
+
+        # Final check to ensure state_value is within expected range
+        if state_value not in [0, 1, 2]:
+            self.logger.warning(f"Corrected out-of-range state value {state_value} to 0.")
+            state_value = 0
+            state_description += " [Corrected Index]"
+
+        return state_value, state_description
+
 
     def _calculate_correlations(self):
-        """Calculate correlations between sensors."""
-        for s1 in self.sensor_history:
-            for s2 in self.sensor_history:
-                if s1 < s2:  # Avoid duplicates
-                    corr = np.corrcoef(
-                        self.sensor_history[s1][-self.max_history:],
-                        self.sensor_history[s2][-self.max_history:]
-                    )[0, 1]
-                    self.sensor_correlations[f"{s1}_{s2}"] = corr
+        """Safely calculate correlations between sensors."""
+        sensors = list(self.sensor_history.keys())
+        # Only calculate if we have history for at least 2 sensors
+        if len(sensors) < 2:
+            return
 
-    def _add_correlation_edges(self):
-        """Add edges for highly correlated sensors."""
-        for pair, corr in self.sensor_correlations.items():
-            if abs(corr) > 0.7:  # Strong correlation
-                s1, s2 = pair.split('_')
-                self.graph.add_edge(
-                    f"{s1}_{self.node_counter['sensor'] - 1}",
-                    f"{s2}_{self.node_counter['sensor'] - 1}",
-                    weight=abs(corr),
-                    label=f'corr: {corr:.2f}',
-                    style='dotted'
-                )
+        for i in range(len(sensors)):
+            for j in range(i + 1, len(sensors)):
+                s1, s2 = sensors[i], sensors[j]
+                hist1 = self.sensor_history[s1]
+                hist2 = self.sensor_history[s2]
+                pair_key = f"{s1}_{s2}"
 
-    def _add_metrics_node(self, performance_metrics: Dict[str, float]):
-        """Add a node showing key performance metrics."""
-        metrics_id = f"metrics_{self.node_counter['state']}"
-        self.graph.add_node(metrics_id,
-                            type='metrics',
-                            label=(f"Metrics\n"
-                                   f"Efficiency: {performance_metrics.get('efficiency_index', 0):.2f}\n"
-                                   f"Performance: {performance_metrics.get('performance_score', 0):.2f}"),
-                            color='lightgray'
-                            )
-        return metrics_id
+                # Require minimum history length for meaningful correlation
+                min_hist_len = 10
+                if len(hist1) >= min_hist_len and len(hist2) >= min_hist_len:
+                    try:
+                        # Ensure arrays are of the same length for corrcoef
+                        common_len = min(len(hist1), len(hist2))
+                        arr1 = np.array(hist1[-common_len:], dtype=float)
+                        arr2 = np.array(hist2[-common_len:], dtype=float)
+
+                        # Check for constant arrays (which lead to NaN correlation)
+                        if np.all(arr1 == arr1[0]) or np.all(arr2 == arr2[0]):
+                            self.logger.debug(f"Skipping correlation for {pair_key}: one array is constant.")
+                            self.sensor_correlations.pop(pair_key, None)
+                            continue
+
+                        corr_matrix = np.corrcoef(arr1, arr2)
+
+                        # Check if corr_matrix is valid before accessing element
+                        if corr_matrix.shape == (2, 2):
+                             corr = corr_matrix[0, 1]
+                             if not math.isnan(corr):
+                                  self.sensor_correlations[pair_key] = corr
+                             else:
+                                  self.logger.debug(f"Correlation between {s1} and {s2} resulted in NaN. Skipping.")
+                                  self.sensor_correlations.pop(pair_key, None)
+                        else:
+                             self.logger.warning(f"Invalid correlation matrix shape for {pair_key}: {corr_matrix.shape}. Skipping.")
+                             self.sensor_correlations.pop(pair_key, None)
+
+                    except Exception as corr_err:
+                        self.logger.warning(f"Could not calculate correlation between {s1} and {s2}: {corr_err}")
+                        self.sensor_correlations.pop(pair_key, None)
+                else:
+                    # Not enough history, remove old value if it exists
+                    self.sensor_correlations.pop(pair_key, None)
+
+
+    def _add_edge_safe(self, u_node: str, v_node: str, **attrs):
+        """Adds an edge only if both source and target nodes exist in the graph."""
+        if u_node is not None and v_node is not None: # Also check for None IDs
+            if self.graph.has_node(u_node) and self.graph.has_node(v_node):
+                self.graph.add_edge(u_node, v_node, **attrs)
+            else:
+                self.logger.warning(f"Skipping edge ({u_node} -> {v_node}): one or both nodes not found in graph.")
+        else:
+             self.logger.warning(f"Skipping edge: Node ID is None (u={u_node}, v={v_node}).")
+
 
     def update_graph(self,
-                     current_state: Dict[str, float],
+                     current_state: Dict[str, Any],
                      insights: List[str],
-                     rules: List[Dict],
-                     anomalies: Dict[str, Any]) -> None:
-        """Update knowledge graph with new information."""
+                     rules: List[Dict], # Expects list of {'rule': str, 'confidence': float}
+                     anomalies: Dict[str, Any]) -> None: # Expects dict like {'severity': int, 'confidence': float}
+        """Update knowledge graph with new information, adding nodes before edges."""
+        # --- Prune first ---
+        self._prune_old_nodes()
+
         try:
-            # Add temporal aspect
-            timestamp = datetime.now().strftime("%H:%M:%S")
+            timestamp_dt = datetime.now()
+            timestamp_str = timestamp_dt.isoformat()
 
-            # Add sensor nodes
-            sensor_data = {
-                'temperature': current_state.get('temperature', 0.0),
-                'vibration': current_state.get('vibration', 0.0),
-                'pressure': current_state.get('pressure', 0.0)
-            }
+            # --- Dictionaries to hold IDs created in this step ---
+            sensor_node_ids_this_step = {}
+            rule_node_ids_this_step = []
+            insight_node_ids_this_step = []
+            state_id_this_step = None
+            metrics_id_this_step = None
+            anomaly_id_this_step = None
+            # ---
 
-            # Add sensor nodes and their relationships
-            sensor_nodes = {}
-            for sensor, value in sensor_data.items():
-                trend = self._calculate_trend(sensor, value)
-                node_id = f"{sensor}_{self.node_counter['sensor']}"
-                self.graph.add_node(node_id,
-                                    type='sensor',
-                                    value=value,
-                                    trend=trend,
-                                    label=f"{sensor}\n{value:.2f}\n{trend}",
-                                    color=self.node_types['sensor'],
-                                    timestamp=timestamp)
-                sensor_nodes[sensor] = node_id
-                self.node_counter['sensor'] += 1
+            # Add Sensor Nodes
+            sensor_keys = ['temperature', 'vibration', 'pressure'] # Define expected sensors
+            for sensor in sensor_keys:
+                value = current_state.get(sensor)
+                if value is not None:
+                    try:
+                        value_f = float(value)
+                        trend = self._calculate_trend(sensor, value_f)
+                        node_id = self._get_unique_node_id(sensor)
+                        self.graph.add_node(node_id,
+                                            type='sensor',
+                                            sensor_name=sensor,
+                                            value=value_f,
+                                            trend=trend,
+                                            label=f"{sensor}\n{value_f:.2f} {trend}",
+                                            color=self.node_types['sensor'],
+                                            timestamp=timestamp_dt)
+                        sensor_node_ids_this_step[sensor] = node_id
+                    except (ValueError, TypeError) as e:
+                         self.logger.warning(f"Could not process sensor '{sensor}' value '{value}': {e}")
+                else:
+                     self.logger.debug(f"Sensor '{sensor}' not found in current_state or value is None.")
 
-            # Add state node
-            state_id = f"state_{self.node_counter['state']}"
-            state_value = int(current_state.get('system_state', 0))
-            state_labels = ['Normal', 'Degraded', 'Critical']
-            state_info = self._get_state_info(current_state)
-            self.graph.add_node(state_id,
+            # Add State Node
+            state_value, state_label_part = self._get_state_info(current_state)
+            state_id_this_step = self._get_unique_node_id("state")
+            state_labels = ['Normal', 'Degraded', 'Critical'] # Ensure this aligns with state_value indices
+            self.graph.add_node(state_id_this_step,
                                 type='state',
                                 value=state_value,
-                                info=state_info,
-                                label=f"State\n{state_labels[state_value]}\n{state_info}",
-                                color=self.node_types['state'])
-            self.node_counter['state'] += 1
+                                label=f"State: {state_labels[state_value]}\n({state_label_part})",
+                                color=self.node_types['state'],
+                                timestamp=timestamp_dt)
 
-            # Add relationships between sensors and state
-            for sensor_id in sensor_nodes.values():
-                self.graph.add_edge(sensor_id, state_id,
-                                    weight=1.0,
-                                    label='influences',
-                                    timestamp=timestamp)
+            # Add Metrics Node
+            eff_idx = current_state.get('efficiency_index')
+            perf_score = current_state.get('performance_score')
+            if eff_idx is not None and perf_score is not None:
+                 try:
+                      metrics_id_this_step = self._get_unique_node_id("metrics")
+                      self.graph.add_node(metrics_id_this_step,
+                                           type='metrics',
+                                           efficiency=float(eff_idx),
+                                           performance=float(perf_score),
+                                           label=(f"Metrics\n"
+                                                  f"Eff: {float(eff_idx):.2f}\n"
+                                                  f"Perf: {float(perf_score):.1f}"),
+                                           color=self.node_types['metrics'],
+                                           timestamp=timestamp_dt)
+                 except (ValueError, TypeError) as e:
+                      self.logger.warning(f"Could not process metrics values (Eff:'{eff_idx}', Perf:'{perf_score}'): {e}")
+                      metrics_id_this_step = None # Invalidate ID if error
 
-            # Add rule nodes and their relationships
-            rule_nodes = []
-            for rule in rules:
-                if rule['confidence'] > 0.7:  # Only show high confidence rules
-                    rule_id = f"rule_{self.node_counter['rule']}"
-                    self.graph.add_node(rule_id,
-                                        type='rule',
-                                        confidence=rule['confidence'],
-                                        label=f"Rule\n{rule['rule'][:30]}...\n{rule['confidence']:.2f}",
-                                        color=self.node_types['rule'],
-                                        timestamp=timestamp)
-                    rule_nodes.append(rule_id)
-                    self.node_counter['rule'] += 1
 
-                    # Connect rules to relevant sensors
-                    for sensor, sensor_id in sensor_nodes.items():
-                        if sensor in rule['rule'].lower():
-                            self.graph.add_edge(sensor_id, rule_id,
-                                                weight=rule['confidence'],
-                                                label='triggers',
-                                                timestamp=timestamp)
+            # Add Rule Nodes
+            for rule_info in rules:
+                if isinstance(rule_info, dict) and 'rule' in rule_info and 'confidence' in rule_info:
+                    if rule_info['confidence'] > 0.7:
+                        rule_id = self._get_unique_node_id("rule")
+                        rule_str = rule_info['rule']
+                        label_rule_str = (rule_str[:27] + '...') if len(rule_str) > 30 else rule_str
+                        self.graph.add_node(rule_id,
+                                            type='rule',
+                                            rule_string=rule_str,
+                                            confidence=float(rule_info['confidence']),
+                                            label=f"Rule\n{label_rule_str}\nConf: {rule_info['confidence']:.2f}",
+                                            color=self.node_types['rule'],
+                                            timestamp=timestamp_dt)
+                        rule_node_ids_this_step.append(rule_id)
+                else:
+                    self.logger.warning(f"Skipping invalid rule format during node creation: {rule_info}")
 
-            # Add anomaly nodes if any anomalies detected
-            if anomalies.get('severity', 0) > 0:
-                anomaly_id = f"anomaly_{self.node_counter['anomaly']}"
-                self.graph.add_node(anomaly_id,
+            # Add Anomaly Node
+            anomaly_severity = int(anomalies.get('severity', 0))
+            if anomaly_severity > 0:
+                anomaly_id_this_step = self._get_unique_node_id("anomaly")
+                self.graph.add_node(anomaly_id_this_step,
                                     type='anomaly',
-                                    severity=anomalies['severity'],
-                                    label=f"Anomaly\nSeverity: {anomalies['severity']}",
+                                    severity=anomaly_severity,
+                                    confidence=float(anomalies.get('confidence', 0.0)),
+                                    label=f"Anomaly\nSeverity: {anomaly_severity}",
                                     color=self.node_types['anomaly'],
-                                    timestamp=timestamp)
-                self.node_counter['anomaly'] += 1
+                                    timestamp=timestamp_dt)
 
-                # Connect anomalies to states and rules
-                self.graph.add_edge(state_id, anomaly_id,
-                                    weight=1.0,
-                                    label='indicates',
-                                    timestamp=timestamp)
-                for rule_id in rule_nodes:
-                    self.graph.add_edge(rule_id, anomaly_id,
-                                        weight=self.graph.nodes[rule_id]['confidence'],
-                                        label='detects',
-                                        timestamp=timestamp)
-
-            # Add insight nodes
-            for idx, insight in enumerate(insights):
-                insight_id = f"insight_{self.node_counter['insight']}"
+            # Add Insight Nodes
+            for insight_str in insights:
+                insight_id = self._get_unique_node_id("insight")
+                label_insight_str = (insight_str[:47] + '...') if len(insight_str) > 50 else insight_str
                 self.graph.add_node(insight_id,
                                     type='insight',
-                                    label=f"Insight\n{insight[:50]}...",
+                                    text=insight_str,
+                                    label=f"Insight\n{label_insight_str}",
                                     color=self.node_types['insight'],
-                                    timestamp=timestamp)
-                self.node_counter['insight'] += 1
+                                    timestamp=timestamp_dt)
+                insight_node_ids_this_step.append(insight_id)
 
-                # Connect insights to anomalies and states
-                if anomalies.get('severity', 0) > 0:
-                    self.graph.add_edge(anomaly_id, insight_id,
-                                        weight=1.0,
-                                        label='explains',
-                                        timestamp=timestamp)
-                self.graph.add_edge(state_id, insight_id,
-                                    weight=1.0,
-                                    label='generates',
-                                    timestamp=timestamp)
+            # --- Add Edges using _add_edge_safe and IDs from this step ---
+            edge_ts = timestamp_str # Timestamp for edges
 
-            # Add metrics node
-            metrics_id = self._add_metrics_node({
-                'efficiency_index': current_state.get('efficiency_index', 0),
-                'performance_score': current_state.get('performance_score', 0)
-            })
-            self.graph.add_edge(state_id, metrics_id,
-                                weight=1.0,
-                                label='has',
-                                timestamp=timestamp)
+            # Sensor -> State
+            for sensor_id in sensor_node_ids_this_step.values():
+                 self._add_edge_safe(sensor_id, state_id_this_step, weight=0.8, label='influences', timestamp=edge_ts)
 
-            # Calculate and add correlation edges
-            self._calculate_correlations()
-            self._add_correlation_edges()
+            # State -> Metrics
+            self._add_edge_safe(state_id_this_step, metrics_id_this_step, weight=1.0, label='has', timestamp=edge_ts)
 
-            # Prune old nodes to maintain graph size
-            self._prune_old_nodes()
+            # Rule Connections
+            for rule_id in rule_node_ids_this_step:
+                 rule_data = self.graph.nodes[rule_id] # Get data added above
+                 rule_string_lower = rule_data.get('rule_string', '').lower()
+                 rule_confidence = rule_data.get('confidence', 0.0)
 
-            self.logger.info(f"Knowledge graph updated: {len(self.graph.nodes)} nodes, {len(self.graph.edges)} edges")
+                 # Sensor -> Rule
+                 for sensor_name, sensor_id in sensor_node_ids_this_step.items():
+                     # More specific check for sensor involvement in rule body
+                     if f"{sensor_name}(" in rule_string_lower or f" {sensor_name}_" in rule_string_lower:
+                         self._add_edge_safe(sensor_id, rule_id, weight=rule_confidence, label='related_to', timestamp=edge_ts)
+
+                 # Rule -> State (Basic implication check)
+                 rule_head = rule_string_lower.split(":-")[0].strip()
+                 if "degraded_state" in rule_head:
+                     self._add_edge_safe(rule_id, state_id_this_step, weight=rule_confidence, label='implies_degraded', timestamp=edge_ts)
+                 elif "critical_state" in rule_head:
+                     self._add_edge_safe(rule_id, state_id_this_step, weight=rule_confidence, label='implies_critical', timestamp=edge_ts)
+                 # Add more rule->state links based on rule heads if needed
+
+            # Anomaly Connections
+            if anomaly_id_this_step:
+                 # State -> Anomaly
+                 self._add_edge_safe(state_id_this_step, anomaly_id_this_step, weight=1.0, label='indicates', timestamp=edge_ts)
+                 # Rule -> Anomaly
+                 for rule_id in rule_node_ids_this_step:
+                     rule_conf = self.graph.nodes[rule_id].get('confidence', 0.0)
+                     self._add_edge_safe(rule_id, anomaly_id_this_step, weight=rule_conf, label='detects', timestamp=edge_ts)
+
+            # Insight Connections
+            for insight_id in insight_node_ids_this_step:
+                 # State -> Insight
+                 self._add_edge_safe(state_id_this_step, insight_id, weight=0.5, label='context_for', timestamp=edge_ts)
+                 # Anomaly -> Insight
+                 self._add_edge_safe(anomaly_id_this_step, insight_id, weight=1.0, label='explained_by', timestamp=edge_ts) # Safe even if anomaly_id is None
+                 # Rule -> Insight (Connect relevant rules)
+                 insight_text_lower = self.graph.nodes[insight_id].get('text', '').lower()
+                 for rule_id in rule_node_ids_this_step:
+                      rule_head = self.graph.nodes[rule_id].get('rule_string', '').split(":-")[0].strip().lower()
+                      # Check if rule head (name) appears in the insight text
+                      if rule_head and rule_head in insight_text_lower:
+                           self._add_edge_safe(rule_id, insight_id, weight=0.7, label='generates', timestamp=edge_ts)
+
+            # Correlation Edges (between latest sensor nodes)
+            self._calculate_correlations() # Recalculate based on updated history
+            for pair, corr in self.sensor_correlations.items():
+                 if abs(corr) > 0.7:
+                     s1_name, s2_name = pair.split('_')
+                     # Use the IDs generated in *this* step
+                     s1_id = sensor_node_ids_this_step.get(s1_name)
+                     s2_id = sensor_node_ids_this_step.get(s2_name)
+                     self._add_edge_safe(s1_id, s2_id, weight=abs(corr), label=f'corr: {corr:.2f}', style='dotted', timestamp=edge_ts)
+
+
+            self.logger.info(f"Knowledge graph updated: {self.graph.number_of_nodes()} nodes, {self.graph.number_of_edges()} edges")
 
         except Exception as e:
-            self.logger.error(f"Error updating knowledge graph: {e}")
-            raise
+            self.logger.error(f"Error updating knowledge graph: {e}", exc_info=True)
+            # Don't raise, allow continuation
 
-    def _prune_old_nodes(self, max_nodes: int = 100) -> None:
-        """Remove oldest nodes if graph exceeds size limit."""
+
+    def _prune_old_nodes(self) -> None:
+        """Remove oldest nodes if graph exceeds size limit, preserving structure if possible."""
         try:
-            if len(self.graph) > max_nodes:
-                nodes = sorted(self.graph.nodes(data=True),
-                               key=lambda x: x[1].get('timestamp', ''))
-                nodes_to_remove = nodes[:(len(self.graph) - max_nodes)]
-                self.graph.remove_nodes_from([n[0] for n in nodes_to_remove])
-                self.logger.info(f"Pruned {len(nodes_to_remove)} old nodes from graph")
+            num_nodes = len(self.graph)
+            if num_nodes > self.max_nodes:
+                num_to_remove = num_nodes - self.max_nodes
+                # Get nodes with timestamp attribute, ensure it's datetime
+                nodes_with_ts = [
+                    (n, data['timestamp']) for n, data in self.graph.nodes(data=True)
+                    if 'timestamp' in data and isinstance(data['timestamp'], datetime)
+                ]
+
+                if not nodes_with_ts or len(nodes_with_ts) <= num_to_remove:
+                    self.logger.warning(f"Not enough nodes with valid timestamps ({len(nodes_with_ts)}) to prune {num_to_remove} nodes. Skipping prune.")
+                    return
+
+                # Sort by timestamp (oldest first)
+                nodes_with_ts.sort(key=lambda x: x[1])
+
+                # Identify nodes to remove
+                nodes_to_remove_ids = [n[0] for n in nodes_with_ts[:num_to_remove]]
+
+                # Remove the identified nodes
+                self.graph.remove_nodes_from(nodes_to_remove_ids)
+                self.logger.info(f"Pruned {len(nodes_to_remove_ids)} old nodes from graph (Limit: {self.max_nodes}).")
+
         except Exception as e:
-            self.logger.error(f"Error pruning nodes: {e}")
+            self.logger.error(f"Error pruning nodes: {e}", exc_info=True)
+
 
     def visualize(self, output_path: str) -> None:
         """Generate and save knowledge graph visualization."""
+        if not self.graph or self.graph.number_of_nodes() == 0:
+             self.logger.warning("Graph is empty, skipping visualization.")
+             return
+
         try:
-            self.logger.info(f"Starting visualization with {len(self.graph.nodes)} nodes")
-            self.logger.info(f"Node types present: {set(nx.get_node_attributes(self.graph, 'type').values())}")
+            num_nodes = self.graph.number_of_nodes()
+            num_edges = self.graph.number_of_edges()
+            self.logger.info(f"Starting visualization with {num_nodes} nodes and {num_edges} edges.")
+            node_types_present = set(nx.get_node_attributes(self.graph, 'type').values())
+            self.logger.info(f"Node types present: {node_types_present}")
 
-            plt.figure(figsize=(20, 15))  # Larger figure
+            # Adjust figure size based on node count
+            figsize_base = 15
+            figsize_scale = max(1.0, num_nodes / 50.0) # Scale up moderately
+            plt.figure(figsize=(figsize_base * figsize_scale, figsize_base * figsize_scale * 0.75))
 
-            # Use spring layout with parameters
-            pos = nx.spring_layout(self.graph, **self.layout_params)
+            # Layout calculation
+            try:
+                 # Adaptive k based on node count
+                 effective_k = 1.0 / math.sqrt(num_nodes) if num_nodes > 0 else 0.1
+                 pos = nx.spring_layout(self.graph, k=effective_k, iterations=self.layout_params['iterations'], seed=self.layout_params['seed'])
+            except Exception as layout_error:
+                 self.logger.warning(f"Spring layout failed: {layout_error}. Falling back to random layout.")
+                 pos = nx.random_layout(self.graph, seed=self.layout_params['seed'])
 
-            # Draw nodes by type with different sizes
-            sizes = {
-                'sensor': 2000,
-                'state': 3000,
-                'rule': 2500,
-                'insight': 2000,
-                'anomaly': 2500,
-                'metrics': 2000  # Size for metrics node
-            }
+            # Node sizes and colors
+            sizes = {'sensor': 2500, 'state': 4000, 'rule': 2000, 'insight': 2200, 'anomaly': 3500, 'metrics': 2500}
+            default_size = 1500
+            node_size_list = [sizes.get(self.graph.nodes[n].get('type', ''), default_size) for n in self.graph.nodes()]
+            node_color_list = [self.node_types.get(self.graph.nodes[n].get('type', ''), 'gray') for n in self.graph.nodes()]
 
-            # Add node clustering
-            for node_type in self.node_types:
-                nodes = [n for n, d in self.graph.nodes(data=True)
-                         if d.get('type') == node_type]
-                if nodes:
-                    nx.draw_networkx_nodes(self.graph, pos,
-                                           nodelist=nodes,
-                                           node_color=self.node_types[node_type],
-                                           node_size=sizes[node_type],
-                                           alpha=0.8,
-                                           label=node_type.capitalize())
+            # Draw nodes
+            nx.draw_networkx_nodes(self.graph, pos, node_color=node_color_list, node_size=node_size_list, alpha=0.8)
 
-            # Add better edge styling
+            # Draw edges
             edge_styles = {
-                'influences': {'style': 'solid', 'weight': 2},
-                'triggers': {'style': 'dashed', 'weight': 1},
-                'generates': {'style': 'dotted', 'weight': 1},
-                'has': {'style': 'solid', 'weight': 1}  # Style for metrics edge
+                'influences': {'style': 'solid', 'width': 1.5, 'color': 'darkgray'},
+                'related_to': {'style': 'dashed', 'width': 0.8, 'color': 'gray'},
+                'implies_degraded': {'style': 'solid', 'width': 1.5, 'color': 'orange'},
+                'implies_critical': {'style': 'solid', 'width': 2.0, 'color': 'red'},
+                'indicates': {'style': 'solid', 'width': 1.5, 'color': 'salmon'},
+                'detects': {'style': 'dashed', 'width': 1.0, 'color': 'salmon'},
+                'context_for': {'style': 'dotted', 'width': 0.8, 'color': 'olive'},
+                'explained_by': {'style': 'solid', 'width': 1.0, 'color': 'olive'},
+                'generates': {'style': 'dotted', 'width': 0.8, 'color': 'purple'},
+                'has': {'style': 'solid', 'width': 1.0, 'color': 'black'},
+                'corr': {'style': 'dotted', 'width': 1.5, 'color': 'blue'} # Style for correlation
             }
+            default_edge_style = {'style': 'solid', 'width': 0.5, 'color': 'lightgray'}
+
             for u, v, data in self.graph.edges(data=True):
-                style = edge_styles.get(data.get('label'), {}).get('style', 'solid')
-                weight = edge_styles.get(data.get('label'), {}).get('weight', 1)
-                nx.draw_networkx_edges(self.graph, pos,
-                                       edgelist=[(u, v)],
-                                       style=style,
-                                       width=weight,
-                                       edge_color='gray',
-                                       arrows=True,
-                                       arrowsize=20,
-                                       alpha=0.5)
+                 edge_label = data.get('label', '')
+                 # Special handling for correlation label format
+                 base_label = 'corr' if edge_label.startswith('corr:') else edge_label
+                 style_attrs = edge_styles.get(base_label, default_edge_style)
 
-            # Add labels
-            labels = nx.get_node_attributes(self.graph, 'label')
-            nx.draw_networkx_labels(self.graph, pos, labels,
-                                    font_size=8,
-                                    font_weight='bold')
+                 # Scale width by edge weight if present, default to style width otherwise
+                 edge_weight = data.get('weight', 1.0)
+                 draw_width = style_attrs['width'] * (edge_weight if edge_weight is not None else 1.0)
 
+                 nx.draw_networkx_edges(self.graph, pos,
+                                        edgelist=[(u, v)],
+                                        style=style_attrs['style'],
+                                        width=max(0.5, draw_width), # Ensure minimum width
+                                        edge_color=style_attrs['color'],
+                                        arrows=True,
+                                        arrowsize=15,
+                                        alpha=0.6,
+                                        connectionstyle='arc3,rad=0.1')
+
+            # Draw labels
+            labels = {n: data.get('label', n) for n, data in self.graph.nodes(data=True)}
+            font_size = max(4, 8 - int(num_nodes / 50)) # Decrease font size for large graphs
+            nx.draw_networkx_labels(self.graph, pos, labels, font_size=font_size, font_weight='normal')
+
+            # Draw edge labels (optional)
             edge_labels = nx.get_edge_attributes(self.graph, 'label')
-            nx.draw_networkx_edge_labels(self.graph, pos,
-                                         edge_labels=edge_labels,
-                                         font_size=6)
+            if num_edges < 150: # Only draw edge labels for smaller graphs to avoid clutter
+                nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=edge_labels, font_size=max(3, font_size-2), font_color='dimgray')
 
-            plt.title("ANSR-DT Knowledge Graph", pad=20, size=16)
-            plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
+            plt.title(f"ANSR-DT Knowledge Graph ({datetime.now().strftime('%Y-%m-%d %H:%M:%S')})", size=16)
             plt.axis('off')
-            plt.tight_layout()
-
-            # Create output directory if it doesn't exist
-            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            # Use tight_layout cautiously, might fail on very large graphs
+            try:
+                 plt.tight_layout()
+            except ValueError:
+                 self.logger.warning("tight_layout failed, proceeding without it.")
 
             # Save figure
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
             plt.savefig(output_path, dpi=300, bbox_inches='tight')
             plt.close()
 
             self.logger.info(f"Knowledge graph visualization saved to {output_path}")
 
         except Exception as e:
-            self.logger.error(f"Visualization error: {str(e)}")
-            self.logger.error(f"Graph state: {len(self.graph.nodes)} nodes, {len(self.graph.edges)} edges")
-            raise
+            self.logger.error(f"Visualization error: {str(e)}", exc_info=True)
+            plt.close() # Ensure plot is closed even on error
+
 
     def get_graph_statistics(self) -> Dict[str, Any]:
         """Get statistics about the current graph state."""
         try:
+            num_nodes = self.graph.number_of_nodes()
+            if num_nodes == 0:
+                return {'total_nodes': 0, 'total_edges': 0, 'node_types': {}, 'avg_degree': 0.0, 'timestamp': datetime.now().isoformat()}
+
+            node_types_counts = {
+                node_type: len([n for n, d in self.graph.nodes(data=True)
+                                if d.get('type') == node_type])
+                for node_type in self.node_types
+            }
+            degrees = [d for n, d in self.graph.degree()]
+            avg_degree = np.mean(degrees) if degrees else 0.0
+
             stats = {
-                'total_nodes': len(self.graph.nodes),
-                'total_edges': len(self.graph.edges),
-                'node_types': {
-                    node_type: len([n for n, d in self.graph.nodes(data=True)
-                                    if d.get('type') == node_type])
-                    for node_type in self.node_types
-                },
-                'avg_degree': np.mean([d for n, d in self.graph.degree()]),
+                'total_nodes': num_nodes,
+                'total_edges': self.graph.number_of_edges(),
+                'node_types': node_types_counts,
+                'avg_degree': float(avg_degree),
                 'timestamp': datetime.now().isoformat()
             }
             return stats
         except Exception as e:
-            self.logger.error(f"Error calculating graph statistics: {e}")
+            self.logger.error(f"Error calculating graph statistics: {e}", exc_info=True)
             return {}
 
     def export_graph(self, output_path: str) -> None:
-        """Export graph data to JSON format."""
+        """Export graph data to JSON format using networkx node_link_data."""
         try:
-            import json
-            import networkx as nx
+            # Use networkx's built-in JSON exporter
+            graph_data = nx.node_link_data(self.graph)
 
-            # Convert graph to JSON-serializable format
-            graph_data = {
-                'nodes': [
-                    {
-                        'id': node,
-                        **{k: str(v) if isinstance(v, datetime) else v
-                           for k, v in data.items()}
-                    }
-                    for node, data in self.graph.nodes(data=True)
-                ],
-                'edges': [
-                    {
-                        'source': u,
-                        'target': v,
-                        **{k: str(v) if isinstance(v, datetime) else v
-                           for k, v in data.items()}
-                    }
-                    for u, v, data in self.graph.edges(data=True)
-                ],
-                'metadata': {
-                    'timestamp': datetime.now().isoformat(),
-                    'statistics': self.get_graph_statistics()
-                }
+            # Add metadata
+            graph_data['metadata'] = {
+                 'timestamp': datetime.now().isoformat(),
+                 'statistics': self.get_graph_statistics()
             }
+
+            # Ensure all datetime objects are converted to strings
+            for node in graph_data.get('nodes', []):
+                 for key, value in node.items():
+                      if isinstance(value, datetime):
+                           node[key] = value.isoformat()
+            for link in graph_data.get('links', []):
+                 for key, value in link.items():
+                      if isinstance(value, datetime):
+                           link[key] = value.isoformat()
 
             # Save to file
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
             with open(output_path, 'w') as f:
-                json.dump(graph_data, f, indent=2)
+                json.dump(graph_data, f, indent=2, cls=NumpyEncoder) # Use encoder for safety
 
             self.logger.info(f"Graph data exported to {output_path}")
 
         except Exception as e:
-            self.logger.error(f"Error exporting graph: {e}")
-            raise
-
+            self.logger.error(f"Error exporting graph: {e}", exc_info=True)
+            # Avoid raising here unless critical
