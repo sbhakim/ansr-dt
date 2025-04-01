@@ -1,7 +1,7 @@
 # main.py
-import json
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1" # Force CPU usage
+import json
 import logging
 import numpy as np
 from datetime import datetime
