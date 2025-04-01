@@ -261,7 +261,90 @@ efficiency_degradation(Eff, Grad) :-
     NegGrad is -Grad, % Check for negative gradient (drop)
     feature_gradient(efficiency_index, NegGrad, high). % Check if the drop magnitude is high
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Temporal Trend Predicates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define what increasing/decreasing trends mean for different features
 
+% --- Temporal Trend Detection ---
+trend(temperature, increasing) :-
+    current_sensor_value(temperature, CurrentTemp),
+    sensor_change(temperature, Change),
+    Change > 1.0.
+
+trend(temperature, decreasing) :-
+    current_sensor_value(temperature, CurrentTemp),
+    sensor_change(temperature, Change),
+    Change < -1.0.
+
+trend(vibration, increasing) :-
+    current_sensor_value(vibration, CurrentVib),
+    sensor_change(vibration, Change),
+    Change > 0.5.
+
+trend(vibration, decreasing) :-
+    current_sensor_value(vibration, CurrentVib),
+    sensor_change(vibration, Change),
+    Change < -0.5.
+
+trend(pressure, increasing) :-
+    current_sensor_value(pressure, CurrentPressure),
+    sensor_change(pressure, Change),
+    Change > 0.5.
+
+trend(pressure, decreasing) :-
+    current_sensor_value(pressure, CurrentPressure),
+    sensor_change(pressure, Change),
+    Change < -0.5.
+
+trend(efficiency_index, decreasing) :-
+    current_sensor_value(efficiency_index, CurrentEff),
+    sensor_change(efficiency_index, Change),
+    Change < -0.05.
+
+% --- Enhanced Feature Correlation Predicates ---
+correlated(temperature, vibration) :-
+    current_sensor_value(temperature, Temp),
+    current_sensor_value(vibration, Vib),
+    NormalizedTemp is Temp / 80.0,
+    NormalizedVib is Vib / 60.0,
+    Diff is abs(NormalizedTemp - NormalizedVib),
+    Diff < 0.2.
+
+correlated(temperature, pressure) :-
+    current_sensor_value(temperature, Temp),
+    current_sensor_value(pressure, Press),
+    NormalizedTemp is Temp / 80.0,
+    NormalizedPress is Press / 40.0,
+    Diff is abs(NormalizedTemp - NormalizedPress),
+    Diff < 0.2.
+
+correlated(vibration, pressure) :-
+    current_sensor_value(vibration, Vib),
+    current_sensor_value(pressure, Press),
+    NormalizedVib is Vib / 60.0,
+    NormalizedPress is Press / 40.0,
+    Diff is abs(NormalizedVib - NormalizedPress),
+    Diff < 0.2.
+
+% --- Pattern Sequence Predicates ---
+sequence_pattern(increasing_temp_decreasing_press) :-
+    trend(temperature, increasing),
+    trend(pressure, decreasing).
+
+sequence_pattern(all_increasing) :-
+    trend(temperature, increasing),
+    trend(vibration, increasing),
+    trend(pressure, increasing).
+
+sequence_pattern(all_decreasing) :-
+    trend(temperature, decreasing),
+    trend(vibration, decreasing),
+    trend(pressure, decreasing).
+
+sequence_pattern(efficiency_drop_with_temp_rise) :-
+    trend(temperature, increasing),
+    trend(efficiency_index, decreasing).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ProbLog Integration (Optional - keep stubs if used)
@@ -285,107 +368,22 @@ reload_and_report :-
 % Rules below this marker are managed by the Python SymbolicReasoner.
 % Manual edits here will likely be overwritten.
 
+
+
+
+
+
+
 %% START DYNAMIC RULES %%
 %% Automatically managed section - Do not edit manually below this line %%
-neural_rule_10 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_112 :- combined_low_press_eff, efficiency_index(-1.52), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_113 :- combined_low_press_eff, efficiency_index(-1.44), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_115 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_116 :- combined_low_press_eff, efficiency_index(-1.62), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_117 :- combined_low_press_eff, efficiency_index(-1.55), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_118 :- combined_low_press_eff, efficiency_index(-1.65), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_119 :- combined_low_press_eff, efficiency_index(-1.69), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_12 :- combined_low_press_eff, efficiency_index(-1.59), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_120 :- combined_low_press_eff, efficiency_index(-1.67), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_121 :- combined_low_press_eff, efficiency_index(-1.78), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_122 :- combined_low_press_eff, efficiency_index(-1.65), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_125 :- combined_low_press_eff, efficiency_index(-1.50), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_126 :- combined_low_press_eff, efficiency_index(-1.65), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_127 :- combined_low_press_eff, efficiency_index(-1.66), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_128 :- combined_low_press_eff, efficiency_index(-1.61), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_129 :- combined_low_press_eff, efficiency_index(-1.68), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_130 :- combined_low_press_eff, efficiency_index(-1.58), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_131 :- combined_low_press_eff, efficiency_index(-1.48), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_132 :- combined_low_press_eff, efficiency_index(-1.50), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_133 :- combined_low_press_eff, efficiency_index(-1.51), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_134 :- combined_low_press_eff, efficiency_index(-1.44), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_135 :- combined_low_press_eff, efficiency_index(-1.38), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_136 :- combined_low_press_eff, efficiency_index(-1.55), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_137 :- combined_low_press_eff, efficiency_index(-1.44), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_138 :- combined_low_press_eff, efficiency_index(-1.46), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_139 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_14 :- combined_low_press_eff, efficiency_index(-1.62), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_140 :- combined_low_press_eff, efficiency_index(-1.62), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_141 :- combined_low_press_eff, efficiency_index(-1.58), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_142 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_143 :- combined_low_press_eff, efficiency_index(-1.56), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_144 :- combined_low_press_eff, efficiency_index(-1.73), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_145 :- combined_low_press_eff, efficiency_index(-1.73), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_146 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_147 :- combined_low_press_eff, efficiency_index(-1.81), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_148 :- combined_low_press_eff, efficiency_index(-1.69), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_149 :- combined_low_press_eff, efficiency_index(-1.70), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_15 :- combined_low_press_eff, efficiency_index(-1.45), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_150 :- combined_low_press_eff, efficiency_index(-1.71), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_151 :- combined_low_press_eff, efficiency_index(-1.64), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_153 :- combined_low_press_eff, efficiency_index(-1.71), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_16 :- combined_low_press_eff, efficiency_index(-1.71), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_17 :- combined_low_press_eff, efficiency_index(-1.62), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_18 :- combined_low_press_eff, efficiency_index(-1.70), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_19 :- combined_low_press_eff, efficiency_index(-1.65), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_20 :- combined_low_press_eff, efficiency_index(-1.65), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_21 :- combined_low_press_eff, efficiency_index(-1.71), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_30 :- combined_low_press_eff, efficiency_index(-1.58), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_31 :- combined_low_press_eff, efficiency_index(-1.42), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_32 :- combined_low_press_eff, efficiency_index(-1.47), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_33 :- combined_low_press_eff, efficiency_index(-1.46), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_34 :- combined_low_press_eff, efficiency_index(-1.54), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_35 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_36 :- combined_low_press_eff, efficiency_index(-1.40), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_37 :- combined_low_press_eff, efficiency_index(-1.49), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_38 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_39 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_40 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_41 :- combined_low_press_eff, efficiency_index(-1.72), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_42 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_43 :- combined_low_press_eff, efficiency_index(-1.68), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_44 :- combined_low_press_eff, efficiency_index(-1.70), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_46 :- combined_low_press_eff, efficiency_index(-1.71), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_50 :- combined_low_press_eff, efficiency_index(-1.74), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_60 :- combined_low_press_eff, efficiency_index(-1.44), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_61 :- combined_low_press_eff, efficiency_index(-1.58), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_63 :- combined_low_press_eff, efficiency_index(-1.51), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_64 :- combined_low_press_eff, efficiency_index(-1.59), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_65 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_66 :- combined_low_press_eff, efficiency_index(-1.61), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_67 :- combined_low_press_eff, efficiency_index(-1.66), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_68 :- combined_low_press_eff, efficiency_index(-1.53), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_69 :- combined_low_press_eff, efficiency_index(-1.76), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_70 :- combined_low_press_eff, efficiency_index(-1.62), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_71 :- combined_low_press_eff, efficiency_index(-1.66), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_74 :- combined_low_press_eff, efficiency_index(-1.77), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_76 :- combined_low_press_eff, efficiency_index(-1.54), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_77 :- combined_low_press_eff, efficiency_index(-1.48), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_78 :- combined_low_press_eff, efficiency_index(-1.50), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_79 :- combined_low_press_eff, efficiency_index(-1.57), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_80 :- combined_low_press_eff, efficiency_index(-1.58), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_81 :- combined_low_press_eff, efficiency_index(-1.51), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_82 :- combined_low_press_eff, efficiency_index(-1.49), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_83 :- combined_low_press_eff, efficiency_index(-1.55), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_84 :- combined_low_press_eff, efficiency_index(-1.46), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_85 :- combined_low_press_eff, efficiency_index(-1.50), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_86 :- combined_low_press_eff, efficiency_index(-1.50), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_87 :- combined_low_press_eff, efficiency_index(-1.56), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_88 :- combined_low_press_eff, efficiency_index(-1.45), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_89 :- combined_low_press_eff, efficiency_index(-1.48), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_9 :- combined_low_press_eff, efficiency_index(-1.63), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_90 :- combined_low_press_eff, efficiency_index(-1.64), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_91 :- combined_low_press_eff, efficiency_index(-1.52), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_92 :- combined_low_press_eff, efficiency_index(-1.52), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_93 :- combined_low_press_eff, efficiency_index(-1.69), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_94 :- combined_low_press_eff, efficiency_index(-1.69), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_95 :- combined_low_press_eff, efficiency_index(-1.72), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_96 :- combined_low_press_eff, efficiency_index(-1.74), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
-neural_rule_99 :- combined_low_press_eff, efficiency_index(-1.63), pressure(-1).  % Confidence: 1.000, Extracted: 2025-03-31T03:09:00.327699, Activations: 0
+neural_rule_1 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low).  % Confidence: 0.987, Extracted: 2025-04-01T15:54:03.871996, Activations: 0
+neural_rule_2 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_gradient(vibration, _, high), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low), trend(temperature, medium).  % Confidence: 1.000, Extracted: 2025-04-01T15:54:03.871996, Activations: 0
+neural_rule_3 :- feature_threshold(pressure, _, low).  % Confidence: 1.000, Extracted: 2025-04-01T15:54:03.871996, Activations: 0
+neural_rule_4 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_gradient(vibration, _, high), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low), trend(temperature, medium).  % Confidence: 1.000, Extracted: 2025-04-01T15:56:10.733620, Activations: 0
+neural_rule_5 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low).  % Confidence: 0.999, Extracted: 2025-04-01T15:56:10.733620, Activations: 0
+neural_rule_6 :- feature_threshold(pressure, _, low).  % Confidence: 1.000, Extracted: 2025-04-01T15:56:10.733620, Activations: 0
+neural_rule_7 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low).  % Confidence: 0.867, Extracted: 2025-04-01T15:57:50.857220, Activations: 0
+neural_rule_8 :- correlated(efficiency_index, performance_score), correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, performance_score), correlated(operational_hours, system_state), correlated(pressure, efficiency_index), correlated(pressure, operational_hours), correlated(pressure, performance_score), correlated(pressure, system_state), correlated(system_state, performance_score), correlated(temperature, efficiency_index), correlated(temperature, operational_hours), correlated(temperature, performance_score), correlated(temperature, pressure), correlated(temperature, system_state), correlated(temperature, vibration), correlated(vibration, efficiency_index), correlated(vibration, operational_hours), correlated(vibration, performance_score), correlated(vibration, pressure), correlated(vibration, system_state), feature_gradient(vibration, _, high), feature_threshold(efficiency_index, _, low), feature_threshold(pressure, _, low), trend(temperature, medium).  % Confidence: 0.999, Extracted: 2025-04-01T15:57:50.857220, Activations: 0
+neural_rule_9 :- correlated(efficiency_index, system_state), correlated(operational_hours, efficiency_index), correlated(operational_hours, system_state), feature_gradient(vibration, _, high), trend(temperature, increasing).  % Confidence: 0.840, Extracted: 2025-04-01T15:58:29.284589, Activations: 0
 
 %% END DYNAMIC RULES %%

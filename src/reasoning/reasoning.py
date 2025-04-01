@@ -1,7 +1,7 @@
 # src/reasoning/reasoning.py
 
 import logging
-from pyswip import Prolog # Import PrologError for specific catching
+from pyswip import Prolog  # Import PrologError for specific catching
 import os
 import numpy as np
 import tensorflow as tf
@@ -10,8 +10,7 @@ from src.utils.model_utils import load_model_with_initialization
 from .rule_learning import RuleLearner
 from .state_tracker import StateTracker
 from datetime import datetime
-import math # For isnan checks
-
+import math  # For isnan checks
 
 # Define a marker for separating base rules from dynamic ones
 DYNAMIC_RULES_MARKER = "%% START DYNAMIC RULES %%"
@@ -25,12 +24,11 @@ class SymbolicReasoner:
             model_path: Optional[str] = None,
             logger: Optional[logging.Logger] = None
     ):
-        """ Initializes the Symbolic Reasoner """
+        """Initializes the Symbolic Reasoner."""
         self.logger = logger or logging.getLogger(__name__)
         try:
             self.prolog = Prolog()
-            # Increase default stack sizes (optional, might help with complex queries/many rules)
-            # list(self.prolog.query("set_prolog_flag(stack_limit, 2_147_483_648).")) # Example: 2GB
+            # Optionally, increase default stack sizes if needed.
         except Exception as e:
              self.logger.critical(f"Failed to initialize PySWIP Prolog instance: {e}", exc_info=True)
              raise RuntimeError(f"Prolog initialization failed: {e}") from e
@@ -50,7 +48,7 @@ class SymbolicReasoner:
             self.logger.error(f"Prolog rules file not found at: {rules_path}")
             raise FileNotFoundError(f"Prolog rules file not found at: {rules_path}")
 
-        # Load files, handling potential errors
+        # Load Prolog files
         self._load_prolog_files([
             'load_config.pl',
             'integrate_prob_log.pl',
@@ -66,7 +64,7 @@ class SymbolicReasoner:
                 self.model = load_model_with_initialization(
                     path=model_path,
                     logger=self.logger,
-                    input_shape=input_shape # Pass shape for build check
+                    input_shape=input_shape  # Pass shape for build check
                 )
                 self.logger.info("Model loaded and initialized successfully.")
             else:
@@ -90,13 +88,10 @@ class SymbolicReasoner:
             path = os.path.join(self.rules_dir, file)
             if os.path.exists(path):
                 try:
-                    prolog_path = path.replace("\\", "/") # Ensure prolog-friendly path
+                    prolog_path = path.replace("\\", "/")  # Ensure prolog-friendly path
                     list(self.prolog.query(f"consult('{prolog_path}')"))
                     self.logger.info(f"Loaded Prolog file: {file}")
-                except PrologError as pe: # Catch specific Prolog errors
-                     self.logger.error(f"PrologError consulting file {file} at {path}: {pe}", exc_info=True)
                 except Exception as e:
-                     # Log other exceptions as warnings
                      self.logger.warning(f"Potential issue loading {file} at {path}: {type(e).__name__} - {e}")
             else:
                 self.logger.warning(f"Prolog file not found, skipping: {path}")
@@ -108,7 +103,7 @@ class SymbolicReasoner:
                 content = f.readlines()
 
             in_dynamic_section = False
-            self.learned_rules = {} # Reset before loading
+            self.learned_rules = {}  # Reset before loading
 
             for line_num, line in enumerate(content):
                 stripped_line = line.strip()
@@ -143,7 +138,7 @@ class SymbolicReasoner:
                                     elif key == 'activations': activations = int(value)
                         except Exception as parse_error:
                             self.logger.warning(f"L{line_num+1}: Could not parse metadata '{comment_part}': {parse_error}")
-                            rule_part = stripped_line # Fallback to using the whole line
+                            rule_part = stripped_line  # Fallback to using the whole line
                             comment_part = ""
 
                     if rule_part.endswith('.'):
@@ -169,9 +164,8 @@ class SymbolicReasoner:
         except Exception as e:
             self.logger.error(f"Error loading dynamic rules from file: {e}", exc_info=True)
 
-
     def _rewrite_rules_file(self):
-        """ Rewrites the rules file safely """
+        """Rewrites the rules file safely."""
         temp_rules_path = self.rules_path + ".tmp"
         try:
             base_rules_content = []
@@ -181,7 +175,7 @@ class SymbolicReasoner:
                     for line in f_read:
                         if line.strip() == DYNAMIC_RULES_MARKER:
                             found_marker = True
-                            base_rules_content.append(line) # Include marker
+                            base_rules_content.append(line)  # Include marker
                             break
                         base_rules_content.append(line)
                     # If marker wasn't found, add it
@@ -218,17 +212,16 @@ class SymbolicReasoner:
                 prolog_path = self.rules_path.replace("\\", "/")
                 list(self.prolog.query(f"consult('{prolog_path}')"))
                 self.logger.info(f"Re-consulted Prolog file: {prolog_path}")
-            except PrologError as pe:
-                 self.logger.error(f"PrologError re-consulting file after rewrite {prolog_path}: {pe}", exc_info=True)
             except Exception as e:
                  self.logger.error(f"Failed to re-consult {prolog_path} after rewrite: {type(e).__name__} - {e}", exc_info=True)
 
         except Exception as e:
             self.logger.error(f"Error rewriting Prolog rules file: {e}", exc_info=True)
             if os.path.exists(temp_rules_path):
-                try: os.remove(temp_rules_path)
-                except OSError as rm_error: self.logger.error(f"Could not remove temporary rules file {temp_rules_path}: {rm_error}")
-
+                try:
+                    os.remove(temp_rules_path)
+                except OSError as rm_error:
+                    self.logger.error(f"Could not remove temporary rules file {temp_rules_path}: {rm_error}")
 
     def extract_rules_from_neural_model(
             self,
@@ -237,7 +230,7 @@ class SymbolicReasoner:
             threshold: float = 0.7,
             model: Optional[tf.keras.Model] = None
     ) -> List[Tuple[str, float]]:
-        """ Extracts potential rule candidates from neural model predictions. """
+        """Extracts potential rule candidates from neural model predictions with improved diversity."""
         try:
             model_to_use = model if model is not None else self.model
             if model_to_use is None:
@@ -247,9 +240,9 @@ class SymbolicReasoner:
             # Ensure model is built
             if not model_to_use.built:
                  self.logger.warning("Model not built, attempting build for rule extraction.")
-                 if self.input_shape and input_data.shape[1:] == self.input_shape: # Check if input data matches expected shape
+                 if self.input_shape and input_data.shape[1:] == self.input_shape:
                      try:
-                         _ = model_to_use.predict(input_data[:1].astype(np.float32), verbose=0) # Build with first sample
+                         _ = model_to_use.predict(input_data[:1].astype(np.float32), verbose=0)
                          self.logger.info("Model built successfully during rule extraction.")
                      except Exception as e:
                          self.logger.error(f"Failed to build model during rule extraction with data shape {input_data.shape[1:]} vs expected {self.input_shape}: {e}")
@@ -282,14 +275,17 @@ class SymbolicReasoner:
 
             potential_new_rules = []
             current_learned_rule_count = len(self.learned_rules)
+            unique_rule_bodies = set()  # Track unique rule bodies to prevent duplicates
 
             for i, idx in enumerate(anomaly_indices):
                 sequence = input_data[idx]
-                if sequence.shape[0] < 2: continue
+                if sequence.shape[0] < 2:
+                    continue
 
                 current_values = sequence[-1, :]
                 previous_values = sequence[-2, :]
                 feature_conditions = []
+                condition_confidences = []
 
                 # --- Generate conditions using predicate names defined in rules.pl ---
                 for feat_idx, feat_name in enumerate(feature_names):
@@ -301,52 +297,78 @@ class SymbolicReasoner:
                         self.logger.warning(f"Error processing feature '{feat_name}' (idx {feat_idx}) for rule gen at sequence {idx}: {e}")
                         continue
 
-                    # --- CHANGE: Use predicates defined in rules.pl ---
-                    # Check threshold conditions defined in Prolog using feature_threshold/3
                     # Example: Check if temperature is 'high'
                     if feat_name == 'temperature' and list(self.prolog.query(f"feature_threshold(temperature, {feat_value}, high).")):
-                        feature_conditions.append(f"feature_threshold(temperature, _, high)") # Use variable for value
+                        feature_conditions.append("feature_threshold(temperature, _, high)")
+                        condition_confidences.append(min(1.0, feat_value / 80.0))
 
-                    # Example: Check if vibration change is 'high'
+                    # Example: Check if vibration gradient is 'high'
                     if feat_name == 'vibration' and list(self.prolog.query(f"feature_gradient(vibration, {change}, high).")):
-                         feature_conditions.append(f"feature_gradient(vibration, _, high)")
+                        feature_conditions.append("feature_gradient(vibration, _, high)")
+                        condition_confidences.append(min(1.0, change / 2.0))
 
                     # Example: Check if pressure is 'low'
                     if feat_name == 'pressure' and list(self.prolog.query(f"feature_threshold(pressure, {feat_value}, low).")):
-                        feature_conditions.append(f"feature_threshold(pressure, _, low)")
+                        feature_conditions.append("feature_threshold(pressure, _, low)")
+                        condition_confidences.append(min(1.0, (100 - feat_value) / 70.0))
 
                     # Example: Check if efficiency is 'low'
                     if feat_name == 'efficiency_index' and list(self.prolog.query(f"feature_threshold(efficiency_index, {feat_value}, low).")):
-                         feature_conditions.append(f"feature_threshold(efficiency_index, _, low)")
+                        feature_conditions.append("feature_threshold(efficiency_index, _, low)")
+                        condition_confidences.append(min(1.0, (1.0 - feat_value) / 0.4))
 
-                    # Example: Check maintenance_needed condition (using the base Prolog rule)
+                    # Example: Check maintenance_needed condition
                     op_hours_int = int(round(feat_value))
                     if feat_name == 'operational_hours' and list(self.prolog.query(f"maintenance_needed({op_hours_int}).")):
-                         feature_conditions.append(f"maintenance_needed(_)") # Use variable
+                        feature_conditions.append("maintenance_needed(_)")
+                        condition_confidences.append(1.0)
 
                     # Example: Check state_transition condition
                     if feat_name == 'system_state':
-                         prev_state_int = int(round(prev_value))
-                         curr_state_int = int(round(feat_value))
-                         if curr_state_int != prev_state_int and list(self.prolog.query(f"state_transition({prev_state_int}, {curr_state_int}).")):
-                              feature_conditions.append(f"state_transition({prev_state_int}, {curr_state_int})") # Keep specific transition
-                # --- End CHANGE ---
+                        prev_state_int = int(round(prev_value))
+                        curr_state_int = int(round(feat_value))
+                        if curr_state_int != prev_state_int and list(self.prolog.query(f"state_transition({prev_state_int}, {curr_state_int}).")):
+                            feature_conditions.append(f"state_transition({prev_state_int}, {curr_state_int})")
+                            condition_confidences.append(1.0)
 
-                # --- Add combined conditions (using defined arity-0 predicates) ---
-                # These check the *current* asserted facts via rules.pl definitions
-                if list(self.prolog.query("combined_high_temp_vib.")):
-                     feature_conditions.append("combined_high_temp_vib")
-                if list(self.prolog.query("combined_low_press_eff.")):
-                    feature_conditions.append("combined_low_press_eff")
+                    # --- Temporal Trend Detection ---
+                    # Calculate trend over a short window (using last two points here)
+                    if change > 0:
+                        # For example, for temperature:
+                        if feat_name == 'temperature':
+                            if change > 3.0:
+                                feature_conditions.append("trend(temperature, increasing)")
+                                condition_confidences.append(min(1.0, change / 3.0))
+                            elif change > 1.0:
+                                feature_conditions.append("trend(temperature, medium)")
+                                condition_confidences.append(min(1.0, change / 1.0))
+                        # Similarly for other features (vibration, pressure, etc.)
+                # --- End condition generation ---
 
+                # --- Add combined conditions (for example, feature correlation) ---
+                if len(feature_conditions) >= 2:
+                    for i in range(len(feature_names)):
+                        for j in range(i+1, len(feature_names)):
+                            f1, f2 = feature_names[i], feature_names[j]
+                            v1, v2 = current_values[i], current_values[j]
+                            if abs(v1 - v2) < 10.0:  # Arbitrary threshold for correlation
+                                feature_conditions.append(f"correlated({f1}, {f2})")
+                                condition_confidences.append(1.0 - abs(v1 - v2) / 10.0)
 
                 if feature_conditions:
                     # Create rule string with unique conditions sorted
                     rule_body = ", ".join(sorted(list(set(feature_conditions)))) + "."
+                    # Skip if we've already seen this exact rule body
+                    if rule_body in unique_rule_bodies:
+                        continue
+                    unique_rule_bodies.add(rule_body)
                     rule_name = f"neural_rule_{current_learned_rule_count + len(potential_new_rules) + 1}"
                     rule_string = f"{rule_name} :- {rule_body}"
                     instance_confidence = float(predictions[idx])
-                    potential_new_rules.append((rule_string, instance_confidence))
+                    # Optionally, you can combine average condition confidence and prediction confidence.
+                    avg_confidence = sum(condition_confidences) / len(condition_confidences) if condition_confidences else 0.0
+                    final_confidence = max(avg_confidence, instance_confidence)
+                    potential_new_rules.append((rule_string, final_confidence))
 
             self.logger.info(f"Generated {len(potential_new_rules)} potential new rule candidates.")
             return potential_new_rules
@@ -355,7 +377,6 @@ class SymbolicReasoner:
             self.logger.error(f"Error extracting rules from neural model: {e}", exc_info=True)
             return []
 
-    # --- analyze_neural_patterns remains unchanged from previous version ---
     def analyze_neural_patterns(
             self,
             anomalous_sequences: np.ndarray,
@@ -371,17 +392,15 @@ class SymbolicReasoner:
             if self.model is None:
                 self.logger.error("Cannot analyze patterns: Model not available.")
                 return []
-            if anomalous_sequences.size == 0 or normal_sequences.size == 0: # Check size instead of shape[0] for empty arrays
+            if anomalous_sequences.size == 0 or normal_sequences.size == 0:
                 self.logger.warning("Insufficient sequences provided for pattern analysis.")
                 return pattern_rules
 
-            # Ensure model is built
             if not self.model.built:
                  self.logger.warning("Model is not built before calling analyze_neural_patterns. Attempting build.")
                  try:
-                     # Use first available sequence to build
-                     build_input = np.expand_dims(anomalous_sequences[0], axis=0) if anomalous_sequences.size > 0 else \
-                                   (np.expand_dims(normal_sequences[0], axis=0) if normal_sequences.size > 0 else None)
+                     build_input = np.expand_dims(anomalous_sequences[0], axis=0) if anomalous_sequences.size > 0 else (
+                                   np.expand_dims(normal_sequences[0], axis=0) if normal_sequences.size > 0 else None)
                      if build_input is not None:
                          _ = self.model.predict(build_input.astype(np.float32), verbose=0)
                          self.logger.info("Model built successfully within analyze_neural_patterns.")
@@ -392,7 +411,6 @@ class SymbolicReasoner:
                      self.logger.error(f"Failed to build model within analyze_neural_patterns: {build_error}")
                      return []
 
-            # Find a suitable intermediate layer (e.g., LSTM output)
             feature_layer = None
             for layer in reversed(self.model.layers):
                  if isinstance(layer, (tf.keras.layers.LSTM, tf.keras.layers.Dense)) and layer != self.model.layers[-1]:
@@ -404,7 +422,6 @@ class SymbolicReasoner:
                 return []
             self.logger.info(f"Using layer '{feature_layer.name}' for pattern analysis feature extraction.")
 
-            # Create feature extractor sub-model
             try:
                 feature_extractor = tf.keras.Model(
                     inputs=self.model.input,
@@ -415,17 +432,17 @@ class SymbolicReasoner:
                 self.logger.error(f"Failed to create feature extractor for patterns using layer '{feature_layer.name}': {fe}")
                 return []
 
-            # Extract features
             try:
                 anomalous_features = feature_extractor.predict(anomalous_sequences.astype(np.float32), verbose=0)
                 normal_features = feature_extractor.predict(normal_sequences.astype(np.float32), verbose=0)
-                if len(anomalous_features.shape) == 3: anomalous_features = anomalous_features[:, -1, :]
-                if len(normal_features.shape) == 3: normal_features = normal_features[:, -1, :]
+                if len(anomalous_features.shape) == 3:
+                    anomalous_features = anomalous_features[:, -1, :]
+                if len(normal_features.shape) == 3:
+                    normal_features = normal_features[:, -1, :]
             except Exception as pe:
                 self.logger.error(f"Failed to extract features for patterns using layer '{feature_layer.name}': {pe}")
                 return []
 
-            # Compare feature distributions
             if anomalous_features.shape[0] > 0 and normal_features.shape[0] > 0:
                 anomaly_pattern_mean = np.mean(anomalous_features, axis=0)
                 normal_pattern_mean = np.mean(normal_features, axis=0)
@@ -437,12 +454,10 @@ class SymbolicReasoner:
                     self.logger.info(f"Found {len(significant_dims)} significant feature dimensions in layer '{feature_layer.name}'.")
                     pattern_rule_name = f"abstract_pattern_{len(self.learned_rules) + len(pattern_rules) + 1}"
                     dims_str = str(significant_dims.tolist()).replace(' ', '')
-                    pattern_rule_body = f"internal_pattern('{feature_layer.name}', {dims_str})." # Ensure ' ' is handled if layer names have spaces
+                    pattern_rule_body = f"internal_pattern('{feature_layer.name}', {dims_str})."
                     pattern_rule = f"{pattern_rule_name} :- {pattern_rule_body}"
                     avg_confidence = np.mean(self.model.predict(anomalous_sequences.astype(np.float32), verbose=0))
                     pattern_rules.append((pattern_rule, float(avg_confidence)))
-                    # NOTE: Need to define internal_pattern/2 in rules.pl if this rule is to be used.
-
             self.logger.info(f"Generated {len(pattern_rules)} abstract pattern-based rules.")
             return pattern_rules
 
@@ -450,14 +465,13 @@ class SymbolicReasoner:
             self.logger.error(f"Error in analyze_neural_patterns: {e}", exc_info=True)
             return []
 
-    # --- update_rules remains unchanged from previous version ---
     def update_rules(self,
                      potential_new_rules: List[Tuple[str, float]],
                      min_confidence: float = 0.7,
                      max_learned_rules: int = 100,
                      pruning_strategy: str = 'confidence'
                     ):
-        """ Adds new rules meeting confidence, potentially prunes old rules... """
+        """Adds new rules meeting confidence, potentially prunes old rules."""
         try:
             added_count = 0
             updated_count = 0
@@ -468,7 +482,7 @@ class SymbolicReasoner:
                 if instance_confidence >= min_confidence:
                     if rule_string in self.learned_rules:
                         self.learned_rules[rule_string]['timestamp'] = now
-                        updated_count +=1
+                        updated_count += 1
                         needs_rewrite = True
                     else:
                         self.learned_rules[rule_string] = {
@@ -511,14 +525,12 @@ class SymbolicReasoner:
         except Exception as e:
             self.logger.error(f"Error updating Prolog rules: {e}", exc_info=True)
 
-
     def get_rule_activations(self) -> List[Dict]:
-        """ Get history of detailed rule activations. """
+        """Get history of detailed rule activations."""
         return self.rule_activations
 
-
     def reason(self, sensor_dict: Dict[str, float]) -> List[str]:
-        """ Apply symbolic reasoning rules after asserting current facts. """
+        """Apply symbolic reasoning rules after asserting current facts."""
         insights = []
         activated_rules_details = []
 
@@ -543,7 +555,7 @@ class SymbolicReasoner:
 
         # --- 3. Manage State History & Calculate Changes ---
         previous_values = self.state_history[-1] if self.state_history else None
-        self.state_history.append(current_values) # Store processed dict
+        self.state_history.append(current_values)  # Store processed dict
         if len(self.state_history) > 2:
              self.state_history.pop(0)
 
@@ -559,7 +571,8 @@ class SymbolicReasoner:
                 "retractall(current_sensor_value(_, _))", "retractall(sensor_change(_, _))",
                 "retractall(current_state(_))", "retractall(previous_state(_))"
             ]
-            for q in retract_queries: list(self.prolog.query(q))
+            for q in retract_queries:
+                list(self.prolog.query(q))
 
             # Assert new facts
             for key in ['temperature', 'vibration', 'pressure', 'efficiency_index', 'operational_hours']:
@@ -571,13 +584,9 @@ class SymbolicReasoner:
                  prev_state_val = int(previous_values.get('system_state', 0))
                  list(self.prolog.query(f"assertz(previous_state({prev_state_val}))"))
 
-        except PrologError as pe:
-             # Specifically catch Prolog errors during assert/retract
-             self.logger.error(f"PrologError managing facts: {pe}", exc_info=True)
-             return [] # Cannot proceed if facts are wrong
-        except Exception as assert_err:
-             self.logger.error(f"Unexpected error managing Prolog facts: {assert_err}", exc_info=True)
-             return []
+        except Exception as e:
+            self.logger.error(f"Unexpected error managing Prolog facts: {e}", exc_info=True)
+            return []
 
         # --- 5. Define and Execute Base Rule Queries ---
         base_queries = {
@@ -595,16 +604,15 @@ class SymbolicReasoner:
                     rule_name = query_string.split('(')[0]
                     activated_rules_details.append({'rule': rule_name + "_base", 'confidence': 1.0, 'type': 'base'})
                     self.logger.debug(f"Base Rule Activated: {insight_desc}")
-            except PrologError as pe: # Catch specific prolog errors
-                 self.logger.warning(f"PrologError querying base rule '{insight_desc}': {pe}")
             except Exception as e:
-                 self.logger.warning(f"Generic error querying base rule '{insight_desc}': {type(e).__name__} - {e}")
+                self.logger.warning(f"Error querying base rule '{insight_desc}': {type(e).__name__} - {e}")
 
         # --- 6. Execute Learned Rule Queries ---
         for rule_string, metadata in self.learned_rules.items():
              try:
                  rule_head = rule_string.split(":-")[0].strip()
-                 if not rule_head: continue
+                 if not rule_head:
+                     continue
 
                  query_string = f"{rule_head}."
                  if list(self.prolog.query(query_string)):
@@ -612,11 +620,8 @@ class SymbolicReasoner:
                      insight = f"Learned Rule Activated: {rule_head} (Conf: {confidence:.2f})"
                      insights.append(insight)
                      activated_rules_details.append({'rule': rule_head, 'confidence': confidence, 'type': 'learned'})
-                     # Increment activation count
                      self.learned_rules[rule_string]['activations'] = metadata.get('activations', 0) + 1
                      self.logger.debug(f"Learned Rule Activated: {insight}")
-             except PrologError as pe: # Catch specific prolog errors
-                  self.logger.warning(f"PrologError querying learned rule '{rule_head}': {pe}")
              except Exception as e:
                   self.logger.warning(f"Failed applying learned rule {rule_string}: {type(e).__name__} - {e}")
 
@@ -633,14 +638,11 @@ class SymbolicReasoner:
         if len(self.rule_activations) > 1000:
             self.rule_activations.pop(0)
 
-        # Optionally update separate state tracker
-        # self.state_tracker.update(current_values)
-
         return insights
 
     def get_rule_statistics(self) -> Dict[str, Any]:
-        """ Retrieve statistics about the current rule base """
-        num_base_rules = 6 # Estimate based on base_queries
+        """Retrieve statistics about the current rule base."""
+        num_base_rules = 6  # Estimate based on base_queries
         num_learned_rules = len(self.learned_rules)
 
         if num_learned_rules > 0:
