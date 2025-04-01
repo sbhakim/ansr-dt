@@ -229,8 +229,29 @@ class KnowledgeGraphGenerator:
                      insights: List[str],
                      rules: List[Dict],
                      anomalies: Dict[str, Any]) -> None:
-        """Update knowledge graph, ensuring nodes are added before edges and handling missing data."""
-        self._prune_old_nodes()  # Prune before adding new nodes
+        """Update knowledge graph as a snapshot of current state.
+
+        This update clears previous nodes/edges so that each update reflects only the current inference.
+        """
+        # Clear the graph and reset the node counter to provide a fresh snapshot.
+        self.graph.clear()
+        self.global_node_counter = 0
+
+        # (Optionally, _prune_old_nodes() is not needed when clearing the graph.)
+        # Ensure required keys are present in current_state by assigning defaults if missing.
+        required_keys = ['temperature', 'vibration', 'pressure', 'system_state', 'efficiency_index', 'performance_score']
+        defaults = {
+            'temperature': 70.0,
+            'vibration': 50.0,
+            'pressure': 30.0,
+            'system_state': 0,
+            'efficiency_index': 0.9,
+            'performance_score': 90.0
+        }
+        for key in required_keys:
+            if key not in current_state or current_state[key] is None:
+                self.logger.warning(f"Current state missing key '{key}', assigning default value {defaults[key]}.")
+                current_state[key] = defaults[key]
 
         try:
             timestamp_dt = datetime.now()
@@ -383,7 +404,6 @@ class KnowledgeGraphGenerator:
         except Exception as e:
             self.logger.error(f"Critical error updating knowledge graph: {e}", exc_info=True)
 
-
     def _prune_old_nodes(self) -> None:
         """Removes oldest nodes if graph exceeds size limit."""
         try:
@@ -406,7 +426,6 @@ class KnowledgeGraphGenerator:
                 self.logger.info(f"Pruned {len(nodes_to_remove_ids)} old nodes from graph (Limit: {self.max_nodes}). New size: {self.graph.number_of_nodes()}")
         except Exception as e:
             self.logger.error(f"Error during graph pruning: {e}", exc_info=True)
-
 
     def visualize(self, output_path: str) -> None:
         """Generates and saves knowledge graph visualization."""
