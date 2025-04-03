@@ -368,9 +368,6 @@ reload_and_report :-
 % Rules below this marker are managed by the Python SymbolicReasoner.
 % Manual edits here will likely be overwritten.
 
-
-
-
-
-
-
+% Added dynamic declarations to allow runtime assertions and retractions
+:- dynamic feature_threshold/3.
+:- dynamic feature_gradient/3.
