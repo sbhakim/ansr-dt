@@ -1,9 +1,9 @@
 {
-  "temperature": 0.03449686989188194,
-  "vibration": 0.025351375341415405,
-  "pressure": 0.08786962181329727,
-  "operational_hours": 0.02133919671177864,
-  "efficiency_index": 0.06633510440587997,
-  "system_state": 0.02797015942633152,
-  "performance_score": 0.029210034757852554
+  "temperature": 9.378099093737546e-06,
+  "vibration": 8.44792702991981e-06,
+  "pressure": 1.7000136722344905e-05,
+  "operational_hours": 6.764286808902398e-06,
+  "efficiency_index": 1.0763134923763573e-05,
+  "system_state": 8.40205029817298e-06,
+  "performance_score": 8.284207069664262e-06
 }

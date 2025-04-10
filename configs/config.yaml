@@ -40,7 +40,7 @@ training:
 # ===============================
 ppo:
   enabled: true
-  total_timesteps: 10000
+  total_timesteps: 20000
   reward_weights:
     efficiency: 1.0
     satisfaction: 1.0
@@ -52,9 +52,9 @@ ppo:
 paths:
   data_file: 'data/synthetic_sensor_data_with_anomalies.npz'
   results_dir: 'results'
-  plot_config_path: 'configs/plot_config.yaml'
+  plot_config_path: 'plot_config.yaml'
   reasoning_rules_path: 'src/reasoning/rules.pl'  # Path to deterministic Prolog rules
-  prob_log_rules_file: 'prob_rules.pl'  # Path to ProbLog rules (relative to src/reasoning/)
+  prob_log_rules_file: 'src/reasoning/prob_rules.pl'  # Path to ProbLog rules (relative to src/reasoning/)
   knowledge_graphs_dir: 'results/knowledge_graphs'
 
 # ===============================
@@ -73,23 +73,30 @@ symbolic_reasoning:
 # ===============================
 knowledge_graph:
   enabled: true
+  max_nodes: 500         # Less critical now, but kept for potential future use
+  max_history: 1000      # History size for trend/correlation calculations within KG class
+
+  # --- Visualization Settings (NEW - Replaces old visualization section) ---
   visualization:
-    max_nodes: 100
-    update_interval: 10
-    node_types:
-      sensor: '#lightblue'
-      state: '#lightgreen'
-      rule: '#lightpink'
-      anomaly: '#salmon'
-      insight: '#lightyellow'
-    network_layout:
-      type: 'spring'
-      k: 1.0
-      iterations: 50
-  storage:
-    format: 'png'
-    save_interval: 10
-    keep_history: 100
+    dpi: 300                  # Resolution (dots per inch) for saved images
+    # --- Settings for the detailed/debug plot ---
+    full_layout: 'spring'     # 'spring', 'kamada_kawai', 'dot', 'neato', 'fdp', etc.
+                              # Using 'dot' etc. requires Graphviz + python bindings installed
+    show_full_edge_labels: true # Show edge labels on the full/detailed plot?
+    full_font_scale: 1.0      # Font size scaling (1.0 = default)
+    # --- Settings for the focused/publication plot ---
+    ieee_layout: 'dot'        # Highly recommend 'dot' or 'kamada_kawai' for papers
+                              # Ensure Graphviz + python bindings are installed if using 'dot' etc.
+    ieee_rule_threshold: 0.8  # Min confidence for rules shown in the focused plot
+    ieee_font_scale: 0.8      # Font size scaling (often smaller for focused plot)
+    # Note: Edge labels for ieee_plot are typically forced OFF in the code for clarity
+
+  # --- Storage Settings (Simplified) ---
+  # storage: # This sub-section seemed overly complex for snapshot mode
+    # format: 'png' # Format is handled in visualize method
+    # save_interval: 10 # Saving happens once per run in main.py currently
+    # keep_history: 100 # History is internal to KG object, not saved versions
+
 
 # ===============================
 # ProbLog Configuration
