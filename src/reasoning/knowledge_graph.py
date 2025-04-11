@@ -553,7 +553,7 @@ class KnowledgeGraphGenerator:
                     if ntype == 'sensor': labels[n] = f"{data.get('sensor_name','S')[:4]}\n{data.get('value',0):.1f}{data.get('trend','')}"
                     elif ntype == 'state': slbls = ['N','D','C']; labels[n] = f"State\n{slbls[data.get('value',0)]}"
                     elif ntype == 'metrics': labels[n] = f"Metrics\nE:{data.get('efficiency',0):.2f} P:{data.get('performance',0):.1f}"
-                    elif ntype == 'anomaly': labels[n] = f"Anomaly\nS:{data.get('severity',0)} C:{data.get('confidence',0):.1f}"
+                    elif ntype == 'anomaly': labels[n] = f"Key Event\nS:{data.get('severity',0)} C:{data.get('confidence',0):.1f}"
                     elif ntype == 'rule': rname=data.get('rule_string','R').split(":-")[0].strip().replace('neural_rule_','nr_'); labels[n] = f"{rname}\nC:{data.get('confidence',0):.2f}"
                     elif ntype == 'insight': txt=data.get('text','I'); m=re.search(r': (\w+)',txt); labels[n]=f"Insight\n{m.group(1) if m else txt[:10]}"
                     else: labels[n] = data.get('label', n)[:10]
