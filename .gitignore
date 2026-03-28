@@ -24,3 +24,19 @@ check_data.py
 # Exclude __pycache__ directories
 __pycache__/
 
+
+# Exclude Markdown files except README.md
+Results_for_Manuscript.md
+SKAB_RUNBOOK.md
+UPDATE.md
+SKAB_SEPARATE_RUNBOOK.md
+INTEGRATE_SKAB.md
+data/SKAB/SKAB-master/docs/contributing.md
+
+# Keep minimal experiment entry clues only; ignore internal experiment machinery
+src/experiments/*
+!src/experiments/__init__.py
+!src/experiments/run_skab.py
+paper.pdf
+rule_extraction_sample.log
+configs/plot_config.yaml
