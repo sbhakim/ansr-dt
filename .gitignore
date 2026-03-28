@@ -40,3 +40,4 @@ src/experiments/*
 paper.pdf
 rule_extraction_sample.log
 configs/plot_config.yaml
+data/digital_twin_multivariate_dataset.csv

@@ -1,21 +1,25 @@
 # tests/test_model.py
 
 import unittest
+
+from tensorflow.keras.layers import Conv1D, Dense, LSTM
+
 from src.models.cnn_lstm_model import create_cnn_lstm_model
-import numpy as np
 
 
 class TestCNNLSTMModel(unittest.TestCase):
     def test_create_cnn_lstm_model(self):
-        input_shape = (10, 7)
-        learning_rate = 0.001
-        model = create_cnn_lstm_model(input_shape, learning_rate)
+        model = create_cnn_lstm_model((10, 7), 0.001)
+
         self.assertIsNotNone(model)
-        # Expected number of layers: Conv1D x2, BatchNormalization x2, MaxPooling1D x2,
-        # Dropout x4, LSTM x2, Dense x1 => Total: 13 layers
-        # This may vary based on implementation; adjust accordingly
-        expected_num_layers = 13
-        self.assertEqual(len(model.layers), expected_num_layers)
+        self.assertEqual(model.input_shape, (None, 10, 7))
+        self.assertEqual(model.output_shape[-1], 1)
+        self.assertEqual(model.loss, 'binary_crossentropy')
+        self.assertTrue(any(isinstance(layer, Conv1D) for layer in model.layers))
+        self.assertTrue(any(isinstance(layer, LSTM) for layer in model.layers))
+        self.assertIsInstance(model.layers[-1], Dense)
+        self.assertEqual(model.layers[-1].units, 1)
+        self.assertEqual(model.layers[-1].activation.__name__, 'sigmoid')
 
 
 if __name__ == '__main__':

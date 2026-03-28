@@ -47,6 +47,13 @@ ppo:
     safety: 1.0
 
 # ===============================
+# Runtime Configuration
+# ===============================
+runtime:
+  generate_visualizations: false
+  clear_results: false
+
+# ===============================
 # Path Configuration
 # ===============================
 paths:

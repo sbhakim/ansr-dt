@@ -49,7 +49,7 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
         required_paths_info = {
             'data_file': {'relative_to': project_root, 'default': 'data/synthetic_sensor_data_with_anomalies.npz'},
             'results_dir': {'relative_to': project_root, 'default': 'results'},
-            'plot_config_path': {'relative_to': config_dir, 'default': 'plot_config.yaml'},
+            'plot_config_path': {'relative_to': config_dir, 'default': 'plot_config.yaml', 'optional': True},
             'reasoning_rules_path': {'relative_to': project_root, 'default': 'src/reasoning/rules.pl'}
         }
 
@@ -71,9 +71,13 @@ def validate_config(config: dict, logger: logging.Logger, project_root: str, con
                 logger.info(f"Directory '{key}' ensured at: {full_path}")
             else: # Assume it's a file path
                 if not os.path.exists(full_path):
-                    logger.error(f"Required file '{key}' not found at resolved path: {full_path}")
-                    raise FileNotFoundError(f"Required file '{key}' not found at: {full_path}")
-                logger.info(f"File '{key}' found at: {full_path}")
+                    if path_info.get('optional', False):
+                        logger.warning(f"Optional file '{key}' not found at resolved path: {full_path}. Related plotting steps will be skipped.")
+                    else:
+                        logger.error(f"Required file '{key}' not found at resolved path: {full_path}")
+                        raise FileNotFoundError(f"Required file '{key}' not found at: {full_path}")
+                else:
+                    logger.info(f"File '{key}' found at: {full_path}")
 
         logger.info("Configuration paths validated and resolved.")
 
@@ -284,8 +288,12 @@ class ANSRDTPipeline:
             figures_dir = os.path.join(self.config['paths']['results_dir'], 'visualization')
             os.makedirs(figures_dir, exist_ok=True)
 
-            plot_config = load_plot_config(self.config['paths']['plot_config_path'])
-            plot_metrics(history, figures_dir, plot_config)
+            plot_config_path = self.config['paths'].get('plot_config_path')
+            if plot_config_path and os.path.exists(plot_config_path):
+                plot_config = load_plot_config(plot_config_path)
+                plot_metrics(history, figures_dir, plot_config)
+            else:
+                self.logger.warning('Skipping training plot generation because plot_config_path is unavailable.')
 
             # 11. Evaluate model on Test Set & Extract/Update Rules
             self.logger.info("Predicting on test set...")

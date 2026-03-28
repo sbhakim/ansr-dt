@@ -66,7 +66,7 @@ def evaluate_model(
         y_pred: np.ndarray,
         y_scores: np.ndarray,
         figures_dir: str,
-        plot_config_path: str,
+        plot_config_path: Optional[str],
         config_path: str,
         sensor_data: np.ndarray,
         model: Optional[Any] = None
@@ -79,7 +79,7 @@ def evaluate_model(
         y_pred (np.ndarray): Predicted labels
         y_scores (np.ndarray): Prediction scores
         figures_dir (str): Directory to save figures
-        plot_config_path (str): Path to plotting configuration
+        plot_config_path (Optional[str]): Path to plotting configuration
         config_path (str): Path to main configuration
         sensor_data (np.ndarray): Sensor data for analysis
         model (Optional[Any]): Optional trained model for visualization
@@ -157,35 +157,36 @@ def evaluate_model(
         # Generate visualization paths
         plot_paths = {}
 
-        # Load and apply plot configuration
-        plot_config = load_plot_config(plot_config_path)
-        apply_plot_config(plot_config)
+        if plot_config_path and os.path.exists(plot_config_path):
+            plot_config = load_plot_config(plot_config_path)
+            apply_plot_config(plot_config)
 
-        # Generate standard plots
-        plot_paths['confusion_matrix'] = os.path.join(eval_dirs['figures'], 'confusion_matrix.png')
-        plot_confusion_matrix(
-            cm=np.array(metrics['confusion_matrix']),
-            classes=['Normal', 'Anomaly'],
-            title='Confusion Matrix',
-            save_path=plot_paths['confusion_matrix'],
-            config=plot_config
-        )
+            plot_paths['confusion_matrix'] = os.path.join(eval_dirs['figures'], 'confusion_matrix.png')
+            plot_confusion_matrix(
+                cm=np.array(metrics['confusion_matrix']),
+                classes=['Normal', 'Anomaly'],
+                title='Confusion Matrix',
+                save_path=plot_paths['confusion_matrix'],
+                config=plot_config
+            )
 
-        plot_paths['roc_curve'] = os.path.join(eval_dirs['figures'], 'roc_curve.png')
-        plot_roc_curve(
-            y_true=y_true,
-            y_scores=y_scores,
-            save_path=plot_paths['roc_curve'],
-            config=plot_config
-        )
+            plot_paths['roc_curve'] = os.path.join(eval_dirs['figures'], 'roc_curve.png')
+            plot_roc_curve(
+                y_true=y_true,
+                y_scores=y_scores,
+                save_path=plot_paths['roc_curve'],
+                config=plot_config
+            )
 
-        plot_paths['precision_recall'] = os.path.join(eval_dirs['figures'], 'precision_recall_curve.png')
-        plot_precision_recall_curve(
-            y_true=y_true,
-            y_scores=y_scores,
-            save_path=plot_paths['precision_recall'],
-            config=plot_config
-        )
+            plot_paths['precision_recall'] = os.path.join(eval_dirs['figures'], 'precision_recall_curve.png')
+            plot_precision_recall_curve(
+                y_true=y_true,
+                y_scores=y_scores,
+                save_path=plot_paths['precision_recall'],
+                config=plot_config
+            )
+        else:
+            logger.warning('Skipping standard evaluation plots because plot_config_path is unavailable.')
 
         # Model visualization if available
         feature_importance_scores = None

@@ -1,62 +1,71 @@
 # tests/test_pipeline.py
 
+import logging
+import os
+import tempfile
 import unittest
-from unittest.mock import MagicMock
+
 from src.pipeline.pipeline import validate_config
+
 
 class TestValidateConfig(unittest.TestCase):
     def setUp(self):
-        self.logger = MagicMock()
-        self.project_root = '/path/to/project'
-        self.config_dir = '/path/to/project/configs'
+        self.logger = logging.getLogger('TestValidateConfig')
+        self.logger.addHandler(logging.NullHandler())
 
-    def test_valid_config(self):
-        config = {
-            'model': {},
-            'training': {},
-            'paths': {
-                'plot_config_path': 'plot_config.yaml',
-                'reasoning_rules_path': 'src/reasoning/rules.pl'
-            }
-        }
-        # Mock os.path.exists to return True
-        with unittest.mock.patch('os.path.exists', return_value=True):
-            validate_config(config, self.logger, self.project_root, self.config_dir)
-            self.logger.info.assert_called_with("Configuration validation passed.")
+    def test_valid_config_resolves_defaults(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project_root = tmpdir
+            config_dir = os.path.join(project_root, 'configs')
+            data_dir = os.path.join(project_root, 'data')
+            reasoning_dir = os.path.join(project_root, 'src', 'reasoning')
+            os.makedirs(config_dir, exist_ok=True)
+            os.makedirs(data_dir, exist_ok=True)
+            os.makedirs(reasoning_dir, exist_ok=True)
+
+            open(os.path.join(data_dir, 'synthetic_sensor_data_with_anomalies.npz'), 'a').close()
+            open(os.path.join(reasoning_dir, 'rules.pl'), 'a').close()
+
+            config = {'model': {}, 'training': {}, 'paths': {}}
+            validate_config(config, self.logger, project_root, config_dir)
+
+            self.assertTrue(config['paths']['data_file'].endswith('synthetic_sensor_data_with_anomalies.npz'))
+            self.assertTrue(config['paths']['reasoning_rules_path'].endswith('src/reasoning/rules.pl'))
+            self.assertTrue(os.path.isdir(config['paths']['results_dir']))
 
     def test_missing_key(self):
-        config = {
-            'model': {},
-            'training': {}
-            # 'paths' key missing
-        }
         with self.assertRaises(KeyError):
-            validate_config(config, self.logger, self.project_root, self.config_dir)
+            validate_config({'model': {}, 'training': {}}, self.logger, '/tmp/project', '/tmp/project/configs')
 
-    def test_missing_plot_config(self):
-        config = {
-            'model': {},
-            'training': {},
-            'paths': {
-                # 'plot_config_path' missing
-                'reasoning_rules_path': 'src/reasoning/rules.pl'
-            }
-        }
-        with self.assertRaises(KeyError):
-            validate_config(config, self.logger, self.project_root, self.config_dir)
+    def test_missing_plot_config_is_allowed(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project_root = tmpdir
+            config_dir = os.path.join(project_root, 'configs')
+            data_dir = os.path.join(project_root, 'data')
+            reasoning_dir = os.path.join(project_root, 'src', 'reasoning')
+            os.makedirs(config_dir, exist_ok=True)
+            os.makedirs(data_dir, exist_ok=True)
+            os.makedirs(reasoning_dir, exist_ok=True)
+            open(os.path.join(data_dir, 'synthetic_sensor_data_with_anomalies.npz'), 'a').close()
+            open(os.path.join(reasoning_dir, 'rules.pl'), 'a').close()
 
-    def test_plot_config_not_found(self):
-        config = {
-            'model': {},
-            'training': {},
-            'paths': {
-                'plot_config_path': 'plot_config.yaml',
-                'reasoning_rules_path': 'src/reasoning/rules.pl'
-            }
-        }
-        with unittest.mock.patch('os.path.exists', side_effect=lambda x: False if 'plot_config.yaml' in x else True):
+            config = {'model': {}, 'training': {}, 'paths': {'reasoning_rules_path': 'src/reasoning/rules.pl'}}
+            validate_config(config, self.logger, project_root, config_dir)
+            self.assertTrue(config['paths']['plot_config_path'].endswith('plot_config.yaml'))
+
+    def test_missing_required_rule_file_fails(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            project_root = tmpdir
+            config_dir = os.path.join(project_root, 'configs')
+            data_dir = os.path.join(project_root, 'data')
+            os.makedirs(config_dir, exist_ok=True)
+            os.makedirs(data_dir, exist_ok=True)
+            open(os.path.join(data_dir, 'synthetic_sensor_data_with_anomalies.npz'), 'a').close()
+
+            config = {'model': {}, 'training': {}, 'paths': {'reasoning_rules_path': 'src/reasoning/rules.pl'}}
             with self.assertRaises(FileNotFoundError):
-                validate_config(config, self.logger, self.project_root, self.config_dir)
+                validate_config(config, self.logger, project_root, config_dir)
+
 
 if __name__ == '__main__':
     unittest.main()
