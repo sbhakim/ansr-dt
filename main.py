@@ -5,9 +5,11 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import sys
 import json
+import argparse
 import logging
 import shutil
 import numpy as np
+import yaml
 from datetime import datetime
 from typing import Dict, Any, List, Optional # Added Optional
 
@@ -64,6 +66,15 @@ def setup_project_structure(project_root: str):
     for dir_path in required_dirs:
         os.makedirs(os.path.join(project_root, dir_path), exist_ok=True)
 
+def should_generate_visualizations(config: dict, cli_visualize: Optional[bool] = None) -> bool:
+    """Resolve whether visualization should run for this invocation."""
+    if cli_visualize is not None:
+        return cli_visualize
+
+    runtime_config = config.get('runtime', {})
+    return runtime_config.get('generate_visualizations', False)
+
+
 def prepare_sensor_window(data: np.lib.npyio.NpzFile, window_size: int, feature_names: list) -> np.ndarray:
     """Prepare a sensor window with the correct shape and features for inference."""
     try:
@@ -103,6 +114,34 @@ def initialize_visualizers(logger: logging.Logger, figures_dir: str, config: dic
     except Exception as e:
         logger.error(f"Failed to initialize visualizers: {e}")
         raise
+
+def persist_run_context(results_dir: str, config: dict, logger: logging.Logger, run_id: str, clear_results_enabled: bool):
+    """Persist the exact configuration and lightweight run metadata for reproducibility."""
+    try:
+        os.makedirs(results_dir, exist_ok=True)
+        config_snapshot_path = os.path.join(results_dir, 'config_used.yaml')
+        with open(config_snapshot_path, 'w') as f:
+            yaml.safe_dump(config, f, sort_keys=False)
+
+        metadata = {
+            'run_id': run_id,
+            'run_timestamp': datetime.now().isoformat(),
+            'results_dir': results_dir,
+            'clear_results_enabled': clear_results_enabled,
+            'visualization_enabled_by_default': config.get('runtime', {}).get('generate_visualizations', False),
+            'data_file': config.get('paths', {}).get('data_file'),
+            'reasoning_rules_path': config.get('paths', {}).get('reasoning_rules_path'),
+        }
+        metadata_path = os.path.join(results_dir, 'run_metadata.json')
+        with open(metadata_path, 'w') as f:
+            json.dump(metadata, f, indent=2)
+
+        logger.info(f"Saved run configuration snapshot to {config_snapshot_path}")
+        logger.info(f"Saved run metadata to {metadata_path}")
+    except Exception as e:
+        logger.error(f"Failed to persist run context: {e}", exc_info=True)
+        raise
+
 
 def save_results(results: dict, path: str, logger: logging.Logger):
     """Save results to a JSON file, handling NumPy types using NumpyEncoder."""
@@ -179,6 +218,17 @@ def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
         )
         logger.info(f"Focused IEEE knowledge graph visualization attempt saved to: {graph_path_ieee}")
 
+        # --- Plot 3: Publication-quality figure (with legend, shapes, PDF) ---
+        graph_path_pub = os.path.join(kg_viz_dir, f'knowledge_graph_publication_{timestamp}.png')
+        logger.info("Generating publication-quality KG figure...")
+        graph_generator.visualize_publication(
+            output_path=graph_path_pub,
+            rule_confidence_threshold=ieee_rule_threshold,
+            max_rules=5,
+            dpi=dpi
+        )
+        logger.info(f"Publication KG visualization saved to: {graph_path_pub}")
+
         # --- Export Graph Data ---
         export_path = os.path.join(kg_data_dir, f'knowledge_graph_export_{timestamp}.json')
         graph_generator.export_graph(export_path) # export_graph handles its own errors
@@ -192,7 +242,7 @@ def save_knowledge_graph_state(graph_generator: KnowledgeGraphGenerator,
         logger.error(f"Failed during knowledge graph saving/visualization: {e}", exc_info=True)
 
 
-def main():
+def main(enable_visualizations: Optional[bool] = None):
     """
     Execute the ANSR-DT pipeline:
     1. Clear the results directory.
@@ -202,7 +252,8 @@ def main():
     5. Initialize the ANSR-DT core system.
     6. Prepare sample input data.
     7. Run integrated inference and explanation.
-    8. Generate visualizations (including KG) and save results.
+    8. Optionally generate visualizations (including KG).
+    9. Save results.
     """
     project_root = os.path.dirname(os.path.abspath(__file__))
     run_successful = False # Track success for finally block
@@ -211,9 +262,12 @@ def main():
     cnn_lstm_model: Optional[Any] = None # Use type hint
     ppo_agent: Optional[PPO] = None
     ansrdt: Optional[ExplainableANSRDT] = None
-    visualizers: Optional[Dict[str, Any]] = None
+    visualizers: Dict[str, Any] = {}
     config: Optional[Dict[str, Any]] = None
     logger: Optional[logging.Logger] = None # Define logger variable
+    visualization_enabled = False
+    clear_results_enabled = False
+    run_id = datetime.now().strftime('%Y%m%d_%H%M%S')
 
     try:
         # --- Setup Logging Early ---
@@ -223,10 +277,6 @@ def main():
         logger.info(f"--- Starting ANSR-DT Pipeline Run ({datetime.now()}) ---")
         logger.info(f"Project Root: {project_root}")
 
-        # --- Clear Results ---
-        results_dir_to_clear = os.path.join(project_root, "results")
-        clear_results_func(results_dir_to_clear) # Use function pointer
-
         # --- Setup Directories ---
         setup_project_structure(project_root)
 
@@ -234,16 +284,25 @@ def main():
         config_path = os.path.join(project_root, 'configs', 'config.yaml')
         config = load_config(config_path) # load_config handles its own logging/errors
         logger.info(f"Configuration loaded from {config_path}")
+        visualization_enabled = should_generate_visualizations(config, enable_visualizations)
+        clear_results_enabled = config.get('runtime', {}).get('clear_results', False) or os.environ.get('ANSR_DT_FORCE_CLEAR_RESULTS') == '1'
+        logger.info(f"Run ID: {run_id}")
+        logger.info(f"Visualization enabled for this run: {visualization_enabled}")
+        logger.info(f"Clear results enabled for this run: {clear_results_enabled}")
 
         # --- Resolve and Validate Paths ---
         # Define paths relative to project root or config dir as appropriate
         paths_to_resolve = {
             'results_dir': (project_root, 'results'), # Tuple: (base_dir, relative_path_in_config_or_default)
             'data_file': (project_root, config['paths']['data_file']),
-            'plot_config_path': (os.path.dirname(config_path), config['paths']['plot_config_path']), # Relative to config dir
             'reasoning_rules_path': (project_root, config['paths']['reasoning_rules_path']),
             'knowledge_graphs_dir': (project_root, 'results/knowledge_graphs') # Usually relative to results
         }
+        if visualization_enabled and config['paths'].get('plot_config_path'):
+            paths_to_resolve['plot_config_path'] = (
+                os.path.dirname(config_path),
+                config['paths']['plot_config_path'],
+            )
         resolved_paths = {}
         for key, (base_dir, rel_path) in paths_to_resolve.items():
             abs_path = os.path.normpath(os.path.join(base_dir, rel_path))
@@ -258,6 +317,23 @@ def main():
 
         # Update config with resolved, absolute paths BEFORE passing config around
         config['paths'].update(resolved_paths) # Update the paths sub-dictionary
+
+        # --- Clear Results Only If Explicitly Enabled ---
+        if clear_results_enabled:
+            results_dir_to_clear = config['paths']['results_dir']
+            logger.warning(f"Clearing results directory because clear_results is enabled: {results_dir_to_clear}")
+            clear_results_func(results_dir_to_clear)
+            setup_project_structure(project_root)
+        else:
+            logger.info(f"Preserving existing results directory contents: {config['paths']['results_dir']}")
+
+        persist_run_context(
+            results_dir=config['paths']['results_dir'],
+            config=config,
+            logger=logger,
+            run_id=run_id,
+            clear_results_enabled=clear_results_enabled
+        )
 
         # --- Define Model Paths ---
         # Paths should now be absolute from the updated config
@@ -351,8 +427,11 @@ def main():
 
         # --- Initialize Visualizers ---
         figures_dir = os.path.join(config['paths']['results_dir'], 'visualization')
-        visualizers = initialize_visualizers(logger, figures_dir, config) # Pass full config
-        knowledge_graph_enabled = config.get('knowledge_graph', {}).get('enabled', False)
+        knowledge_graph_enabled = visualization_enabled and config.get('knowledge_graph', {}).get('enabled', False)
+        if visualization_enabled:
+            visualizers = initialize_visualizers(logger, figures_dir, config) # Pass full config
+        else:
+            logger.info("Visualization generation is disabled for this run. Skipping visualizer initialization.")
 
         # --- Log Input Data Details ---
         logger.info("Input data validation for inference:")
@@ -398,129 +477,132 @@ def main():
 
 
         # --- Generate Visualizations ---
-        logger.info("Generating visualizations...")
-        try:
-            # Rule Activation Visualization
-            # Ensure reasoner and necessary methods/attributes exist
-            if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'get_rule_activations'):
-                activation_history = ansrdt.reasoner.get_rule_activations() # Gets full history
-                if activation_history:
-                    # Check structure of activation_history elements
-                    # Assuming it's List[Dict] where each dict has 'activated_rules_detailed': List[Dict]
-                    all_activations_for_viz = []
-                    for record in activation_history:
-                         # Check if record is a dict and has the key
-                         if isinstance(record, dict) and 'activated_rules_detailed' in record:
-                              details = record['activated_rules_detailed']
-                              if isinstance(details, list):
-                                   for activation_detail in details:
-                                       # Check if detail is dict and has confidence
-                                       if isinstance(activation_detail, dict) and 'confidence' in activation_detail:
-                                           all_activations_for_viz.append(activation_detail)
-                                       else:
-                                            logger.debug(f"Skipping activation detail due to missing 'confidence' or invalid format: {activation_detail}")
-                         else:
-                             logger.debug(f"Skipping activation history record due to unexpected format: {record}")
+        if visualization_enabled:
+            logger.info("Generating visualizations...")
+            try:
+                # Rule Activation Visualization
+                # Ensure reasoner and necessary methods/attributes exist
+                if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'get_rule_activations'):
+                    activation_history = ansrdt.reasoner.get_rule_activations() # Gets full history
+                    if activation_history:
+                        # Check structure of activation_history elements
+                        # Assuming it's List[Dict] where each dict has 'activated_rules_detailed': List[Dict]
+                        all_activations_for_viz = []
+                        for record in activation_history:
+                             # Check if record is a dict and has the key
+                             if isinstance(record, dict) and 'activated_rules_detailed' in record:
+                                  details = record['activated_rules_detailed']
+                                  if isinstance(details, list):
+                                       for activation_detail in details:
+                                           # Check if detail is dict and has confidence
+                                           if isinstance(activation_detail, dict) and 'confidence' in activation_detail:
+                                               all_activations_for_viz.append(activation_detail)
+                                           else:
+                                                logger.debug(f"Skipping activation detail due to missing 'confidence' or invalid format: {activation_detail}")
+                             else:
+                                 logger.debug(f"Skipping activation history record due to unexpected format: {record}")
 
-                    if all_activations_for_viz:
-                        save_path_activations = os.path.join(figures_dir, 'neurosymbolic', 'rule_activations.png')
-                        os.makedirs(os.path.dirname(save_path_activations), exist_ok=True)
-                        # Ensure visualizer exists
+                        if all_activations_for_viz:
+                            save_path_activations = os.path.join(figures_dir, 'neurosymbolic', 'rule_activations.png')
+                            os.makedirs(os.path.dirname(save_path_activations), exist_ok=True)
+                            # Ensure visualizer exists
+                            if 'neurosymbolic' in visualizers:
+                                visualizers['neurosymbolic'].visualize_rule_activations(
+                                    activations=all_activations_for_viz,
+                                    save_path=save_path_activations
+                                )
+                            else:
+                                logger.warning("Neurosymbolic visualizer not initialized.")
+                        else:
+                            logger.info("No valid rule activations with confidence found in history to visualize.")
+                    else:
+                         logger.info("Rule activation history is empty or unavailable.")
+                else:
+                    logger.warning("Could not access reasoner or rule activations for visualization.")
+
+                # State Transition Visualization
+                # Ensure reasoner and state_tracker exist
+                if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'state_tracker') and hasattr(ansrdt.reasoner.state_tracker, 'get_transition_probabilities'):
+                    transition_probs = ansrdt.reasoner.state_tracker.get_transition_probabilities()
+                    # Check if the result is a valid numpy array
+                    if isinstance(transition_probs, np.ndarray) and transition_probs.size > 0:
+                        save_path_transitions = os.path.join(figures_dir, 'neurosymbolic', 'state_transitions.png')
+                        os.makedirs(os.path.dirname(save_path_transitions), exist_ok=True)
                         if 'neurosymbolic' in visualizers:
-                            visualizers['neurosymbolic'].visualize_rule_activations(
-                                activations=all_activations_for_viz,
-                                save_path=save_path_activations
+                            visualizers['neurosymbolic'].plot_state_transitions(
+                                transition_matrix=transition_probs,
+                                save_path=save_path_transitions
                             )
                         else:
-                            logger.warning("Neurosymbolic visualizer not initialized.")
+                             logger.warning("Neurosymbolic visualizer not initialized.")
                     else:
-                        logger.info("No valid rule activations with confidence found in history to visualize.")
+                         logger.info("No state transition data available from state tracker or data was invalid.")
                 else:
-                     logger.info("Rule activation history is empty or unavailable.")
-            else:
-                logger.warning("Could not access reasoner or rule activations for visualization.")
+                     logger.warning("Could not access state tracker or transition probabilities for visualization.")
 
-            # State Transition Visualization
-            # Ensure reasoner and state_tracker exist
-            if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'state_tracker') and hasattr(ansrdt.reasoner.state_tracker, 'get_transition_probabilities'):
-                transition_probs = ansrdt.reasoner.state_tracker.get_transition_probabilities()
-                # Check if the result is a valid numpy array
-                if isinstance(transition_probs, np.ndarray) and transition_probs.size > 0:
-                    save_path_transitions = os.path.join(figures_dir, 'neurosymbolic', 'state_transitions.png')
-                    os.makedirs(os.path.dirname(save_path_transitions), exist_ok=True)
-                    if 'neurosymbolic' in visualizers:
-                        visualizers['neurosymbolic'].plot_state_transitions(
-                            transition_matrix=transition_probs,
-                            save_path=save_path_transitions
+                # --- Knowledge Graph Visualization ---
+                if knowledge_graph_enabled:
+                    logger.info("Updating and visualizing knowledge graph...")
+                    # Get the latest state from the ansrdt object (which was updated by adapt_and_explain)
+                    current_state_data = ansrdt.current_state if hasattr(ansrdt, 'current_state') and isinstance(ansrdt.current_state, dict) else {}
+                    if not current_state_data:
+                         logger.warning("ansrdt.current_state is not available or not a dictionary. Using empty data for KG.")
+
+                    # Extract necessary info directly from the latest state dictionary
+                    insights_data = current_state_data.get('insights', [])
+                    # Get learned rules snapshot from the reasoner instance
+                    rules_data = []
+                    if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'learned_rules'):
+                        # Ensure learned_rules is a dictionary {rule_str: metadata_dict}
+                        if isinstance(ansrdt.reasoner.learned_rules, dict):
+                             rules_data = [{'rule': r, 'confidence': m.get('confidence', 0.0)}
+                                           for r, m in ansrdt.reasoner.learned_rules.items() if isinstance(m, dict)]
+                        else:
+                             logger.warning("ansrdt.reasoner.learned_rules is not a dictionary.")
+
+
+                    # Construct anomaly info using latest state data
+                    anomaly_confidence = current_state_data.get('confidence', 0.0)
+                    # Define anomaly severity based on state or confidence, e.g.:
+                    anomaly_detected = current_state_data.get('anomaly_detected', False)
+                    system_state_val = current_state_data.get('system_state', 0) # 0=N, 1=D, 2=C
+                    anomaly_severity = 0
+                    if system_state_val == 2: anomaly_severity = 2 # Critical
+                    elif system_state_val == 1: anomaly_severity = 1 # Degraded
+                    elif anomaly_detected: anomaly_severity = 1 # Basic anomaly if detected but not Degraded/Critical
+
+                    anomaly_data = {
+                        'severity': anomaly_severity,
+                        'confidence': anomaly_confidence
+                    }
+
+                    # Ensure visualizer exists
+                    if 'knowledge_graph' in visualizers:
+                        visualizers['knowledge_graph'].update_graph(
+                            current_state=current_state_data, # Pass the full current state
+                            insights=insights_data,
+                            rules=rules_data, # Pass the list of rule dicts
+                            anomalies=anomaly_data # Pass the anomaly dict
+                        )
+
+                        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                        # --- Pass KG config section to save function ---
+                        kg_config_section = config.get('knowledge_graph', {})
+                        save_knowledge_graph_state(
+                            graph_generator=visualizers['knowledge_graph'],
+                            output_dir=config['paths']['knowledge_graphs_dir'], # Use absolute path
+                            timestamp=timestamp,
+                            logger=logger,
+                            kg_config=kg_config_section # Pass the config subsection
                         )
                     else:
-                         logger.warning("Neurosymbolic visualizer not initialized.")
+                        logger.warning("Knowledge Graph visualizer not initialized.")
                 else:
-                     logger.info("No state transition data available from state tracker or data was invalid.")
-            else:
-                 logger.warning("Could not access state tracker or transition probabilities for visualization.")
-
-            # --- Knowledge Graph Visualization ---
-            if knowledge_graph_enabled:
-                logger.info("Updating and visualizing knowledge graph...")
-                # Get the latest state from the ansrdt object (which was updated by adapt_and_explain)
-                current_state_data = ansrdt.current_state if hasattr(ansrdt, 'current_state') and isinstance(ansrdt.current_state, dict) else {}
-                if not current_state_data:
-                     logger.warning("ansrdt.current_state is not available or not a dictionary. Using empty data for KG.")
-
-                # Extract necessary info directly from the latest state dictionary
-                insights_data = current_state_data.get('insights', [])
-                # Get learned rules snapshot from the reasoner instance
-                rules_data = []
-                if hasattr(ansrdt, 'reasoner') and ansrdt.reasoner and hasattr(ansrdt.reasoner, 'learned_rules'):
-                    # Ensure learned_rules is a dictionary {rule_str: metadata_dict}
-                    if isinstance(ansrdt.reasoner.learned_rules, dict):
-                         rules_data = [{'rule': r, 'confidence': m.get('confidence', 0.0)}
-                                       for r, m in ansrdt.reasoner.learned_rules.items() if isinstance(m, dict)]
-                    else:
-                         logger.warning("ansrdt.reasoner.learned_rules is not a dictionary.")
-
-
-                # Construct anomaly info using latest state data
-                anomaly_confidence = current_state_data.get('confidence', 0.0)
-                # Define anomaly severity based on state or confidence, e.g.:
-                anomaly_detected = current_state_data.get('anomaly_detected', False)
-                system_state_val = current_state_data.get('system_state', 0) # 0=N, 1=D, 2=C
-                anomaly_severity = 0
-                if system_state_val == 2: anomaly_severity = 2 # Critical
-                elif system_state_val == 1: anomaly_severity = 1 # Degraded
-                elif anomaly_detected: anomaly_severity = 1 # Basic anomaly if detected but not Degraded/Critical
-
-                anomaly_data = {
-                    'severity': anomaly_severity,
-                    'confidence': anomaly_confidence
-                }
-
-                # Ensure visualizer exists
-                if 'knowledge_graph' in visualizers:
-                    visualizers['knowledge_graph'].update_graph(
-                        current_state=current_state_data, # Pass the full current state
-                        insights=insights_data,
-                        rules=rules_data, # Pass the list of rule dicts
-                        anomalies=anomaly_data # Pass the anomaly dict
-                    )
-
-                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    # --- Pass KG config section to save function ---
-                    kg_config_section = config.get('knowledge_graph', {})
-                    save_knowledge_graph_state(
-                        graph_generator=visualizers['knowledge_graph'],
-                        output_dir=config['paths']['knowledge_graphs_dir'], # Use absolute path
-                        timestamp=timestamp,
-                        logger=logger,
-                        kg_config=kg_config_section # Pass the config subsection
-                    )
-                else:
-                    logger.warning("Knowledge Graph visualizer not initialized.")
-            else:
-                 logger.info("Knowledge graph generation is disabled in config.")
-        except Exception as viz_error:
-            logger.error(f"Visualization generation failed: {viz_error}", exc_info=True) # Log full traceback
+                     logger.info("Knowledge graph generation is disabled in config.")
+            except Exception as viz_error:
+                logger.error(f"Visualization generation failed: {viz_error}", exc_info=True) # Log full traceback
+        else:
+            logger.info("Visualization generation skipped. Outputs were generated without rendering plots or knowledge-graph images.")
 
 
         # --- Save Final Results ---
@@ -621,6 +703,19 @@ def main():
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Run the ANSR-DT pipeline.')
+    parser.add_argument(
+        '--visualize',
+        action='store_true',
+        help='Generate plots and knowledge-graph visualizations during the run. Disabled by default.'
+    )
+    parser.add_argument(
+        '--clear-results',
+        action='store_true',
+        help='Clear the configured results directory before running. Disabled by default.'
+    )
+    args = parser.parse_args()
+
     # Initialize logger outside main() scope for final message
     main_logger = None
     try:
@@ -632,7 +727,10 @@ if __name__ == '__main__':
         print(f"Warning: Failed to setup logger for final message: {log_setup_error}")
 
     # Run the main application logic
-    run_successful = main()
+    if args.clear_results:
+        os.environ['ANSR_DT_FORCE_CLEAR_RESULTS'] = '1'
+
+    run_successful = main(enable_visualizations=args.visualize)
     exit_code = 0 if run_successful else 1
 
     # Log final exit message
