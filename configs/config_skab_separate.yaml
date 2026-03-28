@@ -1,0 +1,47 @@
+dataset:
+  categories:
+    - valve1
+    - valve2
+    - other
+  include_anomaly_free: true
+
+model:
+  architecture: skab_cnn_bilstm_attention
+  window_size: 32
+  input_shape: [32, 8]
+  feature_names:
+    - Accelerometer1RMS
+    - Accelerometer2RMS
+    - Current
+    - Pressure
+    - Temperature
+    - Thermocouple
+    - Voltage
+    - Volume Flow RateRMS
+  conv_filters: [64, 64]
+  kernel_size: 3
+  lstm_units: 64
+  attention_heads: 4
+  attention_key_dim: 16
+  dense_units: 64
+  dropout: 0.3
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 12
+  validation_split: 0.2
+  test_split: 0.1
+  early_stopping_patience: 4
+
+symbolic:
+  max_rules: 8
+  min_rule_precision: 0.55
+  min_rule_recall: 0.02
+
+paths:
+  data_dir: data/SKAB/data
+  results_dir: results/skab_separate
+
+evaluation:
+  selection_metric: f1

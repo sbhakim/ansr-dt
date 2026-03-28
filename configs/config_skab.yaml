@@ -1,0 +1,63 @@
+# configs/config_skab.yaml
+
+dataset:
+  type: "skab"
+  categories:
+    - valve1
+    - valve2
+    - other
+  include_anomaly_free: true
+  feature_map:
+    temperature: Temperature
+    vibration: "__accel_max__"
+    pressure: Volume Flow RateRMS
+    operational_hours: "__constant__"
+    efficiency_index: Current
+    system_state: "__constant__"
+    performance_score: Pressure
+
+model:
+  window_size: 10
+  feature_names:
+    - temperature
+    - vibration
+    - pressure
+    - operational_hours
+    - efficiency_index
+    - system_state
+    - performance_score
+  input_shape: [10, 7]
+  architecture: "cnn_lstm"
+  cnn_lstm:
+    conv_filters: [64, 128]
+    kernel_sizes: [3, 3]
+    pool_sizes: [2, 2]
+    lstm_units: [100, 50]
+    dropout_rates: [0.3, 0.3, 0.3, 0.3]
+    dense_units: 1
+    activation: "sigmoid"
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  epochs: 20
+  validation_split: 0.2
+  test_split: 0.1
+  early_stopping_patience: 5
+
+paths:
+  data_dir: 'data/SKAB/data'
+  results_dir: 'results/skab'
+  plot_config_path: 'plot_config.yaml'
+  reasoning_rules_path: 'src/reasoning/rules_skab.pl'
+
+symbolic_reasoning:
+  enabled: true
+  extraction_threshold: 0.7
+  min_confidence: 0.7
+  max_rules: 100
+  pruning_strategy: 'confidence'
+  rule_extraction:
+    confidence_threshold: 0.7
+    min_support: 3
+    max_rules: 100
