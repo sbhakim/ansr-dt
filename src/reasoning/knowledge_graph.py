@@ -623,6 +623,159 @@ class KnowledgeGraphGenerator:
             self.logger.error(f"Error calculating graph stats: {e}", exc_info=True)
             return {'error': str(e)}
 
+    def visualize_publication(self,
+                              output_path: str,
+                              rule_confidence_threshold: float = 0.8,
+                              max_rules: int = 5,
+                              dpi: int = 300) -> None:
+        """Generate a publication-quality KG figure with legend and distinct node shapes.
+
+        Designed for IEEE two-column format (~3.5 in or 7.16 in wide).
+        Saves both PNG and PDF.
+        """
+        import matplotlib.patches as mpatches
+
+        target_graph = self._create_focused_subgraph(rule_confidence_threshold, max_rules)
+        if target_graph.number_of_nodes() == 0:
+            self.logger.warning("No nodes for publication visualization.")
+            return
+
+        # IEEE-friendly color palette (distinguishable in grayscale)
+        palette = {
+            'sensor':  '#4393C3',  # blue
+            'state':   '#2CA02C',  # green
+            'rule':    '#D6604D',  # red
+            'anomaly': '#B2182B',  # dark red
+            'insight': '#FDB863',  # orange/yellow
+            'metrics': '#878787',  # gray
+        }
+        shape_map = {
+            'sensor':  'o',   # circle
+            'state':   's',   # square
+            'rule':    'D',   # diamond
+            'anomaly': '^',   # triangle up
+            'insight': 'H',   # hexagon
+            'metrics': 'p',   # pentagon
+        }
+
+        # Compute layout
+        try:
+            import pygraphviz
+            pos = nx.nx_agraph.graphviz_layout(
+                target_graph, prog='dot',
+                args=f"-Gnodesep=0.8 -Granksep=1.2 -Grankdir=LR -Goverlap=false")
+        except ImportError:
+            try:
+                import pydot
+                pos = nx.nx_pydot.graphviz_layout(
+                    target_graph, prog='dot',
+                    args=f"-Gnodesep=0.8 -Granksep=1.2 -Grankdir=LR -Goverlap=false")
+            except ImportError:
+                num_n = target_graph.number_of_nodes()
+                pos = nx.spring_layout(target_graph,
+                                       k=1.5 / math.sqrt(max(num_n, 1)),
+                                       seed=42, iterations=200)
+
+        fig, ax = plt.subplots(figsize=(7.16, 4.5))
+
+        # Draw nodes by type (each type drawn separately for shape control)
+        nodes_by_type = {}
+        for n, d in target_graph.nodes(data=True):
+            ntype = d.get('type', 'metrics')
+            nodes_by_type.setdefault(ntype, []).append(n)
+
+        for ntype, node_list in nodes_by_type.items():
+            color = palette.get(ntype, '#CCCCCC')
+            marker = shape_map.get(ntype, 'o')
+            size = 600 if ntype in ('state', 'anomaly') else 450
+            # Draw manually for shape control
+            xs = [pos[n][0] for n in node_list]
+            ys = [pos[n][1] for n in node_list]
+            ax.scatter(xs, ys, s=size, c=color, marker=marker,
+                       edgecolors='#333333', linewidths=0.8, zorder=3, alpha=0.9)
+
+        # Draw edges
+        for u, v, data in target_graph.edges(data=True):
+            x0, y0 = pos[u]
+            x1, y1 = pos[v]
+            elabel = data.get('label', '')
+            color = '#999999'
+            lw = 0.8
+            ls = '-'
+            if 'implies_critical' in elabel:
+                color, lw = '#B2182B', 1.5
+            elif 'implies_degraded' in elabel:
+                color, lw = '#D6604D', 1.2
+            elif 'indicates' in elabel:
+                color, lw = '#E57373', 1.2
+            elif elabel.startswith('corr:'):
+                color, ls = '#4393C3', ':'
+            elif 'related_to' in elabel:
+                ls = '--'
+
+            ax.annotate('', xy=(x1, y1), xytext=(x0, y0),
+                        arrowprops=dict(arrowstyle='->', color=color,
+                                        lw=lw, linestyle=ls,
+                                        connectionstyle='arc3,rad=0.1'),
+                        zorder=2)
+
+        # Node labels (compact)
+        for n, data in target_graph.nodes(data=True):
+            ntype = data.get('type')
+            x, y = pos[n]
+            if ntype == 'sensor':
+                lbl = f"{data.get('sensor_name', 'S')[:4].title()}"
+            elif ntype == 'state':
+                slbls = ['Normal', 'Degraded', 'Critical']
+                lbl = slbls[data.get('value', 0)]
+            elif ntype == 'metrics':
+                lbl = f"Eff:{data.get('efficiency', 0):.2f}"
+            elif ntype == 'anomaly':
+                lbl = f"Sev:{data.get('severity', 0)}"
+            elif ntype == 'rule':
+                rname = data.get('rule_string', 'R').split(":-")[0].strip()
+                rname = rname.replace('neural_rule_', 'NR')
+                lbl = f"{rname}\n({data.get('confidence', 0):.2f})"
+            elif ntype == 'insight':
+                txt = data.get('text', '')
+                m = re.search(r': (\w+)', txt)
+                lbl = m.group(1)[:12] if m else txt[:12]
+            else:
+                lbl = str(n)[:10]
+
+            ax.annotate(lbl, (x, y), fontsize=7, ha='center', va='center',
+                        fontweight='normal', zorder=4,
+                        bbox=dict(boxstyle='round,pad=0.2', facecolor='white',
+                                  alpha=0.7, edgecolor='none'))
+
+        # Legend
+        legend_handles = []
+        type_names = {
+            'sensor': 'Sensor', 'state': 'System State', 'rule': 'Learned Rule',
+            'anomaly': 'Anomaly', 'insight': 'Insight', 'metrics': 'Metrics'
+        }
+        for ntype in ['sensor', 'state', 'rule', 'anomaly', 'insight', 'metrics']:
+            if ntype in nodes_by_type:
+                legend_handles.append(
+                    mpatches.Patch(facecolor=palette[ntype], edgecolor='#333333',
+                                  label=type_names.get(ntype, ntype))
+                )
+        ax.legend(handles=legend_handles, loc='lower right', fontsize=7,
+                  frameon=True, fancybox=False, edgecolor='black',
+                  ncol=2, handlelength=1.2)
+
+        ax.set_title('ANSR-DT Knowledge Graph', fontsize=10, fontweight='bold')
+        ax.axis('off')
+        fig.tight_layout(pad=0.3)
+
+        # Save PNG and PDF
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        fig.savefig(output_path, dpi=dpi, bbox_inches='tight')
+        pdf_path = os.path.splitext(output_path)[0] + '.pdf'
+        fig.savefig(pdf_path, bbox_inches='tight')
+        plt.close(fig)
+        self.logger.info(f"Publication KG saved: {output_path} + {pdf_path}")
+
     def export_graph(self, output_path: str) -> None:
         """Export graph data to JSON format using networkx node_link_data."""
         try:

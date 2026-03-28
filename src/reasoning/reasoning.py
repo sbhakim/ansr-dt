@@ -13,6 +13,21 @@ from datetime import datetime
 import math  # For isnan checks
 import re  # For parsing metadata and rule strings
 
+def _extract_rule_body(rule_string: str) -> Optional[str]:
+    """Extract the body of a Prolog rule (everything after ':-' before trailing '.').
+
+    Used for deduplication: two rules with the same body but different names
+    (e.g. neural_rule_1 vs neural_rule_15) are semantically identical.
+    Returns None if the rule has no ':-' separator.
+    """
+    if ':-' not in rule_string:
+        return None
+    body = rule_string.split(':-', 1)[1].strip()
+    if body.endswith('.'):
+        body = body[:-1].strip()
+    return body
+
+
 class SymbolicReasoner:
     def __init__(
             self,
@@ -39,6 +54,7 @@ class SymbolicReasoner:
         self.learned_rules_path = os.path.splitext(self.rules_path)[0] + "_learned.pl"
 
         self.learned_rules: Dict[str, Dict[str, Any]] = {}  # Store learned rules in memory {rule_string: metadata}
+        self._body_to_key: Dict[str, str] = {}  # Maps rule body -> rule_string key for dedup
         self.model = model  # Expect model instance to be passed
         self.input_shape = input_shape
         self.rule_activations: List[Dict[str, Any]] = []  # History of activations per step
@@ -100,8 +116,14 @@ class SymbolicReasoner:
                     self.logger.warning(f"Prolog file not found, skipping: {path}")
 
     def _load_dynamic_rules_from_file(self):
-        """Loads existing dynamic rules from the separate learned rules file."""
+        """Loads existing dynamic rules from the separate learned rules file.
+
+        Deduplicates by rule body: if two rules share the same body but have
+        different names, the one with higher confidence (or more activations as
+        tiebreaker) is kept and the duplicate is discarded.
+        """
         self.learned_rules = {}
+        self._body_to_key = {}
         try:
             if not os.path.exists(self.learned_rules_path):
                 self.logger.info(f"Learned rules file {self.learned_rules_path} not found, starting fresh.")
@@ -110,6 +132,7 @@ class SymbolicReasoner:
             with open(self.learned_rules_path, 'r') as f:
                 content = f.readlines()
 
+            duplicates_removed = 0
             for line_num, line in enumerate(content):
                 stripped_line = line.strip()
                 if not stripped_line or (stripped_line.startswith('%') and 'Confidence:' not in stripped_line) or stripped_line.startswith(':- discontiguous'):
@@ -145,19 +168,45 @@ class SymbolicReasoner:
 
                 if rule_part.endswith('.'):
                     rule_key = rule_part
-                    if rule_key not in self.learned_rules:
-                        try:
-                            timestamp_str_cleaned = timestamp_str.replace('Z', '+00:00')
-                            timestamp_dt = datetime.fromisoformat(timestamp_str_cleaned)
-                        except ValueError:
-                            self.logger.warning(f"L{line_num+1}: Invalid ISO timestamp '{timestamp_str}' for rule '{rule_key}', using current time.")
-                            timestamp_dt = datetime.now()
+                    body = _extract_rule_body(rule_key)
+
+                    try:
+                        timestamp_str_cleaned = timestamp_str.replace('Z', '+00:00')
+                        timestamp_dt = datetime.fromisoformat(timestamp_str_cleaned)
+                    except ValueError:
+                        self.logger.warning(f"L{line_num+1}: Invalid ISO timestamp '{timestamp_str}' for rule '{rule_key}', using current time.")
+                        timestamp_dt = datetime.now()
+
+                    # Deduplicate by body: keep the rule with higher confidence
+                    if body and body in self._body_to_key:
+                        existing_key = self._body_to_key[body]
+                        existing_meta = self.learned_rules[existing_key]
+                        # Keep the one with higher confidence; tiebreak by more activations
+                        if (confidence > existing_meta['confidence'] or
+                                (confidence == existing_meta['confidence'] and activations > existing_meta['activations'])):
+                            # Replace the existing rule with this better one
+                            del self.learned_rules[existing_key]
+                            self.learned_rules[rule_key] = {
+                                'confidence': confidence, 'timestamp': timestamp_dt,
+                                'activations': activations + existing_meta['activations']
+                            }
+                            self._body_to_key[body] = rule_key
+                        else:
+                            # Merge activations into the existing rule
+                            existing_meta['activations'] += activations
+                        duplicates_removed += 1
+                    elif rule_key not in self.learned_rules:
                         self.learned_rules[rule_key] = {
                             'confidence': confidence, 'timestamp': timestamp_dt, 'activations': activations
                         }
+                        if body:
+                            self._body_to_key[body] = rule_key
                 elif rule_part and not rule_part.startswith(':-'):
                     self.logger.warning(f"L{line_num+1} in {self.learned_rules_path}: Skipping potential rule due to missing period: '{rule_part}'")
 
+            if duplicates_removed > 0:
+                self.logger.info(f"Deduplicated {duplicates_removed} rules with identical bodies. Kept {len(self.learned_rules)} unique rules.")
+                self._rewrite_rules_file()
             self.logger.info(f"Loaded {len(self.learned_rules)} dynamic rules from {self.learned_rules_path}")
 
         except FileNotFoundError:
@@ -523,16 +572,33 @@ class SymbolicReasoner:
                     continue
 
                 if instance_confidence >= min_confidence:
+                    body = _extract_rule_body(rule_string)
+
+                    # Check for exact key match OR body-level duplicate
                     if rule_string in self.learned_rules:
                         self.learned_rules[rule_string]['timestamp'] = now
+                        if instance_confidence > self.learned_rules[rule_string]['confidence']:
+                            self.learned_rules[rule_string]['confidence'] = instance_confidence
                         updated_count += 1
                         needs_rewrite = True
+                    elif body and body in self._body_to_key:
+                        # Same body under a different name — update existing, skip adding duplicate
+                        existing_key = self._body_to_key[body]
+                        existing_meta = self.learned_rules[existing_key]
+                        existing_meta['timestamp'] = now
+                        if instance_confidence > existing_meta['confidence']:
+                            existing_meta['confidence'] = instance_confidence
+                        updated_count += 1
+                        needs_rewrite = True
+                        self.logger.debug(f"Deduplicated rule by body: '{rule_string}' matches existing '{existing_key}'")
                     else:
                         self.learned_rules[rule_string] = {
                             'confidence': instance_confidence,
                             'timestamp': now,
                             'activations': 0
                         }
+                        if body:
+                            self._body_to_key[body] = rule_string
                         added_count += 1
                         needs_rewrite = True
 
