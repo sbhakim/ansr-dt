@@ -1,3 +1,5 @@
+# Dedicated SKAB config: this path keeps the benchmark native rather than
+# forcing it through the synthetic ANSR-DT schema.
 dataset:
   categories:
     - valve1
@@ -6,6 +8,8 @@ dataset:
   include_anomaly_free: true
 
 model:
+  # The dedicated branch uses all eight native SKAB sensors and a larger
+  # temporal window so attention operates on meaningful sequence structure.
   architecture: skab_cnn_bilstm_attention
   window_size: 32
   input_shape: [32, 8]
@@ -35,6 +39,8 @@ training:
   early_stopping_patience: 4
 
 symbolic:
+  # These limits keep the learned rule set compact enough to inspect and
+  # report directly in the manuscript.
   max_rules: 8
   min_rule_precision: 0.55
   min_rule_recall: 0.02

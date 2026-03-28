@@ -1,3 +1,6 @@
+# src/skab/reasoner.py
+# Learns compact symbolic rules from SKAB windows, scores anomalies transparently, and produces human-readable rule explanations for benchmark interpretation and reporting.
+
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -44,6 +47,8 @@ class SKABRuleReasoner:
         self.total_weight = 1.0
 
     def fit(self, X_train: np.ndarray, y_train: np.ndarray, X_val: np.ndarray, y_val: np.ndarray, feature_names: Sequence[str]) -> Dict[str, Any]:
+        # Candidate rules are ranked on validation performance first, then the
+        # final score threshold is selected on the same validation split.
         train_frame = self._window_to_feature_frame(X_train, feature_names)
         val_frame = self._window_to_feature_frame(X_val, feature_names)
         candidates = self._generate_candidates(train_frame, y_train, val_frame, y_val)

@@ -1,5 +1,8 @@
 # configs/config_skab.yaml
 
+# Transitional SKAB bridge config: keeps the experiment interface close to the
+# original ANSR-DT stack by mapping SKAB signals onto the 7-feature synthetic schema.
+
 dataset:
   type: "skab"
   categories:
@@ -7,6 +10,8 @@ dataset:
     - valve2
     - other
   include_anomaly_free: true
+  # These aliases let the older synthetic-oriented experiment code consume
+  # SKAB data without changing the original ANSR-DT feature contract.
   feature_map:
     temperature: Temperature
     vibration: "__accel_max__"

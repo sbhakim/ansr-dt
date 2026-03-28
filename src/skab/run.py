@@ -1,9 +1,15 @@
+# src/skab/run.py
+# Parses command-line options, selects dedicated SKAB evaluation modes, and launches the isolated benchmark pipeline with reproducible settings and output artifacts.
+
 import argparse
 
 from .pipeline import run_pipeline
 
 
 DEFAULT_MODES = ['random_forest', 'neural', 'symbolic', 'neuro_symbolic']
+
+# Expose the main reporting modes explicitly so readers can rerun only the
+# benchmark slices they care about without editing the pipeline internals.
 
 
 def parse_args() -> argparse.Namespace:

@@ -1,3 +1,6 @@
+# src/skab/utils.py
+# Provides shared SKAB utilities for logging, metrics, threshold selection, serialization, seeding, and run-directory management across dedicated benchmark experiments and tests.
+
 import csv
 import json
 import logging
@@ -108,6 +111,8 @@ def write_rows_csv(path: str, rows: List[Dict[str, Any]]) -> None:
 
 
 def compute_metrics(y_true: np.ndarray, y_scores: np.ndarray, threshold: float = 0.5) -> Dict[str, Any]:
+    # Centralize metric computation so Random Forest, neural, symbolic, and
+    # neuro-symbolic runs are compared under the same decision logic.
     y_true = np.asarray(y_true).astype(int)
     y_scores = np.asarray(y_scores).astype(float)
     y_pred = (y_scores >= threshold).astype(int)
@@ -147,6 +152,8 @@ def _safe_div(numerator: float, denominator: float) -> float:
 
 
 def select_threshold(y_true: np.ndarray, y_scores: np.ndarray, metric_name: str = 'f1') -> Tuple[float, Dict[str, float]]:
+    # Threshold search is intentionally simple and fully observable: evaluate the
+    # unique score levels seen on validation and keep the best operating point.
     rounded_scores = np.unique(np.round(np.asarray(y_scores, dtype=float), 4))
     if rounded_scores.size == 0:
         return 0.5, {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'positive_rate': 0.0}

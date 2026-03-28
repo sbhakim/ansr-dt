@@ -1,3 +1,6 @@
+# src/skab/data.py
+# Loads native SKAB CSV series, builds windowed datasets, scales features, and preserves category-aware splits for benchmark fidelity, coverage, and reproducibility.
+
 import logging
 import os
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -48,6 +51,8 @@ class NativeSKABLoader:
             validation_split=validation_split,
             test_split=test_split,
         )
+        # Reserve anomaly-free traces for training only so they stabilize the
+        # background distribution without leaking into validation or test splits.
         train_series = anomaly_free_series + train_series
 
         X_train_raw, y_train, train_meta = self._series_to_sequences(train_series)
@@ -138,6 +143,8 @@ class NativeSKABLoader:
         validation_split: float,
         test_split: float,
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[Dict[str, Any]]]:
+        # Split within each SKAB category so valve-specific and other-fault
+        # patterns remain represented across train/validation/test partitions.
         grouped: Dict[str, List[Dict[str, Any]]] = {}
         for series in labeled_series:
             grouped.setdefault(series['category'], []).append(series)

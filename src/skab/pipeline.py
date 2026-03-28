@@ -1,3 +1,6 @@
+# src/skab/pipeline.py
+# Orchestrates the dedicated SKAB benchmark pipeline, training baseline, neural, symbolic, and neuro-symbolic variants while exporting consistent metrics and artifacts cleanly.
+
 import os
 import time
 from typing import Any, Dict, List, Sequence
@@ -55,6 +58,8 @@ def _flatten(X: np.ndarray) -> np.ndarray:
 
 
 def _metric_row(variant: str, metrics: Dict[str, Any]) -> Dict[str, Any]:
+    # Keep the summary schema flat so downstream CSV aggregation stays simple and
+    # manuscript tables can be regenerated without custom parsing code.
     return {
         'variant': variant,
         'threshold': metrics.get('threshold'),

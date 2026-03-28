@@ -1,3 +1,6 @@
+# src/skab/model.py
+# Defines the dedicated SKAB neural architecture, combining sequence-preserving convolutions, bidirectional LSTM encoding, and temporal attention for robust anomaly scoring behavior.
+
 from typing import Any, Dict
 
 import tensorflow as tf
@@ -18,6 +21,8 @@ def build_skab_model(config: Dict[str, Any]) -> tf.keras.Model:
     learning_rate = float(config['training']['learning_rate'])
 
     inputs = layers.Input(shape=input_shape, name='skab_input')
+    # Keep the convolution stack sequence-preserving; unlike the synthetic model,
+    # this branch avoids collapsing the temporal axis before attention.
     x = inputs
     for index, filters in enumerate(conv_filters):
         x = layers.Conv1D(filters=filters, kernel_size=kernel_size, padding='same', name=f'conv_{index + 1}')(x)
@@ -28,6 +33,8 @@ def build_skab_model(config: Dict[str, Any]) -> tf.keras.Model:
     x = layers.Bidirectional(layers.LSTM(lstm_units, return_sequences=True), name='bilstm')(x)
     x = layers.Dropout(dropout, name='lstm_dropout')(x)
 
+    # Temporal attention operates after BiLSTM encoding so the model can
+    # reweight informative timesteps instead of isolated sensor channels.
     attention_output = layers.MultiHeadAttention(
         num_heads=attention_heads,
         key_dim=attention_key_dim,
