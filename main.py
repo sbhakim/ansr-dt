@@ -291,7 +291,8 @@ def main(enable_visualizations: Optional[bool] = None):
         logger.info(f"Clear results enabled for this run: {clear_results_enabled}")
 
         # --- Resolve and Validate Paths ---
-        # Define paths relative to project root or config dir as appropriate
+        # Plot configuration is resolved only when visualization is requested,
+        # which keeps the public runtime path independent of manuscript assets.
         paths_to_resolve = {
             'results_dir': (project_root, 'results'), # Tuple: (base_dir, relative_path_in_config_or_default)
             'data_file': (project_root, config['paths']['data_file']),
@@ -299,6 +300,8 @@ def main(enable_visualizations: Optional[bool] = None):
             'knowledge_graphs_dir': (project_root, 'results/knowledge_graphs') # Usually relative to results
         }
         if visualization_enabled and config['paths'].get('plot_config_path'):
+            # Resolve plot settings only for runs that actually request figure
+            # generation, so the default runtime path stays manuscript-agnostic.
             paths_to_resolve['plot_config_path'] = (
                 os.path.dirname(config_path),
                 config['paths']['plot_config_path'],
@@ -327,6 +330,8 @@ def main(enable_visualizations: Optional[bool] = None):
         else:
             logger.info(f"Preserving existing results directory contents: {config['paths']['results_dir']}")
 
+        # Persist the effective configuration used for this run so exported
+        # results remain interpretable even after the repository evolves.
         persist_run_context(
             results_dir=config['paths']['results_dir'],
             config=config,

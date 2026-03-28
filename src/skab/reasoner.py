@@ -103,6 +103,8 @@ class SKABRuleReasoner:
         return explanations
 
     def _window_to_feature_frame(self, X: np.ndarray, feature_names: Sequence[str]) -> pd.DataFrame:
+        # Convert each temporal window into interpretable summary descriptors so
+        # rule learning operates over transparent statistics rather than raw traces.
         feature_rows: List[Dict[str, float]] = []
         for window in X:
             row: Dict[str, float] = {}
@@ -152,6 +154,8 @@ class SKABRuleReasoner:
             if len(np.unique(normal_values)) < 2 and len(np.unique(anomaly_values)) < 2:
                 continue
 
+            # Probe quantiles from both normal and anomalous windows to obtain a
+            # compact threshold set that still covers the main separation regimes.
             candidate_thresholds = sorted(set(np.round(np.concatenate([
                 np.quantile(normal_values, [0.90, 0.95, 0.975, 0.99]),
                 np.quantile(normal_values, [0.01, 0.025, 0.05, 0.10]),
@@ -191,6 +195,8 @@ class SKABRuleReasoner:
                     candidates.append(best_rule)
 
         candidates.sort(key=lambda rule: (rule.f1, rule.precision, rule.recall), reverse=True)
+        # Keep at most one rule per feature/direction pair so the final rule set
+        # stays compact enough to inspect and report directly.
         deduped: List[SymbolicRule] = []
         seen = set()
         for rule in candidates:

@@ -45,6 +45,8 @@ class RLSymbolicIntegration:
         self.reasoner = SymbolicReasoner(
             rules_path=self.rules_path,
             input_shape=self.input_shape,
+            # Integration-time reasoning operates over environment state snapshots;
+            # it does not perform neural rule extraction inside this rollout loop.
             model=None,
             logger=self.logger,
         )
@@ -89,6 +91,8 @@ class RLSymbolicIntegration:
                 steps += 1
 
                 latest_obs = obs[0, -1]
+                # Map the final timestep in the environment window back to the
+                # symbolic feature names expected by the Prolog reasoner.
                 sensor_state = {
                     'temperature': float(latest_obs[0]),
                     'vibration': float(latest_obs[1]),
@@ -99,6 +103,8 @@ class RLSymbolicIntegration:
                     'performance_score': float(latest_obs[6]),
                 }
 
+                # Query the symbolic layer on the semantically named state so
+                # the PPO trajectory can be inspected alongside rule activations.
                 insight = self.reasoner.reason(sensor_state)
                 insights_list.append(insight)
                 self.logger.info(f"Step {steps}: Reward={reward:.4f}, Action={action.tolist()}, Insights={len(insight)}")

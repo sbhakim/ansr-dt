@@ -25,6 +25,8 @@ from .utils import (
 
 
 def prepare_dataset(config_path: str, logger) -> Dict[str, Any]:
+    # The dedicated SKAB path uses its own loader and schema so benchmark
+    # validation does not have to inherit the synthetic pipeline assumptions.
     config, project_root = load_skab_config(config_path)
     loader = NativeSKABLoader(
         data_dir=config['paths']['data_dir'],
@@ -77,6 +79,8 @@ def train_random_forest(dataset: Dict[str, Any], run_dir: str, logger) -> Dict[s
     model.fit(X_train, dataset['y_train'])
     train_time = time.perf_counter() - start
     y_val_scores = model.predict_proba(X_val)[:, 1]
+    # Select the operating threshold on validation data once, then freeze it for
+    # test evaluation to avoid inflating SKAB benchmark performance.
     threshold, val_threshold_metrics = select_threshold(
         dataset['y_val'],
         y_val_scores,
@@ -174,6 +178,8 @@ def train_neural_model(dataset: Dict[str, Any], run_dir: str, logger, epochs_ove
 def train_symbolic_model(dataset: Dict[str, Any], run_dir: str, logger) -> Dict[str, Any]:
     variant_dir = ensure_directory(os.path.join(run_dir, 'symbolic'))
     symbolic_cfg = dataset['config']['symbolic']
+    # Learn rules on the dedicated SKAB descriptors so the symbolic layer
+    # reflects benchmark-native sensor behavior instead of synthetic aliases.
     reasoner = SKABRuleReasoner(
         max_rules=symbolic_cfg['max_rules'],
         min_rule_precision=symbolic_cfg['min_rule_precision'],
@@ -229,6 +235,8 @@ def train_symbolic_model(dataset: Dict[str, Any], run_dir: str, logger) -> Dict[
 def combine_neuro_symbolic(dataset: Dict[str, Any], run_dir: str, logger, neural_result: Dict[str, Any], symbolic_result: Dict[str, Any]) -> Dict[str, Any]:
     variant_dir = ensure_directory(os.path.join(run_dir, 'neuro_symbolic'))
     best = None
+    # Search a small validation-time fusion grid instead of hard-coding the
+    # neuro-symbolic mix, which keeps the combination rule explicit and auditable.
     for alpha in np.linspace(0.1, 0.9, 9):
         val_combo = alpha * neural_result['val_scores'] + (1.0 - alpha) * symbolic_result.get('val_scores', np.zeros_like(neural_result['val_scores']))
         threshold, val_metrics = select_threshold(dataset['y_val'], val_combo, metric_name=dataset['config']['evaluation']['selection_metric'])

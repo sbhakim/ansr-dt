@@ -54,7 +54,9 @@ class SymbolicReasoner:
         self.learned_rules_path = os.path.splitext(self.rules_path)[0] + "_learned.pl"
 
         self.learned_rules: Dict[str, Dict[str, Any]] = {}  # Store learned rules in memory {rule_string: metadata}
-        self._body_to_key: Dict[str, str] = {}  # Maps rule body -> rule_string key for dedup
+        # Track rules by body so semantically identical clauses are merged even if
+        # they were generated under different rule names across training cycles.
+        self._body_to_key: Dict[str, str] = {}
         self.model = model  # Expect model instance to be passed
         self.input_shape = input_shape
         self.rule_activations: List[Dict[str, Any]] = []  # History of activations per step
@@ -177,11 +179,13 @@ class SymbolicReasoner:
                         self.logger.warning(f"L{line_num+1}: Invalid ISO timestamp '{timestamp_str}' for rule '{rule_key}', using current time.")
                         timestamp_dt = datetime.now()
 
-                    # Deduplicate by body: keep the rule with higher confidence
+                    # Deduplicate at the clause-body level so the sidecar rule file
+                    # remains compact and interpretable rather than name-fragmented.
                     if body and body in self._body_to_key:
                         existing_key = self._body_to_key[body]
                         existing_meta = self.learned_rules[existing_key]
-                        # Keep the one with higher confidence; tiebreak by more activations
+                        # Keep the strongest representative for each symbolic
+                        # body so repeated extractions do not fragment the rule base.
                         if (confidence > existing_meta['confidence'] or
                                 (confidence == existing_meta['confidence'] and activations > existing_meta['activations'])):
                             # Replace the existing rule with this better one
@@ -218,6 +222,8 @@ class SymbolicReasoner:
         """Rewrites ONLY the learned rules file safely."""
         temp_learned_rules_path = self.learned_rules_path + ".tmp"
         try:
+            # Rewrite the learned-rule sidecar atomically so partial writes do not
+            # leave the Prolog state and on-disk rule set out of sync.
             with open(temp_learned_rules_path, 'w') as f_temp:
                 f_temp.write(f"% Dynamically learned rules for ANSR-DT - Automatically managed\n")
                 f_temp.write(f"% Last updated: {datetime.now().isoformat()}\n\n")
@@ -762,8 +768,8 @@ class SymbolicReasoner:
                     list(self.prolog.query(f"assertz(feature_gradient({key}, {change}, high))"))
                 list(self.prolog.query(f"assertz(sensor_change({key}, {change}))"))
 
-            if op_hours % 1000 == 0 and op_hours > 0:
-                list(self.prolog.query(f"assertz(base_maintenance_needed({op_hours}))"))
+            # base_maintenance_needed/1 is defined as a Prolog rule, so it should
+            # be queried directly later rather than asserted into the knowledge base.
 
             list(self.prolog.query(f"assertz(current_state({current_values['system_state']}))"))
             if previous_values:
