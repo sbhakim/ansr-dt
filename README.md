@@ -118,7 +118,7 @@ The curated local SKAB subset used by this repository is stored under [`data/SKA
 
 ### Supplementary associated paper
 
-[S. B. Hakim, M. Adil, A. Velasquez and H. H. Song, "An Explainable Neuro-Symbolic Rule Extraction Framework for Digital Twins," 2025 IEEE Smart World Congress (SWC), Calgary, AB, Canada, 2025, pp. 1042-1047.](https://ieeexplore.ieee.org/abstract/document/11395000)  
+<a href="https://ieeexplore.ieee.org/abstract/document/11395000" target="_blank" rel="noopener noreferrer">S. B. Hakim, M. Adil, A. Velasquez and H. H. Song, "An Explainable Neuro-Symbolic Rule Extraction Framework for Digital Twins," 2025 IEEE Smart World Congress (SWC), Calgary, AB, Canada, 2025, pp. 1042-1047.</a>  
 DOI: `10.1109/SWC65939.2025.00168`
 
 ## License
