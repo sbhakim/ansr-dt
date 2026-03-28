@@ -1,5 +1,9 @@
 # ANSR-DT
 
+<p align="center">
+  <img src="src/media/images/ANSR-DT-icon.png" alt="ANSR-DT Icon" width="140">
+</p>
+
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-purple)](https://www.python.org/)
 [![ProbLog Version](https://img.shields.io/badge/ProbLog-2.2%2B-red)](https://problog.readthedocs.io/en/latest/)
@@ -114,7 +118,8 @@ The curated local SKAB subset used by this repository is stored under [`data/SKA
 
 ### Supplementary associated paper
 
-S. B. Hakim, M. Adil, A. Velasquez and H. H. Song, "An Explainable Neuro-Symbolic Rule Extraction Framework for Digital Twins," 2025 IEEE Smart World Congress (SWC), Calgary, AB, Canada, 2025, pp. 1042-1047, doi: `10.1109/SWC65939.2025.00168`.
+[S. B. Hakim, M. Adil, A. Velasquez and H. H. Song, "An Explainable Neuro-Symbolic Rule Extraction Framework for Digital Twins," 2025 IEEE Smart World Congress (SWC), Calgary, AB, Canada, 2025, pp. 1042-1047.](https://ieeexplore.ieee.org/abstract/document/11395000)  
+DOI: `10.1109/SWC65939.2025.00168`
 
 ## License
 
